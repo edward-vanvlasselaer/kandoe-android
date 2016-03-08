@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--<string name="example" translatable="false">http://www.tievents.be/androidquestions/ci/index.php/question</string>-->
+    <string name="baseUrl" traslatable="false">http://ENTER_KANDOE_URL.com/api</string>
+</resources>
