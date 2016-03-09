@@ -29,7 +29,10 @@ dependencies {
     compile 'com.android.support:design:23.0.1'
     compile 'com.android.support:recyclerview-v7:23.2.0'
     compile 'com.android.support:support-v13:23.2.0'
+    compile 'com.mikepenz:iconics-core:2.5.8@aar'
+    compile 'com.joanzapata.iconify:android-iconify-fontawesome:2.2.1'
     compile('com.mikepenz:materialdrawer:5.1.1@aar') {
         transitive = true
     }
+        //FontAwesomecompile 'com.mikepenz:fontawesome-typeface:+@aar'
 }

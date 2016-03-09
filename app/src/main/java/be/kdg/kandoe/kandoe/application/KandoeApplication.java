@@ -5,6 +5,8 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.joanzapata.iconify.Iconify;
+import com.joanzapata.iconify.fonts.FontAwesomeModule;
 
 import be.kdg.kandoe.kandoe.service.UserApi;
 import retrofit.RestAdapter;
@@ -18,6 +20,8 @@ public class KandoeApplication extends Application{
     @Override
     public void onCreate() {
         super.onCreate();
+        Iconify
+                .with(new FontAwesomeModule());
         userApi = createUserApi();
     }
 
