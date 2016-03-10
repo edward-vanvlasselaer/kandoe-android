@@ -56,6 +56,69 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/register_input_lastname"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email"
+                android:id="@+id/register_txt_email"
+                android:layout_below="@+id/scrollView"
+                android:layout_alignParentStart="true" />
+
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/register_input_email"
+                android:layout_below="@+id/register_txt_email"
+                android:layout_alignParentStart="true"
+                android:inputType="textEmailAddress" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Password"
+                android:id="@+id/register_txt_password"
+                android:layout_below="@+id/scrollView"
+                android:layout_alignParentStart="true" />
+
+            <EditText
+                android:inputType="textPassword"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/register_input_password"
+                android:layout_below="@+id/register_txt_password"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Confirm password"
+                android:id="@+id/register_txt_confirm"
+                android:layout_below="@+id/register_input_password"
+                android:layout_alignParentStart="true" />
+
+            <EditText
+                android:inputType="textPassword"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/register_input_confirm"
+                android:layout_below="@+id/register_txt_confirm"
+                android:layout_alignParentStart="true" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
+
         </LinearLayout>
     </ScrollView>
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Register"
+        android:id="@+id/register_btn_register"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
+
+
 </RelativeLayout>

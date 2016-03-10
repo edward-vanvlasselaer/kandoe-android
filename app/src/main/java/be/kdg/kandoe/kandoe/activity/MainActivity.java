@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initViewPager() {
         viewPager = (ViewPager) findViewById(R.id.pager);
-        pagerAdapter = new CustomPagerAdapter(getSupportFragmentManager(),CustomPagerAdapter.mNumOfTabs);
+        pagerAdapter = new CustomPagerAdapter(getSupportFragmentManager(),3);
         viewPager.setAdapter(pagerAdapter);
     }
 
@@ -68,10 +68,7 @@ public class MainActivity extends AppCompatActivity {
             super.onBackPressed();
     }
     private void initMaterialDrawer() {
-        PrimaryDrawerItem item1 = new PrimaryDrawerItem().withName("Profile");
-        PrimaryDrawerItem item2 = new PrimaryDrawerItem().withName("Organisations");
-        PrimaryDrawerItem item3 = new PrimaryDrawerItem().withName("Extra Option");
-        PrimaryDrawerItem item4 = new PrimaryDrawerItem().withName("Extra Option");
+
 
         AccountHeader headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
@@ -80,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                 .addProfiles(
                         new ProfileDrawerItem()
                                 .withIsExpanded(false)
-                                .withName("name here")
+                                .withName(User.getLoggedInUser().getUsername())
                                 .withEmail("emailhere.com")
                                 .withEnabled(false)
                                 .withIcon(new IconDrawable(this, FontAwesomeIcons.fa_reddit))
@@ -101,14 +98,14 @@ public class MainActivity extends AppCompatActivity {
                 .withAccountHeader(headerResult)
                 .withTranslucentStatusBar(true)
                 .addDrawerItems(
-                        new PrimaryDrawerItem().withName("111111111").withIcon(new IconDrawable(this, FontAwesomeIcons.fa_sign_out)),
-                        new PrimaryDrawerItem().withName("111111111").withIcon(new IconDrawable(this, FontAwesomeIcons.fa_sign_out)),
-                        new PrimaryDrawerItem().withName("111111111").withIcon(new IconDrawable(this, FontAwesomeIcons.fa_sign_out)),
+                        new PrimaryDrawerItem().withName("Chat").withIcon(new IconDrawable(this, FontAwesomeIcons.fa_comment)),
+                        new PrimaryDrawerItem().withName("Game").withIcon(new IconDrawable(this, FontAwesomeIcons.fa_dot_circle_o)),
+                        new PrimaryDrawerItem().withName("Cards").withIcon(new IconDrawable(this, FontAwesomeIcons.fa_files_o)),
                         new SectionDrawerItem().withName("SECTION"),
-                        new SecondaryDrawerItem().withName("22222").withIcon(new IconDrawable(this, FontAwesomeIcons.fa_sign_out)),
-                        new SecondaryDrawerItem().withName("22222").withIcon(new IconDrawable(this, FontAwesomeIcons.fa_sign_out)),
-                        new SecondaryDrawerItem().withName("22222").withIcon(new IconDrawable(this, FontAwesomeIcons.fa_sign_out)),
-                        new SecondaryDrawerItem().withName("22222").withIcon(new IconDrawable(this, FontAwesomeIcons.fa_sign_out))
+                        new SecondaryDrawerItem().withName("TODO").withIcon(new IconDrawable(this, FontAwesomeIcons.fa_sign_out)),
+                        new SecondaryDrawerItem().withName("TODO").withIcon(new IconDrawable(this, FontAwesomeIcons.fa_sign_out)),
+                        new SecondaryDrawerItem().withName("TODO").withIcon(new IconDrawable(this, FontAwesomeIcons.fa_sign_out)),
+                        new SecondaryDrawerItem().withName("TODO").withIcon(new IconDrawable(this, FontAwesomeIcons.fa_sign_out))
                 )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override

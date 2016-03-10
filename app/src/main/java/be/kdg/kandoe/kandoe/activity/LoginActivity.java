@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -23,6 +24,8 @@ public class LoginActivity extends AppCompatActivity {
     private EditText passwordInput;
     private Button btnLogin;
 
+    private View tempview;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,9 +41,8 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                tempview = v;
                 login();
-                Toast.makeText(getBaseContext(), "Hi, " + User.getLoggedInUser().getFirstName() + "!", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(v.getContext(), MainActivity.class));
             }
         });
     }
@@ -70,6 +72,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void success(User user, Response response) {
                 User.setLoggedInUser(user);
+                Toast.makeText(getBaseContext(), "Hi, " + User.getLoggedInUser().getFirstName() + "!", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(tempview.getContext(), MainActivity.class));
             }
 
             @Override
@@ -78,7 +82,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-
 
     public void handleFailure(RetrofitError retrofitError) {
         ExceptionHelper.showRetrofitError(retrofitError, getBaseContext(), TAG);

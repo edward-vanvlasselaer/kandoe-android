@@ -34,7 +34,7 @@ public class KandoeApplication extends Application{
                 .create();
         return new RestAdapter.Builder()
                 .setConverter(new GsonConverter(gson))
-                .setEndpoint("http://wildfly-teamgip2kdgbe.rhcloud.com/api") //TODO zet nr string.xml of config.xml
+                .setEndpoint("http://dolha.in:8080/api") //TODO zet nr string.xml of config.xml
                 .setLogLevel(RestAdapter.LogLevel.FULL) // Om af te drukken welke http-calls er effectief gebeuren
                 .build()
                 .create(UserApi.class);

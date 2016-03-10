@@ -13,7 +13,7 @@ import be.kdg.kandoe.kandoe.fragment.ChatFragment;
 import be.kdg.kandoe.kandoe.fragment.GameFragment;
 
 public class CustomPagerAdapter extends FragmentStatePagerAdapter {
-    public static int mNumOfTabs;
+    public int mNumOfTabs;
 
     public CustomPagerAdapter(FragmentManager fm, int NumOfTabs) {
         super(fm);
@@ -24,14 +24,11 @@ public class CustomPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                Fragment tab1 = new ChatFragment();
-                return tab1;
+                return new ChatFragment();
             case 1:
-                Fragment tab2 = new GameFragment();
-                return tab2;
+                return new GameFragment();
             case 2:
-                Fragment tab3 = new CardFragment();
-                return tab3;
+                return new CardFragment();
             default:
                 return null;
         }

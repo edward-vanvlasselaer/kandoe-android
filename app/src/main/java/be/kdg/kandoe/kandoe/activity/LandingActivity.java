@@ -8,6 +8,7 @@ import android.widget.Button;
 
 import be.kdg.kandoe.kandoe.R;
 import be.kdg.kandoe.kandoe.application.KandoeApplication;
+import be.kdg.kandoe.kandoe.dom.User;
 
 public class LandingActivity extends AppCompatActivity {
     private Button btnGuest;
@@ -29,6 +30,9 @@ public class LandingActivity extends AppCompatActivity {
         btnGuest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                User guest = new User();
+                guest.setUsername("guest");
+                User.setLoggedInUser(guest);
                 startActivity(new Intent(v.getContext(), MainActivity.class));
             }
         });
