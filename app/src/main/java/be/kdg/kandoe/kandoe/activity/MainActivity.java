@@ -2,6 +2,11 @@ package be.kdg.kandoe.kandoe.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v13.app.FragmentPagerAdapter;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.SimpleOnPageChangeListener;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -26,21 +31,33 @@ import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.mikepenz.materialdrawer.model.interfaces.Nameable;
 
 import be.kdg.kandoe.kandoe.R;
+import be.kdg.kandoe.kandoe.adapter.CustomPagerAdapter;
 import be.kdg.kandoe.kandoe.dom.User;
 
 public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private Drawer drawer;
 
+    private ViewPager viewPager;
+    private PagerAdapter pagerAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //initTabLayout(); --> needed?
         toolbar =(Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        initViewPager();
         initMaterialDrawer();
+    }
+
+    private void initViewPager() {
+        viewPager = (ViewPager) findViewById(R.id.pager);
+        pagerAdapter = new CustomPagerAdapter(getSupportFragmentManager(),CustomPagerAdapter.mNumOfTabs);
+        viewPager.setAdapter(pagerAdapter);
     }
 
     @Override
@@ -50,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
         else
             super.onBackPressed();
     }
-
     private void initMaterialDrawer() {
         PrimaryDrawerItem item1 = new PrimaryDrawerItem().withName("Profile");
         PrimaryDrawerItem item2 = new PrimaryDrawerItem().withName("Organisations");

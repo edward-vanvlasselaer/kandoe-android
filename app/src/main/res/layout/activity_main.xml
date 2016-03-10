@@ -8,12 +8,16 @@
         android:id="@+id/toolbar"
         layout="@layout/toolbar">
     </include>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="MAINACTIVITY"
-            android:id="@+id/main_title"
-            android:layout_below="@+id/toolbar"
-            android:layout_alignParentStart="true" />
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MAINACTIVITY"
+        android:id="@+id/main_title"
+        android:layout_below="@+id/toolbar"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
