@@ -8,6 +8,6 @@ import retrofit.Callback;
 public abstract class AbstractExceptionCallback<T> implements Callback<T> {
     @Override
     public void onFailure(Throwable t) {
-
+        int x= new Integer(5);
     }
 }

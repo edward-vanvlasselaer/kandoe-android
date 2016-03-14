@@ -22,7 +22,6 @@ import be.kdg.kandoe.kandoe.dom.Token;
 import be.kdg.kandoe.kandoe.dom.User;
 import be.kdg.kandoe.kandoe.exception.AbstractExceptionCallback;
 import retrofit.Call;
-import retrofit.Callback;
 import retrofit.Response;
 import retrofit.Retrofit;
 
@@ -42,7 +41,6 @@ public class LoginActivity extends AppCompatActivity {
         usernameInput = (EditText) findViewById(R.id.login_input_username);
         passwordInput = (EditText) findViewById(R.id.login_input_password);
         btnLogin = (Button) findViewById(R.id.login_btn_login);
-
         initListeners();
     }
 
@@ -61,9 +59,10 @@ public class LoginActivity extends AppCompatActivity {
         call.enqueue(new AbstractExceptionCallback<Token>() {
             @Override
             public void onResponse(Response<Token> response, Retrofit retrofit) {
-
-                //KandoeApplication.setUserToken(response.body().getToken() == null ? onFailure(); : );
-                requestCurrentUser();
+                if(response.body() != null && response.body().getToken()!=null){
+                    KandoeApplication.setUserToken(response.body().getToken());
+                    requestCurrentUser();
+                }
             }
         });
     }
