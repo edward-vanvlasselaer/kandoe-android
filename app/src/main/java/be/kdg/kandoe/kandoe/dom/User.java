@@ -9,7 +9,6 @@ import be.kdg.kandoe.kandoe.exception.UserException;
  */
 public class User {
     private static User loggedInUser = null;
-
     @SerializedName("userId")
     private Integer userId;
     @SerializedName("username")
@@ -22,6 +21,9 @@ public class User {
     private String email;
     @SerializedName("password")
     private String password;
+
+    private boolean isPlaying;
+
 
     public String getPassword() {
         return password;

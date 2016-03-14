@@ -9,13 +9,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.gson.JsonElement;
+import com.google.gson.internal.LinkedTreeMap;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+
 import be.kdg.kandoe.kandoe.R;
 import be.kdg.kandoe.kandoe.application.KandoeApplication;
+import be.kdg.kandoe.kandoe.dom.Token;
 import be.kdg.kandoe.kandoe.dom.User;
-import be.kdg.kandoe.kandoe.exception.ExceptionHelper;
+import be.kdg.kandoe.kandoe.exception.AbstractExceptionCallback;
+import retrofit.Call;
 import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 public class LoginActivity extends AppCompatActivity {
     private final String TAG = "LoginActivity";
@@ -48,42 +57,26 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void login() {
-        Callback<String> c = new Callback<String>() {
+        Call<Token> call = KandoeApplication.getUserApi().login(usernameInput.getText().toString(), passwordInput.getText().toString());
+        call.enqueue(new AbstractExceptionCallback<Token>() {
             @Override
-            public void success(String t, Response response) {
-                String token = t; //todo iets doen met de token?
+            public void onResponse(Response<Token> response, Retrofit retrofit) {
+
+                //KandoeApplication.setUserToken(response.body().getToken() == null ? onFailure(); : );
                 requestCurrentUser();
-            }
-
-            @Override
-            public void failure(RetrofitError retrofitError) {
-                handleFailure(retrofitError);
-            }
-        };
-
-        KandoeApplication.getUserApi().login(
-                usernameInput.getText().toString(),
-                passwordInput.getText().toString(),
-                c);
-    }
-
-    private void requestCurrentUser() {
-        KandoeApplication.getUserApi().getCurrentUser(new Callback<User>() {
-            @Override
-            public void success(User user, Response response) {
-                User.setLoggedInUser(user);
-                Toast.makeText(getBaseContext(), "Hi, " + User.getLoggedInUser().getFirstName() + "!", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(tempview.getContext(), MainActivity.class));
-            }
-
-            @Override
-            public void failure(RetrofitError retrofitError) {
-                handleFailure(retrofitError);
             }
         });
     }
 
-    public void handleFailure(RetrofitError retrofitError) {
-        ExceptionHelper.showRetrofitError(retrofitError, getBaseContext(), TAG);
+    private void requestCurrentUser() {
+        Call<User> call = KandoeApplication.getUserApi().getCurrentUser();
+        call.enqueue(new AbstractExceptionCallback<User>() {
+            @Override
+            public void onResponse(Response<User> response, Retrofit retrofit) {
+                User.setLoggedInUser(response.body());
+                Toast.makeText(getBaseContext(), "Hi, " + User.getLoggedInUser().getFirstName() + "!", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(tempview.getContext(), MainActivity.class));
+            }
+        });
     }
 }

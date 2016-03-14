@@ -7,10 +7,10 @@ import android.view.View;
 import android.widget.Button;
 
 import be.kdg.kandoe.kandoe.R;
-import be.kdg.kandoe.kandoe.application.KandoeApplication;
 import be.kdg.kandoe.kandoe.dom.User;
 
 public class LandingActivity extends AppCompatActivity {
+    private final String TAG = "LandingActivity";
     private Button btnGuest;
     private Button btnRegister;
     private Button btnLogin;

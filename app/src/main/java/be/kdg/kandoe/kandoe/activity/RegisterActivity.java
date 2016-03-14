@@ -8,13 +8,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
 import be.kdg.kandoe.kandoe.R;
 import be.kdg.kandoe.kandoe.application.KandoeApplication;
 import be.kdg.kandoe.kandoe.dom.User;
-import be.kdg.kandoe.kandoe.exception.ExceptionHelper;
 import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 public class RegisterActivity extends AppCompatActivity {
     private final String TAG = "RegisterActivity";
@@ -57,9 +56,9 @@ public class RegisterActivity extends AppCompatActivity {
                 userRegister.setEmail(usernameInput.getText().toString());
                 userRegister.setPassword(passwordInput.getText().toString());
 
-                KandoeApplication.getUserApi().registerUser(userRegister, new Callback<String>() {
+                /*KandoeApplication.getUserApi().registerUser(userRegister, new Callback<JSONObject>() {
                     @Override
-                    public void success(String s, Response response) {
+                    public void success(JSONObject jsonObject, Response response) {
                         KandoeApplication.getUserApi().getCurrentUser(new Callback<User>() {
                             @Override
                             public void success(User user, Response response) {
@@ -76,11 +75,12 @@ public class RegisterActivity extends AppCompatActivity {
                             }
                         });
                     }
+
                     @Override
                     public void failure(RetrofitError retrofitError) {
                         ExceptionHelper.showRetrofitError(retrofitError,getApplicationContext(),TAG);
                     }
-                }); //if register succesfull, login directly
+                }); //if register succesfull, login directly*/
             }
         });
     }

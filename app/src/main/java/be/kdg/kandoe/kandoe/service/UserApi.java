@@ -1,27 +1,22 @@
 package be.kdg.kandoe.kandoe.service;
+import org.json.JSONObject;
 
-import android.telecom.Call;
-
+import be.kdg.kandoe.kandoe.dom.Token;
 import be.kdg.kandoe.kandoe.dom.User;
+import retrofit.Call;
 import retrofit.http.Body;
+import retrofit.http.GET;
 import retrofit.http.POST;
-import retrofit.Callback;
 import retrofit.http.Query;
-import retrofit2.http.GET;
-
-/**
- * Created by Edward on 05/03/2016.
- */
 
 public interface UserApi {
     @POST("/user/authenticate")
-    void login(@Query("username") String username,
-               @Query("password") String password,
-               Callback<?> token);
+    Call<Token> login(@Query("username") String username,
+                      @Query("password") String password);
 
     @GET("/user/current")
-    void getCurrentUser(Callback<?> user);
+    retrofit.Call<User> getCurrentUser();
 
     @POST("/user/register")
-    void registerUser(@Body User user, Callback<String> token);
+    Call<Token> registerUser(@Body User user);
 }

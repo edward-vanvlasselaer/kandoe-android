@@ -35,6 +35,7 @@ import be.kdg.kandoe.kandoe.adapter.CustomPagerAdapter;
 import be.kdg.kandoe.kandoe.dom.User;
 
 public class MainActivity extends AppCompatActivity {
+    private final String TAG = "MainActivity";
     private Toolbar toolbar;
     private Drawer drawer;
 
@@ -74,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
                 .withActivity(this)
                 .withHeaderBackground(R.drawable.drawer_background1)
                 .withAlternativeProfileHeaderSwitching(false)
+                .withSelectionListEnabled(false)
                 .addProfiles(
                         new ProfileDrawerItem()
                                 .withIsExpanded(false)
