@@ -12,6 +12,7 @@ import be.kdg.kandoe.kandoe.fragment.CardFragment;
 import be.kdg.kandoe.kandoe.fragment.ChatFragment;
 import be.kdg.kandoe.kandoe.fragment.GameFragment;
 import be.kdg.kandoe.kandoe.fragment.OrganisationFragment;
+import be.kdg.kandoe.kandoe.fragment.ThemeCardFragment;
 
 public class CustomPagerAdapter extends FragmentStatePagerAdapter {
     public int mNumOfTabs;
@@ -30,6 +31,8 @@ public class CustomPagerAdapter extends FragmentStatePagerAdapter {
                 return new GameFragment();
             case 2:
                 return new CardFragment();
+            case 3:
+                return new ThemeCardFragment();
             default:
                 return null;
         }

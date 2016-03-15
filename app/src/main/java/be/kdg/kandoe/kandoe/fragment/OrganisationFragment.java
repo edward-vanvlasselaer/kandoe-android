@@ -35,6 +35,7 @@ public class OrganisationFragment extends Fragment {
         return rootView;
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +44,7 @@ public class OrganisationFragment extends Fragment {
             @Override
             public void onResponse(Response<List<Organisation>> response, Retrofit retrofit) {
                 List<Organisation> organisations = new ArrayList<>();
-                for (Organisation organisation : organisations) {
+                for (Organisation organisation : response.body()) {
                     organisations.add(organisation);
                 }
                 getOrganisationAdapter().setOrganisations(organisations);
