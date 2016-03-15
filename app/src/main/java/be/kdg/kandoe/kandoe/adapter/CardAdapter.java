@@ -91,7 +91,7 @@ public class CardAdapter extends BaseAdapter {
                     card.setScore(0);
                 } else {
                     card.setScore(card.getScore() + 1);
-                    Call<Card> c= KandoeApplication.getCardApi().updateCard(card,card.getCardId());
+                    Call<Card> c= KandoeApplication.getCardApi().updateCard(card);
                     c.enqueue(new Callback<Card>() {
                         @Override
                         public void onResponse(Response<Card> response, Retrofit retrofit) {
