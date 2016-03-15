@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import be.kdg.kandoe.kandoe.fragment.CardFragment;
 import be.kdg.kandoe.kandoe.fragment.ChatFragment;
 import be.kdg.kandoe.kandoe.fragment.GameFragment;
+import be.kdg.kandoe.kandoe.fragment.OrganisationFragment;
 
 public class CustomPagerAdapter extends FragmentStatePagerAdapter {
     public int mNumOfTabs;
@@ -24,7 +25,7 @@ public class CustomPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new ChatFragment();
+                return new OrganisationFragment();
             case 1:
                 return new GameFragment();
             case 2:
