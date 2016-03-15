@@ -14,6 +14,7 @@ import com.squareup.okhttp.logging.HttpLoggingInterceptor;
 import java.io.IOException;
 
 import be.kdg.kandoe.kandoe.service.CardApi;
+import be.kdg.kandoe.kandoe.service.CircleApi;
 import be.kdg.kandoe.kandoe.service.OrganisationApi;
 import be.kdg.kandoe.kandoe.service.UserApi;
 import retrofit.GsonConverterFactory;
@@ -27,6 +28,7 @@ public class KandoeApplication extends Application{
     private static OrganisationApi organisationApi;
     private static CardApi cardApi;
     private static UserApi userApi;
+    private static CircleApi circleApi;
 
     public static String getUserToken() {
         return userToken;
@@ -44,6 +46,7 @@ public class KandoeApplication extends Application{
         userApi = createUserApi();
         organisationApi = createOrganisationApi();
         cardApi = createCardApi();
+        circleApi=createCircleApi();
     }
 
     public static UserApi getUserApi(){
@@ -56,6 +59,10 @@ public class KandoeApplication extends Application{
 
     public static CardApi getCardApi() {
         return cardApi;
+    }
+
+    public static CircleApi getCircleApi(){
+        return circleApi;
     }
 
     private void createApi() {
@@ -96,7 +103,7 @@ public class KandoeApplication extends Application{
         client.interceptors().add(logging);
 
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://dolha.in:8080/api")
+                .baseUrl("http://dolha.in:8080")
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -112,5 +119,9 @@ public class KandoeApplication extends Application{
 
     private CardApi createCardApi(){
         return retrofit.create(CardApi.class);
+    }
+
+    private CircleApi createCircleApi(){
+        return retrofit.create(CircleApi.class);
     }
 }
