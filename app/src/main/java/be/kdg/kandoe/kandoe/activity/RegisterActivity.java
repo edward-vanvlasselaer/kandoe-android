@@ -12,8 +12,13 @@ import org.json.JSONObject;
 
 import be.kdg.kandoe.kandoe.R;
 import be.kdg.kandoe.kandoe.application.KandoeApplication;
+import be.kdg.kandoe.kandoe.dom.Token;
 import be.kdg.kandoe.kandoe.dom.User;
+import be.kdg.kandoe.kandoe.exception.AbstractExceptionCallback;
+import retrofit.Call;
 import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 public class RegisterActivity extends AppCompatActivity {
     private final String TAG = "RegisterActivity";
@@ -48,42 +53,32 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 User userRegister = new User();
                 userRegister.setFirstName(firstNameInput.getText().toString());
                 userRegister.setLastName(lastNameInput.getText().toString());
                 userRegister.setUsername(usernameInput.getText().toString());
                 userRegister.setEmail(usernameInput.getText().toString());
                 userRegister.setPassword(passwordInput.getText().toString());
+                Call<Token> call = KandoeApplication.getUserApi().registerUser(userRegister);
+                call.enqueue(new AbstractExceptionCallback<Token>() {
+                    @Override //REGISTER
+                    public void onResponse(Response<Token> response, Retrofit retrofit) {
+                        KandoeApplication.setUserToken(response.body().getToken());
 
-                /*KandoeApplication.getUserApi().registerUser(userRegister, new Callback<JSONObject>() {
-                    @Override
-                    public void success(JSONObject jsonObject, Response response) {
-                        KandoeApplication.getUserApi().getCurrentUser(new Callback<User>() {
-                            @Override
-                            public void success(User user, Response response) {
-                                User.setLoggedInUser(user);
+                        Call<User> call = KandoeApplication.getUserApi().getCurrentUser();
+                        call.enqueue(new AbstractExceptionCallback<User>() {
+                            @Override //LOGIN
+                            public void onResponse(Response<User> response, Retrofit retrofit) {
+                                User.setLoggedInUser(response.body());
                                 Toast.makeText(getBaseContext(), "Hi, " + User.getLoggedInUser().getFirstName() + "!", Toast.LENGTH_SHORT).show();
-                                Intent myintent = new Intent(RegisterActivity.this,MainActivity.class);
+                                Intent myintent = new Intent(RegisterActivity.this, MainActivity.class);
                                 RegisterActivity.this.startActivity(myintent);
                                 finish();
                             }
-
-                            @Override
-                            public void failure(RetrofitError retrofitError) {
-                                ExceptionHelper.showRetrofitError(retrofitError,getApplicationContext(),TAG);
-                            }
                         });
                     }
-
-                    @Override
-                    public void failure(RetrofitError retrofitError) {
-                        ExceptionHelper.showRetrofitError(retrofitError,getApplicationContext(),TAG);
-                    }
-                }); //if register succesfull, login directly*/
+                });
             }
         });
     }
-
-
 }

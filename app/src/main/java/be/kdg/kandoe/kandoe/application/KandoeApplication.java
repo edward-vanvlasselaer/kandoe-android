@@ -59,18 +59,6 @@ public class KandoeApplication extends Application{
     }
 
     private void createApi() {
-//        final Gson gson = new GsonBuilder()
-//                .setDateFormat("yyyy-MM-dd HH:mm:ss")
-//                .create();
-//
-//
-//        return new RestAdapter.Builder()
-//                .setConverter(new GsonConverter(gson))
-//                .setEndpoint("http://dolha.in:8080/api") //TODO zet nr string.xml of config.xml
-//                .setRequestInterceptor(createNewRequestInterceptor())
-//                .setLogLevel(RestAdapter.LogLevel.FULL) // Om af te drukken welke http-calls er effectief gebeuren
-//                .build()
-//                .create(clazz);
         OkHttpClient client = new OkHttpClient();
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
 
@@ -96,7 +84,7 @@ public class KandoeApplication extends Application{
         client.interceptors().add(logging);
 
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://dolha.in:8080/api")
+                .baseUrl("http://dolha.in:8080")
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();

@@ -1,6 +1,8 @@
 package be.kdg.kandoe.kandoe.activity;
 
 import android.app.Activity;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.app.Fragment;
@@ -11,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.joanzapata.iconify.IconDrawable;
@@ -29,6 +32,9 @@ import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.mikepenz.materialdrawer.model.interfaces.Nameable;
+import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
+import com.mikepenz.materialdrawer.util.DrawerImageLoader;
+import com.squareup.picasso.Picasso;
 
 import be.kdg.kandoe.kandoe.R;
 import be.kdg.kandoe.kandoe.adapter.CustomPagerAdapter;
@@ -69,29 +75,53 @@ public class MainActivity extends AppCompatActivity {
             super.onBackPressed();
     }
     private void initMaterialDrawer() {
+        //initialize and create the image loader logic
+        DrawerImageLoader.init(new AbstractDrawerImageLoader() {
+            @Override
+            public void set(ImageView imageView, Uri uri, Drawable placeholder) {
+                Picasso.with(imageView.getContext()).load(uri).placeholder(placeholder).into(imageView);
+            }
 
+            @Override
+            public void cancel(ImageView imageView) {
+                Picasso.with(imageView.getContext()).cancelRequest(imageView);
+            }
+        });
 
         AccountHeader headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
                 .withHeaderBackground(R.drawable.drawer_background1)
-                .withAlternativeProfileHeaderSwitching(false)
                 .withSelectionListEnabled(false)
                 .addProfiles(
                         new ProfileDrawerItem()
-                                .withIsExpanded(false)
                                 .withName(User.getLoggedInUser().getUsername())
-                                .withEmail("emailhere.com")
-                                .withEnabled(false)
+                                .withEmail(User.getLoggedInUser().getEmail())
+                                .withEnabled(true)
                                 .withIcon(new IconDrawable(this, FontAwesomeIcons.fa_reddit))
-                )
-                .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
+                                .withIcon(User.getLoggedInUser().getImageUrl())
+                ).build();
 
-                    @Override
-                    public boolean onProfileChanged(View view, IProfile profile, boolean current) {
-                        return false;
-                    }
-                })
-                .build();
+//        AccountHeader headerResult = new AccountHeaderBuilder()
+//                .withActivity(this)
+//                .withHeaderBackground(R.drawable.drawer_background1)
+//                .withAlternativeProfileHeaderSwitching(false)
+//                .withSelectionListEnabled(false)
+//                .addProfiles(
+//                        new ProfileDrawerItem()
+//                                .withIsExpanded(false)
+//                                .withName(User.getLoggedInUser().getUsername())
+//                                .withEmail("emailhere.com")
+//                                .withEnabled(false)
+//                                .withIcon(new IconDrawable(this, FontAwesomeIcons.fa_reddit))
+//                )
+//                .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
+//
+//                    @Override
+//                    public boolean onProfileChanged(View view, IProfile profile, boolean current) {
+//                        return false;
+//                    }
+//                })
+//                .build();
 
         //create the drawer and remember the `Drawer` result object
         drawer = new DrawerBuilder()
@@ -100,24 +130,39 @@ public class MainActivity extends AppCompatActivity {
                 .withAccountHeader(headerResult)
                 .withTranslucentStatusBar(true)
                 .addDrawerItems(
+                        new PrimaryDrawerItem().withName("Change organisation").withIcon(new IconDrawable(this, FontAwesomeIcons.fa_users)).withDescription("current: TODO"),
+                        new PrimaryDrawerItem().withName("Change theme").withIcon(new IconDrawable(this, FontAwesomeIcons.fa_pie_chart)).withDescription("current: TODO"),
+                        new DividerDrawerItem(),
                         new PrimaryDrawerItem().withName("Chat").withIcon(new IconDrawable(this, FontAwesomeIcons.fa_comment)),
                         new PrimaryDrawerItem().withName("Game").withIcon(new IconDrawable(this, FontAwesomeIcons.fa_dot_circle_o)),
                         new PrimaryDrawerItem().withName("Cards").withIcon(new IconDrawable(this, FontAwesomeIcons.fa_files_o)),
                         new SectionDrawerItem().withName("SECTION"),
-                        new SecondaryDrawerItem().withName("TODO").withIcon(new IconDrawable(this, FontAwesomeIcons.fa_sign_out)),
-                        new SecondaryDrawerItem().withName("TODO").withIcon(new IconDrawable(this, FontAwesomeIcons.fa_sign_out)),
-                        new SecondaryDrawerItem().withName("TODO").withIcon(new IconDrawable(this, FontAwesomeIcons.fa_sign_out)),
-                        new SecondaryDrawerItem().withName("TODO").withIcon(new IconDrawable(this, FontAwesomeIcons.fa_sign_out))
+                        new SecondaryDrawerItem().withName("EXTRA").withIcon(new IconDrawable(this, FontAwesomeIcons.fa_sign_out)),
+                        new SecondaryDrawerItem().withName("EXTRA").withIcon(new IconDrawable(this, FontAwesomeIcons.fa_sign_out)),
+                        new SecondaryDrawerItem().withName("EXTRA").withIcon(new IconDrawable(this, FontAwesomeIcons.fa_sign_out)),
+                        new SecondaryDrawerItem().withName("EXTRA").withIcon(new IconDrawable(this, FontAwesomeIcons.fa_sign_out))
                 )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         if (drawerItem instanceof Nameable) {
                             Toast.makeText(MainActivity.this, ((Nameable) drawerItem).getName().getText(MainActivity.this), Toast.LENGTH_SHORT).show();
+                            switch (((Nameable) drawerItem).getName().getText()){
+                                case "Chat" :
+                                    viewPager.setCurrentItem(0);
+                                    break;
+                                case "Game" :
+                                    viewPager.setCurrentItem(1);
+                                    break;
+                                case "Cards" :
+                                    viewPager.setCurrentItem(2);
+                                    break;
+                            }
                         }
+
                         //true: do nothing
                         //false: close drawer
-                        return true;
+                        return false;
                     }
                 }).build();
 

@@ -11,6 +11,6 @@ import retrofit.http.Path;
  * Created by Edward on 14/03/2016.
  */
 public interface CardApi {
-    @GET("/card/byTheme/{id}")
+    @GET("/api/card/byTheme/{id}")
     void getCardsByTheme(@Path("id") int id, Callback<List<Card>> callback);
 }

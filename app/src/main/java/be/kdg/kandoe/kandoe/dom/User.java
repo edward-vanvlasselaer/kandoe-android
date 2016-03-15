@@ -21,9 +21,49 @@ public class User {
     private String email;
     @SerializedName("password")
     private String password;
-
+    private String imageUrl;
     private boolean isPlaying;
 
+    public User() {
+    }
+
+    public static User getLoggedInUser(){
+        if (loggedInUser == null){
+            throw new UserException("No user logged in");
+        }
+        return loggedInUser;
+    }
+
+    public static void setLoggedInUser(User loggedInUser) {
+        User.loggedInUser = loggedInUser;
+
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public String getImageUrl() {
+        if(imageUrl==null)
+            return "";
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public boolean isPlaying() {
+        return isPlaying;
+    }
+
+    public void setIsPlaying(boolean isPlaying) {
+        this.isPlaying = isPlaying;
+    }
 
     public String getPassword() {
         return password;
@@ -39,21 +79,6 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public User() {
-    }
-
-    public static User getLoggedInUser(){
-        if (loggedInUser == null){
-            throw new UserException("No user logged in");
-        }
-        return loggedInUser;
-    }
-
-    public static void setLoggedInUser(User loggedInUser) {
-        User.loggedInUser = loggedInUser;
-
     }
 
     public String getUsername() {
