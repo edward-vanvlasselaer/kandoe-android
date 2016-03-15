@@ -13,6 +13,7 @@ import java.util.List;
 import be.kdg.kandoe.kandoe.R;
 import be.kdg.kandoe.kandoe.application.KandoeApplication;
 import be.kdg.kandoe.kandoe.dom.Card;
+import be.kdg.kandoe.kandoe.exception.AbstractExceptionCallback;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
@@ -90,7 +91,20 @@ public class CardAdapter extends BaseAdapter {
                     card.setScore(0);
                 } else {
                     card.setScore(card.getScore() + 1);
-                    KandoeApplication.getCardApi().updateCard(card);
+                    Call<Card> c= KandoeApplication.getCardApi().updateCard(card,card.getCardId());
+                    c.enqueue(new Callback<Card>() {
+                        @Override
+                        public void onResponse(Response<Card> response, Retrofit retrofit) {
+                            viewHolder.description.setText(response.body().getScore());
+                        }
+
+                        @Override
+                        public void onFailure(Throwable t) {
+
+                        }
+                    });
+
+
                 }
                 //selectedCard.setScore(selectedCard.getScore() == null ? 0 : selectedCard.getScore()+1);
 
