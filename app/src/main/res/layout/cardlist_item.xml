@@ -5,13 +5,16 @@
     android:layout_height="wrap_content"
     android:background="@drawable/custom_card_item"
     android:id="@+id/cardlist_item"
-    >
+    android:layout_marginLeft="@dimen/margin_card"
+    android:layout_marginRight="@dimen/margin_card"
+    android:minHeight="130dp">
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/cardlist_title"
-        android:background="@color/md_blue_900">
+        android:background="@color/md_blue_900"
+        >
 
         <TextView
                 android:layout_width="wrap_content"
@@ -36,7 +39,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/carditem_txt_description"
-        android:text="@string/loremipsum"
         android:maxHeight="75dp"
         android:layout_below="@+id/cardlist_title"
         android:layout_alignParentStart="true" />

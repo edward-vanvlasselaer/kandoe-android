@@ -9,8 +9,14 @@ import android.widget.ListView;
 
 import be.kdg.kandoe.kandoe.R;
 import be.kdg.kandoe.kandoe.adapter.CardAdapter;
+import be.kdg.kandoe.kandoe.application.KandoeApplication;
 import be.kdg.kandoe.kandoe.dom.Card;
+import be.kdg.kandoe.kandoe.dom.Circle;
+import be.kdg.kandoe.kandoe.exception.AbstractExceptionCallback;
+import retrofit.Call;
 import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +38,27 @@ public class CardFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Call<Circle> call= KandoeApplication.getCircleApi().getCircle(1);
+        call.enqueue(new AbstractExceptionCallback<Circle>() {
+            @Override
+            public void onResponse(Response<Circle> response, Retrofit retrofit) {
+                List<Card> newList = new ArrayList<>();
+                for (Card card : response.body().getCards()) {
+                    newList.add(card);
+                }
+                getCardAdapter().setCards(newList);
+            }
+        });
+        /*call.enqueue(new AbstractExceptionCallback<List<Card>>() {
+            @Override
+            public void onResponse(Response<List<Card>> response, Retrofit retrofit) {
+                List<Card> newList = new ArrayList<>();
+                for (Card card : response.body()) {
+                    newList.add(card);
+                }
+                getCardAdapter().setCards(newList);
+            }
+        });
         /*callbackList = new Callback<List<Card>>() {
             @Override
             public void success(List<Card> cards, Response response) {
@@ -52,4 +79,6 @@ public class CardFragment extends Fragment {
     public CardAdapter getCardAdapter(){
         return cardAdapter;
     }
+
+
 }

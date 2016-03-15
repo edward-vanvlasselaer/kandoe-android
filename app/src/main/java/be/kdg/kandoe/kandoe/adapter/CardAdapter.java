@@ -11,7 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import be.kdg.kandoe.kandoe.R;
+import be.kdg.kandoe.kandoe.application.KandoeApplication;
 import be.kdg.kandoe.kandoe.dom.Card;
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 import static android.view.LayoutInflater.from;
 
@@ -23,8 +28,11 @@ public class CardAdapter extends BaseAdapter {
     private List<Card> cards;
     public Card selectedCard;
 
-    private static CardAdapter instance=null;
-    public static CardAdapter getInstance(){return instance;}
+    private static CardAdapter instance = null;
+
+    public static CardAdapter getInstance() {
+        return instance;
+    }
 
     public CardAdapter(Context context) {
         this.context = context;
@@ -57,24 +65,48 @@ public class CardAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         final Card card = getItem(position);
 
-        ViewHolder viewHolder;
+        final ViewHolder viewHolder;
         if (convertView != null) {
             viewHolder = (ViewHolder) convertView.getTag();
         } else {
             convertView = from(context).inflate(R.layout.cardlist_item, parent, false);
             viewHolder = new ViewHolder(convertView);
             convertView.setTag(viewHolder);
-            System.out.println("convertView = from(context).inflate(R.layout.asm_question_item, parent, false);\n");
         }
 
         //Card tempCard = new Card();
         //tempCard.setCardName(); TODO
         //selectedCard = tempCard;
 
+        viewHolder.title.setText(card.getCardName());
+        viewHolder.description.setText(card.getDescription());
+        //TODO:weg doen is om score ff te zien
+
         viewHolder.upvote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               selectedCard.setScore(selectedCard.getScore()+1);
+//                selectedCard.setScore(selectedCard.getScore() == null ? 0 : selectedCard.getScore()+1);
+                if (card != null && card.getScore() == null) {
+                    card.setScore(0);
+                } else {
+                    card.setScore(card.getScore() + 1);
+                    Call<Card> c= KandoeApplication.getCardApi().updateCard(card,card.getCardId());
+                    c.enqueue(new Callback<Card>() {
+                        @Override
+                        public void onResponse(Response<Card> response, Retrofit retrofit) {
+                            viewHolder.description.setText(response.body().getScore());
+                        }
+
+                        @Override
+                        public void onFailure(Throwable t) {
+
+                        }
+                    });
+
+
+                }
+                //selectedCard.setScore(selectedCard.getScore() == null ? 0 : selectedCard.getScore()+1);
+
             }
         });
         return convertView;
