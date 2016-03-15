@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/kandoe.iml" filepath="$PROJECT_DIR$/kandoe.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kandoe-android.iml" filepath="$PROJECT_DIR$/kandoe-android.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/kandoe-android.iml" filepath="$PROJECT_DIR$/.idea/kandoe-android.iml" />
     </modules>
   </component>

@@ -22,14 +22,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CardFragment extends Fragment {
-    private ListView listView;
     private CardAdapter cardAdapter;
     private Callback<List<Card>> callbackList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_card, container, false);
-        listView = (ListView) rootView.findViewById(R.id.cardlist_listview);
+        ListView listView = (ListView) rootView.findViewById(R.id.cardlist_listview);
         cardAdapter = new CardAdapter(rootView.getContext());
         listView.setAdapter(cardAdapter);
         return rootView;
