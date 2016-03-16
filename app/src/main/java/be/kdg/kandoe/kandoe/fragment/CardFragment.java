@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import be.kdg.kandoe.kandoe.R;
 import be.kdg.kandoe.kandoe.adapter.CardAdapter;
@@ -13,6 +14,7 @@ import be.kdg.kandoe.kandoe.application.KandoeApplication;
 import be.kdg.kandoe.kandoe.dom.Card;
 import be.kdg.kandoe.kandoe.dom.Circle;
 import be.kdg.kandoe.kandoe.exception.AbstractExceptionCallback;
+import be.kdg.kandoe.kandoe.exception.CardException;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
@@ -24,58 +26,50 @@ import java.util.List;
 public class CardFragment extends Fragment {
     private CardAdapter cardAdapter;
     private Callback<List<Card>> callbackList;
+    private int circleId = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_card, container, false);
         ListView listView = (ListView) rootView.findViewById(R.id.cardlist_listview);
+        final TextView textView=(TextView) rootView.findViewById(R.id.txt_nocards);
+        textView.setVisibility(View.GONE);
         cardAdapter = new CardAdapter(rootView.getContext());
         listView.setAdapter(cardAdapter);
+
+        Call<Circle> call = KandoeApplication.getCircleApi().getCircle(circleId);
+        call.enqueue(new AbstractExceptionCallback<Circle>() {
+            @Override
+            public void onResponse(Response<Circle> response, Retrofit retrofit) {
+                List<Card> newList = new ArrayList<>();
+                if (response.body() != null && response.body().getCards() !=null) {
+                    for (Card card : response.body().getCards()) {
+                        newList.add(card);
+                    }
+                    getCardAdapter().setCards(newList);
+                }else {
+                    textView.setVisibility(View.VISIBLE);
+                }
+
+            }
+        });
+
         return rootView;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Call<Circle> call= KandoeApplication.getCircleApi().getCircle(1);
-        call.enqueue(new AbstractExceptionCallback<Circle>() {
-            @Override
-            public void onResponse(Response<Circle> response, Retrofit retrofit) {
-                List<Card> newList = new ArrayList<>();
-                for (Card card : response.body().getCards()) {
-                    newList.add(card);
-                }
-                getCardAdapter().setCards(newList);
-            }
-        });
-        /*call.enqueue(new AbstractExceptionCallback<List<Card>>() {
-            @Override
-            public void onResponse(Response<List<Card>> response, Retrofit retrofit) {
-                List<Card> newList = new ArrayList<>();
-                for (Card card : response.body()) {
-                    newList.add(card);
-                }
-                getCardAdapter().setCards(newList);
-            }
-        });
-        /*callbackList = new Callback<List<Card>>() {
-            @Override
-            public void success(List<Card> cards, Response response) {
-                List<Card> newList = new ArrayList<>();
-                for (Card card : cards) {
-                    newList.add(card);
-                }
-                getCardAdapter().setCards(newList);
-            }
+        try {
+            circleId = ThemeCardFragment.getCurrentTheme().getCircle().getCircleId();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-            @Override
-            public void failure(RetrofitError retrofitError) {
-                ExceptionHelper.logRetrofitError(retrofitError,CardFragment.class.getSimpleName());
-            }
-        };*/
     }
 
-    public CardAdapter getCardAdapter(){
+
+    public CardAdapter getCardAdapter() {
         return cardAdapter;
     }
 

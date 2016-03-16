@@ -1,17 +1,29 @@
 package be.kdg.kandoe.kandoe.dom;
 
+import android.content.Intent;
+
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Edward on 14/03/2016.
  */
-public class Circle {
+public class Circle implements Serializable {
+    private Integer circleId;
     private List<User> users;
     private Theme themeResource;
     //private GameMode gameMode;
     private Integer turnTime;
     private Integer totalRounds;
     private List<Card> cards;
+
+    public Integer getCircleId() {
+        return circleId;
+    }
+
+    public void setCircleId(Integer circleId) {
+        this.circleId = circleId;
+    }
 
     public List<User> getUsers() {
         return users;

@@ -1,9 +1,11 @@
 package be.kdg.kandoe.kandoe.dom;
 
+import java.io.Serializable;
+
 /**
  * Created by Edward on 8/03/2016.
  */
-public class Card {
+public class Card implements Serializable {
     private Integer cardId;
     private String cardName;
     private String description;

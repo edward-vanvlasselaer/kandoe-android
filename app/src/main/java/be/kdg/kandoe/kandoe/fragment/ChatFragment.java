@@ -1,6 +1,7 @@
 package be.kdg.kandoe.kandoe.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,4 +18,5 @@ public class ChatFragment extends Fragment {
         View rootView = (View) inflater.inflate(R.layout.fragment_chat, container, false);
         return rootView;
     }
+
 }

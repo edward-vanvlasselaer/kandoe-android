@@ -2,12 +2,14 @@ package be.kdg.kandoe.kandoe.dom;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 import be.kdg.kandoe.kandoe.exception.UserException;
 
 /**
  * Created by Edward on 05/03/2016.
  */
-public class User {
+public class User implements Serializable {
     private static User loggedInUser = null;
     @SerializedName("userId")
     private Integer userId;

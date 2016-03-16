@@ -21,20 +21,20 @@ import retrofit.Retrofit;
 import static android.view.LayoutInflater.from;
 
 /**
- * Created by Edward on 14/03/2016.
+ * Created by claudiu on 15/03/16.
  */
-public class CardAdapter extends BaseAdapter {
+public class ThemeCardAdapter extends BaseAdapter {
     private final Context context;
     private List<Card> cards;
-    //public Card selectedCard;
+    public Card selectedCard;
 
-    private static CardAdapter instance = null;
+    private static ThemeCardAdapter instance = null;
 
-    public static CardAdapter getInstance() {
+    public static ThemeCardAdapter getInstance() {
         return instance;
     }
 
-    public CardAdapter(Context context) {
+    public ThemeCardAdapter(Context context) {
         this.context = context;
         instance = this;
         this.cards = new ArrayList<>();
@@ -82,7 +82,7 @@ public class CardAdapter extends BaseAdapter {
         viewHolder.description.setText(card.getDescription());
         //TODO:weg doen is om score ff te zien
 
-        viewHolder.upvote.setOnClickListener(new View.OnClickListener() {
+        viewHolder.select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                selectedCard.setScore(selectedCard.getScore() == null ? 0 : selectedCard.getScore()+1);
@@ -115,12 +115,14 @@ public class CardAdapter extends BaseAdapter {
     private class ViewHolder {
         TextView title;
         TextView description;
-        Button upvote;
+        Button select;
 
         public ViewHolder(View view) {
             title = (TextView) view.findViewById(R.id.carditem_txt_title);
             description = (TextView) view.findViewById(R.id.carditem_txt_description);
-            upvote = (Button) view.findViewById(R.id.carditem_btn_upvote);
+            select = (Button) view.findViewById(R.id.carditem_btn_upvote);
+            select.setText(R.string.select_card);
+
         }
     }
 }

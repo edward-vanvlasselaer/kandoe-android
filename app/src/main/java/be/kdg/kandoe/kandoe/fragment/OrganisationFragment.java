@@ -1,5 +1,6 @@
 package be.kdg.kandoe.kandoe.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +21,8 @@ import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
 import retrofit.Retrofit;
+
+import static android.content.Intent.getIntent;
 
 /**
  * Created by claudiu on 15/03/16.
@@ -50,6 +54,7 @@ public class OrganisationFragment extends Fragment {
                 getOrganisationAdapter().setOrganisations(organisations);
             }
         });
+
     }
 
     public OrganisationAdapter getOrganisationAdapter() {
