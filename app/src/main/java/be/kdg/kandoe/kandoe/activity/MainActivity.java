@@ -39,6 +39,7 @@ import com.squareup.picasso.Picasso;
 import be.kdg.kandoe.kandoe.R;
 import be.kdg.kandoe.kandoe.adapter.CustomPagerAdapter;
 import be.kdg.kandoe.kandoe.dom.User;
+import be.kdg.kandoe.kandoe.util.ToolbarBuilder;
 
 public class MainActivity extends AppCompatActivity {
     private final String TAG = "MainActivity";
@@ -58,7 +59,9 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         initViewPager();
-        initMaterialDrawer();
+
+        drawer = ToolbarBuilder.makeDefaultDrawer(this);
+        //initMaterialDrawer();
     }
 
     private void initViewPager() {
