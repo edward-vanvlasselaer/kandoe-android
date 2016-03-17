@@ -1,8 +1,10 @@
-package be.kdg.kandoe.kandoe.fragment;
+package be.kdg.kandoe.kandoe.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,22 +29,20 @@ import static android.content.Intent.getIntent;
 /**
  * Created by claudiu on 15/03/16.
  */
-public class OrganisationFragment extends Fragment {
+public class OrganisationActivity extends AppCompatActivity {
     private OrganisationAdapter organisationAdapter;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_organisations, container, false);
-        ListView listView = (ListView) rootView.findViewById(R.id.organisations_listview);
-        organisationAdapter = new OrganisationAdapter(rootView.getContext());
-        listView.setAdapter(organisationAdapter);
-        return rootView;
-    }
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_organisations);
+
+        ListView listView = (ListView) findViewById(R.id.organisations_listview);
+        organisationAdapter = new OrganisationAdapter(this.getApplicationContext());
+        listView.setAdapter(organisationAdapter);
+
         Call<List<Organisation>> call = KandoeApplication.getOrganisationApi().getOrganisations();
         call.enqueue(new AbstractExceptionCallback<List<Organisation>>() {
             @Override

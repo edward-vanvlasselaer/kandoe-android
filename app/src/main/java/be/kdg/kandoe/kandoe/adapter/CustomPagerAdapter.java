@@ -5,13 +5,11 @@ package be.kdg.kandoe.kandoe.adapter;
  */
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import be.kdg.kandoe.kandoe.fragment.CardFragment;
-import be.kdg.kandoe.kandoe.fragment.ChatFragment;
 import be.kdg.kandoe.kandoe.fragment.GameFragment;
-import be.kdg.kandoe.kandoe.fragment.OrganisationFragment;
+import be.kdg.kandoe.kandoe.activity.OrganisationActivity;
 import be.kdg.kandoe.kandoe.fragment.ThemeCardFragment;
 
 public class CustomPagerAdapter extends FragmentStatePagerAdapter {
@@ -26,12 +24,10 @@ public class CustomPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new OrganisationFragment();
-            case 1:
                 return new GameFragment();
-            case 2:
+            case 1:
                 return new CardFragment();
-            case 3:
+            case 2:
                 return new ThemeCardFragment();
             default:
                 return null;

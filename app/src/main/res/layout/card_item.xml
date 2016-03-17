@@ -6,6 +6,7 @@
     android:layout_marginLeft="@dimen/margin_card"
     android:layout_marginRight="@dimen/margin_card"
     android:background="@drawable/custom_card_item"
+    android:clickable="true"
     android:minHeight="130dp"
     android:orientation="vertical">
 
@@ -18,12 +19,8 @@
             android:id="@+id/carditem_txt_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/carditem_btn_upvote"
-            android:layout_alignBottom="@+id/carditem_btn_upvote"
             android:layout_alignParentStart="true"
-            android:layout_toStartOf="@+id/carditem_btn_upvote"
-            android:paddingLeft="@dimen/margin_card"
-            android:paddingRight="@dimen/margin_card"
+            android:padding="@dimen/margin_card"
             android:text="THIS IS THE TITLE"
             android:textColor="@color/md_white_1000" />
 
@@ -33,18 +30,19 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
-            android:text="upvote" />
+            android:text="@string/upvote" />
 
     </RelativeLayout>
 
     <TextView
+        android:id="@+id/carditem_txt_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
-        android:id="@+id/carditem_txt_description"
-        android:layout_centerVertical="true"
         android:layout_alignParentStart="true"
-        android:layout_margin="@dimen/margin_card"/>
+        android:layout_centerVertical="true"
+        android:layout_margin="@dimen/margin_card"
+        android:clickable="true"
+        android:text="Medium Text"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>

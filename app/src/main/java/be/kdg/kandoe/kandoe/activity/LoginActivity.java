@@ -18,6 +18,7 @@ import org.json.JSONObject;
 
 import be.kdg.kandoe.kandoe.R;
 import be.kdg.kandoe.kandoe.application.KandoeApplication;
+import be.kdg.kandoe.kandoe.dom.Organisation;
 import be.kdg.kandoe.kandoe.dom.Token;
 import be.kdg.kandoe.kandoe.dom.User;
 import be.kdg.kandoe.kandoe.exception.AbstractExceptionCallback;
@@ -74,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Response<User> response, Retrofit retrofit) {
                 User.setLoggedInUser(response.body());
                 Toast.makeText(getBaseContext(), "Hi, " + User.getLoggedInUser().getFirstName() + "!", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(tempview.getContext(), MainActivity.class));
+                startActivity(new Intent(tempview.getContext(), OrganisationActivity.class));
             }
         });
     }

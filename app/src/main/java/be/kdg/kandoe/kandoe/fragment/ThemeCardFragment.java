@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -13,6 +14,7 @@ import java.util.List;
 
 import be.kdg.kandoe.kandoe.R;
 import be.kdg.kandoe.kandoe.adapter.CardAdapter;
+import be.kdg.kandoe.kandoe.adapter.ThemeCardAdapter;
 import be.kdg.kandoe.kandoe.application.KandoeApplication;
 import be.kdg.kandoe.kandoe.dom.Card;
 import be.kdg.kandoe.kandoe.dom.Circle;
@@ -27,7 +29,7 @@ import retrofit.Retrofit;
  * Created by claudiu on 15/03/16.
  */
 public class ThemeCardFragment extends Fragment {
-    private CardAdapter cardAdapter;
+    private ThemeCardAdapter themeCardAdapter;
     private Callback<List<Card>> callbackList;
     private static Theme currentTheme;
     private int themeId;
@@ -48,9 +50,10 @@ public class ThemeCardFragment extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_card, container, false);
         ListView listView = (ListView) rootView.findViewById(R.id.cardlist_listview);
         final TextView textView = (TextView) rootView.findViewById(R.id.txt_nocards);
-        textView.setVisibility(View.GONE);
-        cardAdapter = new CardAdapter(rootView.getContext());
-        listView.setAdapter(cardAdapter);
+        Button selectCardBtn=(Button) rootView.findViewById(R.id.btn_select);
+        selectCardBtn.setVisibility(View.VISIBLE);
+        themeCardAdapter = new ThemeCardAdapter(rootView.getContext());
+        listView.setAdapter(themeCardAdapter);
 
 
         Call<List<Card>> call = KandoeApplication.getCardApi().getCardsByTheme(themeId);
@@ -62,8 +65,8 @@ public class ThemeCardFragment extends Fragment {
                     for (Card card : response.body()) {
                         newList.add(card);
                     }
-                    getCardAdapter().setCards(newList);
-                }else {
+                    getThemeCardAdapter().setCards(newList);
+                } else {
                     textView.setVisibility(View.VISIBLE);
                 }
             }
@@ -79,8 +82,8 @@ public class ThemeCardFragment extends Fragment {
 
     }
 
-    public CardAdapter getCardAdapter() {
-        return cardAdapter;
+    public ThemeCardAdapter getThemeCardAdapter() {
+        return themeCardAdapter;
     }
 
 

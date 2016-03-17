@@ -1,10 +1,16 @@
 package be.kdg.kandoe.kandoe.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.support.v4.content.ContextCompat;
+import android.text.Layout;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -13,6 +19,7 @@ import java.util.List;
 import be.kdg.kandoe.kandoe.R;
 import be.kdg.kandoe.kandoe.application.KandoeApplication;
 import be.kdg.kandoe.kandoe.dom.Card;
+import be.kdg.kandoe.kandoe.dom.Theme;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
@@ -80,35 +87,21 @@ public class ThemeCardAdapter extends BaseAdapter {
 
         viewHolder.title.setText(card.getCardName());
         viewHolder.description.setText(card.getDescription());
-        //TODO:weg doen is om score ff te zien
-
-        viewHolder.select.setOnClickListener(new View.OnClickListener() {
+        viewHolder.select.setText(R.string.select_card);
+        viewHolder.select.setVisibility(View.GONE);
+        viewHolder.cardLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                selectedCard.setScore(selectedCard.getScore() == null ? 0 : selectedCard.getScore()+1);
-                if (card != null && card.getScore() == null) {
-                    card.setScore(0);
-                } else {
-                    card.setScore(card.getScore() + 1);
-                    Call<Card> c= KandoeApplication.getCardApi().updateCard(card);
-                    c.enqueue(new Callback<Card>() {
-                        @Override
-                        public void onResponse(Response<Card> response, Retrofit retrofit) {
-                            viewHolder.description.setText(response.body().getScore());
-                        }
-
-                        @Override
-                        public void onFailure(Throwable t) {
-
-                        }
-                    });
-
-
+                if(!card.isSelected()) {
+                    v.setBackgroundColor(ContextCompat.getColor(context, R.color.md_grey_600));
+                    card.setIsSelected(true);
+                }else {
+                    v.setBackground(ContextCompat.getDrawable(context, R.drawable.custom_card_item));
+                    card.setIsSelected(false);
                 }
-                //selectedCard.setScore(selectedCard.getScore() == null ? 0 : selectedCard.getScore()+1);
-
             }
         });
+
         return convertView;
     }
 
@@ -116,12 +109,13 @@ public class ThemeCardAdapter extends BaseAdapter {
         TextView title;
         TextView description;
         Button select;
+        RelativeLayout cardLayout;
 
         public ViewHolder(View view) {
             title = (TextView) view.findViewById(R.id.carditem_txt_title);
             description = (TextView) view.findViewById(R.id.carditem_txt_description);
             select = (Button) view.findViewById(R.id.carditem_btn_upvote);
-            select.setText(R.string.select_card);
+            cardLayout = (RelativeLayout) view.findViewById(R.id.cardlist_item);
 
         }
     }

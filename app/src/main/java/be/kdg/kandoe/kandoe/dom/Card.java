@@ -12,6 +12,15 @@ public class Card implements Serializable {
     private String imageUrl;
     private Integer score;
     private Integer userId;
+    private boolean isSelected=false;
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setIsSelected(boolean isSelected) {
+        this.isSelected = isSelected;
+    }
 
     public Integer getCardId() {
         return cardId;

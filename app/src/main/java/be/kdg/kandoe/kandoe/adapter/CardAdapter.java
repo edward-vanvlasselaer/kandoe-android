@@ -1,10 +1,13 @@
 package be.kdg.kandoe.kandoe.adapter;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -78,37 +81,25 @@ public class CardAdapter extends BaseAdapter {
         //tempCard.setCardName(); TODO
         //selectedCard = tempCard;
 
-        viewHolder.title.setText(card.getCardName());
+        viewHolder.title.setText("pdé");
         viewHolder.description.setText(card.getDescription());
         //TODO:weg doen is om score ff te zien
 
-        viewHolder.upvote.setOnClickListener(new View.OnClickListener() {
+        /*viewHolder.description.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-//                selectedCard.setScore(selectedCard.getScore() == null ? 0 : selectedCard.getScore()+1);
-                if (card != null && card.getScore() == null) {
-                    card.setScore(0);
-                } else {
-                    card.setScore(card.getScore() + 1);
-                    Call<Card> c= KandoeApplication.getCardApi().updateCard(card);
-                    c.enqueue(new Callback<Card>() {
-                        @Override
-                        public void onResponse(Response<Card> response, Retrofit retrofit) {
-                            viewHolder.description.setText(response.body().getScore());
-                        }
+            public boolean onTouch(View v, MotionEvent event) {
+                v.setBackgroundColor(ContextCompat.getColor(context, R.color.md_grey_600));
 
-                        @Override
-                        public void onFailure(Throwable t) {
-
-                        }
-                    });
-
-
-                }
-                //selectedCard.setScore(selectedCard.getScore() == null ? 0 : selectedCard.getScore()+1);
-
+                return false;
             }
         });
+        viewHolder.cardLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewHolder.cardLayout.setBackgroundColor(ContextCompat.getColor(context,R.color.md_grey_600));
+
+            }
+        });*/
         return convertView;
     }
 
@@ -116,11 +107,15 @@ public class CardAdapter extends BaseAdapter {
         TextView title;
         TextView description;
         Button upvote;
+        RelativeLayout cardLayout;
 
         public ViewHolder(View view) {
             title = (TextView) view.findViewById(R.id.carditem_txt_title);
             description = (TextView) view.findViewById(R.id.carditem_txt_description);
             upvote = (Button) view.findViewById(R.id.carditem_btn_upvote);
+            cardLayout = (RelativeLayout) view.findViewById(R.id.cardlist_item);
+
+
         }
     }
 }

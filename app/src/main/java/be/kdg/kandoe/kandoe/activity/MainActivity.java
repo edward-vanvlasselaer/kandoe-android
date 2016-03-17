@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initViewPager() {
         viewPager = (ViewPager) findViewById(R.id.pager);
-        pagerAdapter = new CustomPagerAdapter(getSupportFragmentManager(),4);
+        pagerAdapter = new CustomPagerAdapter(getSupportFragmentManager(),3);
         viewPager.setAdapter(pagerAdapter);
     }
 
