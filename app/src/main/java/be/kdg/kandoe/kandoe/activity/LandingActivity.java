@@ -33,7 +33,7 @@ public class LandingActivity extends AppCompatActivity {
                 User guest = new User();
                 guest.setUsername("guest");
                 User.setLoggedInUser(guest);
-                startActivity(new Intent(v.getContext(), MainActivity.class));
+                startActivity(new Intent(v.getContext(), GuestActivity.class));
             }
         });
 

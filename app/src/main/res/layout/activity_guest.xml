@@ -12,8 +12,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Username"
-        android:id="@+id/login_txt_username"
+        android:text="Voornaam"
+        android:id="@+id/guest_txt_name"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
 
@@ -21,23 +21,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Login"
-        android:id="@+id/login_btn_login"
+        android:id="@+id/guest_btn_login"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Password"
+        android:text="Invite code"
         android:id="@+id/guest_txt_invitecode"
-        android:layout_below="@+id/login_input_username"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="47dp" />
+        android:layout_marginTop="47dp"
+        android:layout_below="@+id/guest_input_name"
+        android:layout_alignParentStart="true" />
 
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/login_input_username"
+        android:id="@+id/guest_input_name"
         android:layout_below="@+id/login_txt_username"
         android:layout_alignStart="@+id/guest_txt_invitecode"
         android:layout_alignParentEnd="true" />
@@ -45,10 +45,11 @@
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPassword"
+        android:inputType="text"
         android:ems="10"
-        android:id="@+id/login_input_password"
-        android:layout_below="@+id/guest_txt_invitecode"
+        android:id="@+id/guest_input_invitecode"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/guest_txt_invitecode"
+        android:layout_alignParentLeft="true" />
 </RelativeLayout>
