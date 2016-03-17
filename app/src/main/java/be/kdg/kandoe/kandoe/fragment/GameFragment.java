@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import be.kdg.kandoe.kandoe.R;
 import be.kdg.kandoe.kandoe.dom.Card;
@@ -25,13 +26,14 @@ public class GameFragment extends Fragment {
     private Theme currentTheme;
     private Circle currentCircle;
     private int currentOrganisationId;
-    private ArrayList<Card> circleCards;
-    private ArrayList<ImageButton> circleButtons;
+    private List<Card> circleCards;
+    private List<ImageButton> circleButtons;
     private int viewHeight;
     private int viewWidth;
     private RelativeLayout background;
 
     public GameFragment() {
+        circleCards = new ArrayList<>();
     }
 
     public static synchronized GameFragment getSingletonObject() {
@@ -46,7 +48,8 @@ public class GameFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        circleCards = new ArrayList<>();
+
+
     }
 
     @Nullable
@@ -60,6 +63,7 @@ public class GameFragment extends Fragment {
             throw new ThemeException("theme not found");
         }
         background = setBackground(rootView);
+        circleCards = currentCircle.getCards();
         drawCards();
         return rootView;
     }
@@ -99,7 +103,7 @@ public class GameFragment extends Fragment {
                 ;
                 break;
             case 8:
-                drawable = ContextCompat.getDrawable(view.getContext(), R.drawable.c8);
+                drawable = ContextCompat.getDrawable(view.getContext(), R.drawable.rsz_c8);
                 ;
                 break;
             case 9:

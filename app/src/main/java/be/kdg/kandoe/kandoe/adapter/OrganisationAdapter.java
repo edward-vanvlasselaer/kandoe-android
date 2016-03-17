@@ -85,7 +85,6 @@ public class OrganisationAdapter extends BaseAdapter {
                 selectedOrganisation.setCreator(organisation.getCreator());
                 selectedOrganisation.setMembers(organisation.getMembers());
                 selectedOrganisation.setThemes(organisation.getThemes());
-//String action, Uri uri,Context packageContext, Class<?> cls)
 
                 //Uri uri=Uri.parse("organisationIntent");
                 Intent organisationIntent = new Intent(context, ThemeActivity.class);

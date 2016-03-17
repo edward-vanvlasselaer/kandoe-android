@@ -48,19 +48,21 @@ public class MainActivity extends AppCompatActivity {
 
     private ViewPager viewPager;
     private PagerAdapter pagerAdapter;
-
+    private View view;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+         view = (View) findViewById(R.id.main_base);
         //initTabLayout(); --> needed?
-        toolbar =(Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
+//        toolbar =(Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+        toolbar = (Toolbar) this.findViewById(R.id.main_toolbar);
+        toolbar.setTitle("Kandoe - " + this.getClass().getSimpleName());
         initViewPager();
 
-        drawer = ToolbarBuilder.makeDefaultDrawer(this);
+        drawer = ToolbarBuilder.makeDefaultDrawer(this,toolbar);
         //initMaterialDrawer();
     }
 
