@@ -33,7 +33,6 @@ public class OrganisationActivity extends AppCompatActivity {
     private OrganisationAdapter organisationAdapter;
 
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
