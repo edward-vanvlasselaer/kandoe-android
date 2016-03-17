@@ -88,17 +88,11 @@ public class ThemeCardAdapter extends BaseAdapter {
         viewHolder.title.setText(card.getCardName());
         viewHolder.description.setText(card.getDescription());
         viewHolder.select.setText(R.string.select_card);
-        viewHolder.select.setVisibility(View.GONE);
-        viewHolder.cardLayout.setOnClickListener(new View.OnClickListener() {
+        //viewHolder.select.setVisibility(View.GONE);
+        viewHolder.select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!card.isSelected()) {
-                    v.setBackgroundColor(ContextCompat.getColor(context, R.color.md_grey_600));
-                    card.setIsSelected(true);
-                }else {
-                    v.setBackground(ContextCompat.getDrawable(context, R.drawable.custom_card_item));
-                    card.setIsSelected(false);
-                }
+               // Call call=KandoeApplication.getCardApi().addCardToCircle(card.)
             }
         });
 
