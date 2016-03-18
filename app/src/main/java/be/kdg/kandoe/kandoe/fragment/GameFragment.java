@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import be.kdg.kandoe.kandoe.R;
+import be.kdg.kandoe.kandoe.activity.ThemeCardActivity;
 import be.kdg.kandoe.kandoe.dom.Card;
 import be.kdg.kandoe.kandoe.dom.Circle;
 import be.kdg.kandoe.kandoe.dom.Theme;
@@ -78,7 +79,7 @@ public class GameFragment extends Fragment {
             });
         }
         try {
-            currentTheme = ThemeCardFragment.getCurrentTheme();
+            currentTheme = ThemeCardActivity.getCurrentTheme();
             currentCircle = currentTheme.getCircle();
         } catch (Exception e) {
             throw new ThemeException("theme not found");
