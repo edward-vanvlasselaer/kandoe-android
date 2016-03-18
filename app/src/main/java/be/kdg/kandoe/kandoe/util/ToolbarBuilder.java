@@ -36,10 +36,8 @@ public class ToolbarBuilder {
     private static Toolbar toolbar;
     private static Drawer drawer;
 
-    public static Drawer makeDefaultDrawer(AppCompatActivity activity){
-        toolbar =(Toolbar) activity.findViewById(R.id.toolbar);
+    public static Drawer makeDefaultDrawer(AppCompatActivity activity, Toolbar toolbar) {
         activity.setSupportActionBar(toolbar);
-
         DrawerImageLoader.init(new AbstractDrawerImageLoader() {
             @Override
             public void set(ImageView imageView, Uri uri, Drawable placeholder) {
