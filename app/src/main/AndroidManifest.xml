@@ -20,6 +20,7 @@
         <activity android:name=".activity.ThemeActivity" />
         <activity android:name=".activity.OrganisationActivity" />
         <activity android:name=".activity.GuestActivity" />
+        <activity android:name=".activity.ThemeCardActivity" />
         <activity android:name=".activity.LandingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,9 +28,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.RegisterActivity"
-                  android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".activity.MainActivity"/>
+        <activity
+            android:name=".activity.RegisterActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".activity.MainActivity" />
     </application>
 
 </manifest>

@@ -1,10 +1,11 @@
-package be.kdg.kandoe.kandoe.fragment;
+package be.kdg.kandoe.kandoe.activity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
+import android.os.PersistableBundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -13,11 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import be.kdg.kandoe.kandoe.R;
-import be.kdg.kandoe.kandoe.adapter.CardAdapter;
 import be.kdg.kandoe.kandoe.adapter.ThemeCardAdapter;
 import be.kdg.kandoe.kandoe.application.KandoeApplication;
 import be.kdg.kandoe.kandoe.dom.Card;
-import be.kdg.kandoe.kandoe.dom.Circle;
 import be.kdg.kandoe.kandoe.dom.Theme;
 import be.kdg.kandoe.kandoe.exception.AbstractExceptionCallback;
 import retrofit.Call;
@@ -28,14 +27,14 @@ import retrofit.Retrofit;
 /**
  * Created by claudiu on 15/03/16.
  */
-public class ThemeCardFragment extends Fragment {
+public class ThemeCardActivity extends AppCompatActivity {
     private ThemeCardAdapter themeCardAdapter;
-    private Callback<List<Card>> callbackList;
     private static Theme currentTheme;
     private int themeId;
+    private Theme theme;
 
     public static void setCurrentTheme(Theme currentTheme) {
-        ThemeCardFragment.currentTheme = currentTheme;
+        ThemeCardActivity.currentTheme = currentTheme;
     }
 
     public static Theme getCurrentTheme() throws Exception {
@@ -45,18 +44,24 @@ public class ThemeCardFragment extends Fragment {
         return currentTheme;
     }
 
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_card, container, false);
-        ListView listView = (ListView) rootView.findViewById(R.id.cardlist_listview);
-        final TextView textView = (TextView) rootView.findViewById(R.id.txt_nocards);
-        Button selectCardBtn=(Button) rootView.findViewById(R.id.btn_select);
-        selectCardBtn.setVisibility(View.VISIBLE);
-        themeCardAdapter = new ThemeCardAdapter(rootView.getContext());
-        listView.setAdapter(themeCardAdapter);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        themeId = currentTheme.getThemeId();
 
+        setContentView(R.layout.fragment_card);
 
-        Call<List<Card>> call = KandoeApplication.getCardApi().getCardsByTheme(themeId);
+        Bundle extras = getIntent().getExtras();
+        theme = (Theme) extras.get("theme");
+
+        final TextView textView = (TextView) findViewById(R.id.txt_nocards);
+
+        Button startBtn = (Button) findViewById(R.id.btn_select);
+        ListView listView = (ListView) findViewById(R.id.cardlist_listview);
+        startBtn.setVisibility(View.VISIBLE);
+
+        Call<List<Card>> call = KandoeApplication.getCardApi().getCardsByTheme(theme.getThemeId());
         call.enqueue(new AbstractExceptionCallback<List<Card>>() {
             @Override
             public void onResponse(Response<List<Card>> response, Retrofit retrofit) {
@@ -72,13 +77,19 @@ public class ThemeCardFragment extends Fragment {
             }
         });
 
-        return rootView;
-    }
+        themeCardAdapter = new ThemeCardAdapter(this.getApplicationContext());
+        listView.setAdapter(themeCardAdapter);
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        themeId = currentTheme.getThemeId();
+        startBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                //organisationIntent.putExtra("uri",uri.toString());
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("theme", theme);
+                getApplicationContext().startActivity(intent);
+            }
+        });
 
     }
 

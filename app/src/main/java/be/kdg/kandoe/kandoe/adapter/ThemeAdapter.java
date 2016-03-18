@@ -2,7 +2,6 @@ package be.kdg.kandoe.kandoe.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -15,7 +14,7 @@ import java.util.List;
 import be.kdg.kandoe.kandoe.R;
 import be.kdg.kandoe.kandoe.activity.MainActivity;
 import be.kdg.kandoe.kandoe.dom.Theme;
-import be.kdg.kandoe.kandoe.fragment.ThemeCardFragment;
+import be.kdg.kandoe.kandoe.activity.ThemeCardActivity;
 
 import static android.view.LayoutInflater.from;
 
@@ -76,12 +75,13 @@ public class ThemeAdapter extends BaseAdapter {
             public void onClick(View v) {
                 /*Bundle bundle=new Bundle();
                 bundle.putInt("themeId",theme.getThemeId());
-                ThemeCardFragment themeCardFragment=new ThemeCardFragment();
+                ThemeCardActivity themeCardFragment=new ThemeCardActivity();
                 themeCardFragment.setArguments(bundle);*/
-                ThemeCardFragment.setCurrentTheme(theme);
+                ThemeCardActivity.setCurrentTheme(theme);
 
-                Intent intent=new Intent(context, MainActivity.class);
+                Intent intent=new Intent(context, ThemeCardActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("theme", theme);
                 context.startActivity(intent);
             }
         });

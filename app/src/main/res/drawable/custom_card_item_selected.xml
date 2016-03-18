@@ -3,8 +3,6 @@
     <corners android:radius="2dp"/>
     <solid android:color="@color/md_white_1000"/>
     <stroke
-        android:color="@color/md_grey_400"
-        android:dashWidth="15px"
-        android:dashGap="10px"
-        android:width="1dp"/>
+        android:color="@color/md_green_600"
+        android:width="2dp"/>
 </shape>
