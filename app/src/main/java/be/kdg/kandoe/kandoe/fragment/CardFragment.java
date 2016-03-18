@@ -9,12 +9,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import be.kdg.kandoe.kandoe.R;
+import be.kdg.kandoe.kandoe.activity.ThemeCardActivity;
 import be.kdg.kandoe.kandoe.adapter.CardAdapter;
 import be.kdg.kandoe.kandoe.application.KandoeApplication;
 import be.kdg.kandoe.kandoe.dom.Card;
 import be.kdg.kandoe.kandoe.dom.Circle;
 import be.kdg.kandoe.kandoe.exception.AbstractExceptionCallback;
-import be.kdg.kandoe.kandoe.exception.CardException;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
@@ -36,6 +36,12 @@ public class CardFragment extends Fragment {
         textView.setVisibility(View.GONE);
         cardAdapter = new CardAdapter(rootView.getContext());
         listView.setAdapter(cardAdapter);
+
+        try {
+            circleId=ThemeCardActivity.getCurrentTheme().getCircle().getCircleId();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         Call<Circle> call = KandoeApplication.getCircleApi().getCircle(circleId);
         call.enqueue(new AbstractExceptionCallback<Circle>() {
@@ -61,7 +67,7 @@ public class CardFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         try {
-            circleId = ThemeCardFragment.getCurrentTheme().getCircle().getCircleId();
+            circleId = ThemeCardActivity.getCurrentTheme().getCircle().getCircleId();
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -1,6 +1,7 @@
 package be.kdg.kandoe.kandoe.service;
 
 import java.util.List;
+import java.util.Objects;
 
 import be.kdg.kandoe.kandoe.dom.Card;
 import retrofit.Call;
@@ -24,5 +25,5 @@ public interface CardApi {
     Call<Card> updateCard(@Body Card card);
 
     @POST("/api/{themeId}/card")
-    Call addCardToCircle(@Path("themeId") int themeId, @Body Card card);
+    Call<Object> addCardToCircle(@Path("themeId") int themeId, @Body Card card);
 }

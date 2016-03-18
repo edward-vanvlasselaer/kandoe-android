@@ -1,4 +1,5 @@
 package be.kdg.kandoe.kandoe.service;
+
 import org.json.JSONObject;
 
 import be.kdg.kandoe.kandoe.dom.Token;
@@ -20,4 +21,7 @@ public interface UserApi {
 
     @POST("/api/user/register")
     Call<Token> registerUser(@Body User user);
+
+    @POST("/api/user/registerguest")
+    Call<Token> registerGuest(@Body String userFirstName);
 }

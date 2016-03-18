@@ -16,6 +16,7 @@ import java.util.List;
 import be.kdg.kandoe.kandoe.R;
 import be.kdg.kandoe.kandoe.application.KandoeApplication;
 import be.kdg.kandoe.kandoe.dom.Card;
+import be.kdg.kandoe.kandoe.exception.AbstractExceptionCallback;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
@@ -81,9 +82,29 @@ public class CardAdapter extends BaseAdapter {
         //tempCard.setCardName(); TODO
         //selectedCard = tempCard;
 
-        viewHolder.title.setText("pdé");
+        viewHolder.title.setText(card.getDescription());
         viewHolder.description.setText(card.getDescription());
         //TODO:weg doen is om score ff te zien
+
+        viewHolder.upvote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Call<Object> call = KandoeApplication.getCircleApi().addVote(1, card);
+                call.enqueue(new AbstractExceptionCallback() {
+                    @Override
+                    public void onResponse(Response response, Retrofit retrofit) {
+                        //viewHolder.cardLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.md_grey_600));
+                        if (card.getScore() == null) {
+                            viewHolder.title.setText(String.valueOf(1));
+                        } else {
+                            viewHolder.title.setText(card.getScore() + 1);
+                        }
+                    }
+
+
+                });
+            }
+        });
 
         /*viewHolder.description.setOnTouchListener(new View.OnTouchListener() {
             @Override

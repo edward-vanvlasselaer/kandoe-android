@@ -38,6 +38,7 @@ import com.squareup.picasso.Picasso;
 
 import be.kdg.kandoe.kandoe.R;
 import be.kdg.kandoe.kandoe.adapter.CustomPagerAdapter;
+import be.kdg.kandoe.kandoe.dom.Theme;
 import be.kdg.kandoe.kandoe.dom.User;
 import be.kdg.kandoe.kandoe.util.ToolbarBuilder;
 
@@ -48,6 +49,10 @@ public class MainActivity extends AppCompatActivity {
 
     private ViewPager viewPager;
     private PagerAdapter pagerAdapter;
+
+    private Theme theme;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +67,9 @@ public class MainActivity extends AppCompatActivity {
 
         drawer = ToolbarBuilder.makeDefaultDrawer(this);
         //initMaterialDrawer();
+
+        Bundle extras = getIntent().getExtras();
+        theme = (Theme) extras.get("theme");
     }
 
     private void initViewPager() {
