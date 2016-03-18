@@ -8,6 +8,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -30,10 +31,14 @@ public class GameFragment extends Fragment {
     private List<ImageButton> circleButtons;
     private int viewHeight;
     private int viewWidth;
+    private int marginCard;
+    private int[] tableStarts;
     private RelativeLayout background;
 
     public GameFragment() {
         circleCards = new ArrayList<>();
+        circleButtons = new ArrayList<>();
+        tableStarts = new int[9];
     }
 
     public static synchronized GameFragment getSingletonObject() {
@@ -55,7 +60,23 @@ public class GameFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_game, container, false);
+        final ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_game, container, false);
+
+        ViewTreeObserver viewTreeObserver = rootView.getViewTreeObserver();
+        if (viewTreeObserver.isAlive()) {
+            viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    rootView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    viewWidth = rootView.getWidth();
+                    viewHeight = rootView.getHeight();
+                    marginCard = (viewHeight / 9) / 2;
+                    for (int i = 0; i < 9; i++) {
+                        tableStarts[i] = marginCard + marginCard * i;
+                    }
+                }
+            });
+        }
         try {
             currentTheme = ThemeCardFragment.getCurrentTheme();
             currentCircle = currentTheme.getCircle();

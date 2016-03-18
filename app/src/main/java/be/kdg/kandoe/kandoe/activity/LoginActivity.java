@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         Call<Token> call = KandoeApplication.getUserApi().login(usernameInput.getText().toString(), passwordInput.getText().toString());
         call.enqueue(new AbstractExceptionCallback<Token>() {
             @Override
-            public void onResponse(Response<Token> response, Retrofit retrofit) {
+            public void onResponse(Response<Token> response, Retrofit retrofit){
                 if(response.body() != null && response.body().getToken()!=null){
                     KandoeApplication.setUserToken(response.body().getToken());
                     requestCurrentUser();
