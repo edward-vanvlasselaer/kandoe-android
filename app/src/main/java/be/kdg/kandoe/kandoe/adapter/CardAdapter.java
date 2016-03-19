@@ -18,8 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import be.kdg.kandoe.kandoe.R;
+import be.kdg.kandoe.kandoe.activity.ThemeCardActivity;
 import be.kdg.kandoe.kandoe.application.KandoeApplication;
 import be.kdg.kandoe.kandoe.dom.Card;
+import be.kdg.kandoe.kandoe.dom.Theme;
 import be.kdg.kandoe.kandoe.exception.AbstractExceptionCallback;
 import retrofit.Call;
 import retrofit.Callback;
@@ -72,6 +74,12 @@ public class CardAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         final Card card = getItem(position);
+        Theme theme = null;
+        try {
+             theme= ThemeCardActivity.getCurrentTheme();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         final ViewHolder viewHolder;
         if (convertView != null) {
@@ -87,6 +95,7 @@ public class CardAdapter extends BaseAdapter {
         viewHolder.description.setText(card.getDescription());
         //TODO:weg doen is om score ff te zien
 
+        final Theme finalTheme = theme;
         viewHolder.upvote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,9 +105,9 @@ public class CardAdapter extends BaseAdapter {
                     public void onResponse(Response response, Retrofit retrofit) {
                         //viewHolder.cardLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.md_grey_600));
                         if (card.getScore() == null) {
-                            viewHolder.title.setText(String.valueOf(1));
+                          //  viewHolder.title.setText(String.valueOf(1));
                         } else {
-                            viewHolder.title.setText(card.getScore() + 1);
+                           // viewHolder.title.setText(card.getScore() + 1);
                         }
                     }
 

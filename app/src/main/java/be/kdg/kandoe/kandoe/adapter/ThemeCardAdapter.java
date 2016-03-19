@@ -36,9 +36,7 @@ public class ThemeCardAdapter extends BaseAdapter {
     private int cardsSelected = 0;
 
     HashMap<Integer, Integer> mhashColorSelected = new HashMap<>();
-
     HashMap<Integer, Integer> mhashBtnVisibility = new HashMap<>();
-
 
     private static ThemeCardAdapter instance = null;
 
