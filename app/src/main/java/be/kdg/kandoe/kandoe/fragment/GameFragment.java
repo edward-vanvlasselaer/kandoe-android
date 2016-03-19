@@ -73,7 +73,7 @@ public class GameFragment extends Fragment {
                     viewHeight = rootView.getHeight();
                     marginCard = (viewHeight / 9) / 2;
                     for (int i = 0; i < 9; i++) {
-                        tableStarts[i] = marginCard + marginCard * i;
+                        tableStarts[i] = marginCard + (marginCard * i) * 2;
                     }
                 }
             });
