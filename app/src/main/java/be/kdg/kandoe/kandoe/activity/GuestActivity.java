@@ -23,7 +23,7 @@ import retrofit.Retrofit;
 public class GuestActivity extends AppCompatActivity {
     private EditText nameInput;
     private EditText linkInput;
-    private Button btnLogin;
+   private Button btnLogin;
 
     private View tempview;
 
@@ -33,24 +33,61 @@ public class GuestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_guest);
         nameInput = (EditText) findViewById(R.id.guest_input_name);
         linkInput = (EditText) findViewById(R.id.guest_input_invitecode);
-        btnLogin = (Button) findViewById(R.id.guest_btn_login);
-        initListeners();
+         btnLogin = (Button) findViewById(R.id.guest_btn_login);
+
+
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(getApplicationContext(), "YES!", Toast.LENGTH_SHORT).show();
+
+                User user=new User();
+                user.setFirstName(nameInput.getText().toString());
+                Call<Token> registerCall = KandoeApplication.getUserApi().registerGuest(user);
+                registerCall.enqueue(new Callback<Token>() {
+                    @Override
+                    public void onResponse(Response<Token> response, Retrofit retrofit) {
+                        Toast.makeText(getApplicationContext(), "YES!", Toast.LENGTH_SHORT).show();
+
+                    }
+
+                    @Override
+                    public void onFailure(Throwable t) {
+                        Toast.makeText(getApplicationContext(), "NO!", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+            }
+        });
+
+        //initListeners();
     }
 
     private void initListeners() {
-        final String guestName= String.valueOf(nameInput.getText());
-        if (guestName.equals("")) {
+        final String guestName = String.valueOf(nameInput.getText());
+        if (!guestName.equals("")) {
             btnLogin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Call<Token> registerCall = KandoeApplication.getUserApi().registerGuest(guestName);
-                    registerCall.enqueue(new AbstractExceptionCallback<Token>() {
-                        @Override
-                        public void onResponse(Response<Token> response, Retrofit retrofit) {
-                            Toast.makeText(getBaseContext(), "Hi, " + User.getLoggedInUser().getFirstName() + "!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "YES!", Toast.LENGTH_SHORT).show();
 
-                        }
-                    });
+                    User user=new User();
+                    user.setFirstName(guestName);
+                    Call<Token> registerCall = KandoeApplication.getUserApi().registerGuest(user);
+                   registerCall.enqueue(new Callback<Token>() {
+                       @Override
+                       public void onResponse(Response<Token> response, Retrofit retrofit) {
+                           Toast.makeText(getApplicationContext(), "YES!", Toast.LENGTH_SHORT).show();
+
+                       }
+
+                       @Override
+                       public void onFailure(Throwable t) {
+                           Toast.makeText(getApplicationContext(), "NO!", Toast.LENGTH_SHORT).show();
+
+                       }
+                   });
                 }
             });
         }

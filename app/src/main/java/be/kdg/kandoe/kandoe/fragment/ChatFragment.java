@@ -48,8 +48,6 @@ public class ChatFragment extends Fragment {
             public void run() {
                 getChatMessages();
                 handler.postDelayed(backgroundService, interval);
-                Toast.makeText(fragment.getContext(), "run() ", Toast.LENGTH_SHORT).show();
-
             }
         };
     }
@@ -64,7 +62,7 @@ public class ChatFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        handler.postDelayed(backgroundService, interval);
+       // handler.postDelayed(backgroundService, interval);
 
     }
 
@@ -84,7 +82,7 @@ public class ChatFragment extends Fragment {
             //Toast.makeText(fragment.getContext(), "onFocusChange() " + menuVisible, Toast.LENGTH_SHORT).show();
 
         if (menuVisible) {
-            handler.postDelayed(backgroundService, interval);
+           handler.postDelayed(backgroundService, interval);
         } else {
             handler.removeCallbacks(backgroundService);
             //interval=10000;
@@ -103,9 +101,6 @@ public class ChatFragment extends Fragment {
 
         chatAdapter = new ChatAdapter(rootView.getContext());
         listView.setAdapter(chatAdapter);
-
-        listView.setSelection(listView.getAdapter().getCount() - 1);
-
 
         try {
             circleId = ThemeCardActivity.getCurrentTheme().getCircle().getCircleId();
@@ -133,6 +128,9 @@ public class ChatFragment extends Fragment {
                 }
             }
         });
+        //TODO: werkt ni
+        listView.setSelection(getChatAdapter().getCount()-1);
+
 
         getChatMessages();
 

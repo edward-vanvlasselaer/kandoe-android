@@ -30,7 +30,7 @@ public class CustomPagerAdapter extends FragmentStatePagerAdapter {
             case 1:
                 return new CardFragment();
             case 2:
-                return new ChatFragment();
+                return new GameFragment();
             default:
                 return null;
         }

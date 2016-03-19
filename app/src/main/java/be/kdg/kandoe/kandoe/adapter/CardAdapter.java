@@ -1,6 +1,10 @@
 package be.kdg.kandoe.kandoe.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.view.MotionEvent;
 import android.view.View;
@@ -78,9 +82,6 @@ public class CardAdapter extends BaseAdapter {
             convertView.setTag(viewHolder);
         }
 
-        //Card tempCard = new Card();
-        //tempCard.setCardName(); TODO
-        //selectedCard = tempCard;
 
         viewHolder.title.setText(card.getDescription());
         viewHolder.description.setText(card.getDescription());
@@ -139,4 +140,6 @@ public class CardAdapter extends BaseAdapter {
 
         }
     }
+
+
 }

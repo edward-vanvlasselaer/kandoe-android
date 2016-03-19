@@ -109,7 +109,7 @@ public class GameFragment extends Fragment {
                 ;
                 break;
             case 4:
-                drawable = ContextCompat.getDrawable(view.getContext(), R.drawable.c4);
+                drawable = ContextCompat.getDrawable(view.getContext(), R.drawable.c3);
                 ;
                 break;
             case 5:

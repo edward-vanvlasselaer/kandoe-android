@@ -37,12 +37,12 @@ public class CardFragment extends Fragment {
         cardAdapter = new CardAdapter(rootView.getContext());
         listView.setAdapter(cardAdapter);
 
+
         try {
             circleId=ThemeCardActivity.getCurrentTheme().getCircle().getCircleId();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         Call<Circle> call = KandoeApplication.getCircleApi().getCircle(circleId);
         call.enqueue(new AbstractExceptionCallback<Circle>() {
             @Override

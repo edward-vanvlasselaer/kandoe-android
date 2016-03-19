@@ -23,5 +23,5 @@ public interface UserApi {
     Call<Token> registerUser(@Body User user);
 
     @POST("/api/user/registerguest")
-    Call<Token> registerGuest(@Body String userFirstName);
+    Call<Token> registerGuest(@Body User user);
 }

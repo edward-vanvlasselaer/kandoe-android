@@ -24,6 +24,6 @@ public interface CardApi {
     @POST("/api/card")
     Call<Card> updateCard(@Body Card card);
 
-    @POST("/api/{themeId}/card")
+    @POST("/api/theme/{themeId}/card")
     Call<Object> addCardToCircle(@Path("themeId") int themeId, @Body Card card);
 }

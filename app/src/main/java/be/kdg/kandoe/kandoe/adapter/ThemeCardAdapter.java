@@ -1,7 +1,7 @@
 package be.kdg.kandoe.kandoe.adapter;
 
 import android.content.Context;
-import android.opengl.Visibility;
+import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,9 +33,9 @@ public class ThemeCardAdapter extends BaseAdapter {
     private List<Card> cards;
     public Card selectedCard;
 
-    HashMap<Integer,Integer> mhashColorSelected=new HashMap<>();
+    HashMap<Integer, Integer> mhashColorSelected = new HashMap<>();
 
-    HashMap<Integer,Integer> mhashBtnVisibility=new HashMap<>();
+    HashMap<Integer, Integer> mhashBtnVisibility = new HashMap<>();
 
 
     private static ThemeCardAdapter instance = null;
@@ -53,8 +53,8 @@ public class ThemeCardAdapter extends BaseAdapter {
 
     public void setCards(List<Card> cards) {
         this.cards = cards;
-        for(int i=0;i<cards.size();i++){
-            mhashColorSelected.put(i, R.drawable.custom_card_item);
+        for (int i = 0; i < cards.size(); i++) {
+            mhashColorSelected.put(i, R.drawable.custom_themecard_item);
             mhashBtnVisibility.put(i, View.VISIBLE);
         }
         notifyDataSetChanged();
@@ -89,9 +89,13 @@ public class ThemeCardAdapter extends BaseAdapter {
             convertView.setTag(viewHolder);
         }
 
+
         //Card tempCard = new Card();
         //tempCard.setCardName(); TODO
         //selectedCard = tempCard;
+
+        Typeface face = Typeface.createFromAsset(context.getAssets(), "fonts/bakery.ttf");
+        viewHolder.title.setTypeface(face);
 
         viewHolder.title.setText(card.getCardName());
         viewHolder.description.setText(card.getDescription());
@@ -109,7 +113,7 @@ public class ThemeCardAdapter extends BaseAdapter {
                         public void onResponse(Response response, Retrofit retrofit) {
                             //viewHolder.cardLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.md_grey_600));
                             //viewHolder.select.setVisibility(View.INVISIBLE);
-                            mhashColorSelected.put(position, R.drawable.custom_card_item_selected);
+                            mhashColorSelected.put(position, R.drawable.custom_themecard_item_selected);
                             mhashBtnVisibility.put(position, View.INVISIBLE);
                             notifyDataSetChanged();
                         }
@@ -121,12 +125,11 @@ public class ThemeCardAdapter extends BaseAdapter {
             }
         });
 
-       // viewHolder.select.setVisibility(mhashBtnVisibility.get(position));
-
+        // viewHolder.select.setVisibility(mhashBtnVisibility.get(position));
 
 
         viewHolder.cardLayout.setBackground(ContextCompat.getDrawable(context, mhashColorSelected.get(position)));
-        if(card.getCircleId()!=0){
+        if (card.getCircleId() != 0) {
             viewHolder.cardLayout.setBackground(ContextCompat.getDrawable(context, mhashColorSelected.get(position)));
         }
 
@@ -143,6 +146,8 @@ public class ThemeCardAdapter extends BaseAdapter {
         RelativeLayout cardLayout;
 
         public ViewHolder(View view) {
+
+
             title = (TextView) view.findViewById(R.id.carditem_txt_title);
             description = (TextView) view.findViewById(R.id.carditem_txt_description);
             select = (Button) view.findViewById(R.id.carditem_btn_upvote);
