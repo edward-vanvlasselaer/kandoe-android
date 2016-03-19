@@ -62,7 +62,7 @@ public class ThemeCardActivity extends AppCompatActivity {
         ListView listView = (ListView) findViewById(R.id.cardlist_listview);
         startBtn.setVisibility(View.VISIBLE);
 
-        Call<List<Card>> call = KandoeApplication.getCardApi().getCardsByTheme(theme.getThemeId());
+        Call<List<Card>> call = KandoeApplication.getCardApi().getCardsByTheme(themeId);
         call.enqueue(new AbstractExceptionCallback<List<Card>>() {
             @Override
             public void onResponse(Response<List<Card>> response, Retrofit retrofit) {

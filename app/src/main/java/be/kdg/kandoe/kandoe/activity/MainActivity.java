@@ -40,24 +40,29 @@ import be.kdg.kandoe.kandoe.R;
 import be.kdg.kandoe.kandoe.adapter.CustomPagerAdapter;
 import be.kdg.kandoe.kandoe.dom.Theme;
 import be.kdg.kandoe.kandoe.dom.User;
+import be.kdg.kandoe.kandoe.util.AccountSettings;
 import be.kdg.kandoe.kandoe.util.ToolbarBuilder;
 
 public class MainActivity extends AppCompatActivity {
+    private static MainActivity instance;
     private final String TAG = "MainActivity";
     private Toolbar toolbar;
     private Drawer drawer;
-
     private ViewPager viewPager;
     private PagerAdapter pagerAdapter;
-
     private Theme theme;
-
-
-
     private View view;
+
+    public static synchronized MainActivity getInstance(){
+        if(instance==null)
+            throw new RuntimeException("MainActivity doesn't exist for some reason");
+        return instance;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        instance = this;
         setContentView(R.layout.activity_main);
 
          view = (View) findViewById(R.id.main_base);
@@ -73,6 +78,10 @@ public class MainActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         theme = (Theme) extras.get("theme");
+    }
+
+    public ViewPager getViewPager() {
+        return viewPager;
     }
 
     private void initViewPager() {
@@ -108,11 +117,11 @@ public class MainActivity extends AppCompatActivity {
                 .withSelectionListEnabled(false)
                 .addProfiles(
                         new ProfileDrawerItem()
-                                .withName(User.getLoggedInUser().getUsername())
-                                .withEmail(User.getLoggedInUser().getEmail())
+                                .withName(AccountSettings.getLoggedInUser().getUsername())
+                                .withEmail(AccountSettings.getLoggedInUser().getEmail())
                                 .withEnabled(true)
                                 .withIcon(new IconDrawable(this, FontAwesomeIcons.fa_reddit))
-                                .withIcon(User.getLoggedInUser().getImageUrl())
+                                .withIcon(AccountSettings.getLoggedInUser().getImageUrl())
                 ).build();
 
 //        AccountHeader headerResult = new AccountHeaderBuilder()

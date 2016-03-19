@@ -15,6 +15,7 @@ import be.kdg.kandoe.kandoe.application.KandoeApplication;
 import be.kdg.kandoe.kandoe.dom.Token;
 import be.kdg.kandoe.kandoe.dom.User;
 import be.kdg.kandoe.kandoe.exception.AbstractExceptionCallback;
+import be.kdg.kandoe.kandoe.util.AccountSettings;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
@@ -69,8 +70,8 @@ public class RegisterActivity extends AppCompatActivity {
                         call.enqueue(new AbstractExceptionCallback<User>() {
                             @Override //LOGIN
                             public void onResponse(Response<User> response, Retrofit retrofit) {
-                                User.setLoggedInUser(response.body());
-                                Toast.makeText(getBaseContext(), "Hi, " + User.getLoggedInUser().getFirstName() + "!", Toast.LENGTH_SHORT).show();
+                                AccountSettings.setLoggedInUser(response.body());
+                                Toast.makeText(getBaseContext(), "Hi, " + AccountSettings.getLoggedInUser().getFirstName() + "!", Toast.LENGTH_SHORT).show();
                                 Intent myintent = new Intent(RegisterActivity.this, MainActivity.class);
                                 RegisterActivity.this.startActivity(myintent);
                                 finish();

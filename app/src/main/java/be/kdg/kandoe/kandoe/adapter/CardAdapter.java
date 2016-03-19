@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -115,23 +116,18 @@ public class CardAdapter extends BaseAdapter {
                 });
             }
         });
-
-        /*viewHolder.description.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                v.setBackgroundColor(ContextCompat.getColor(context, R.color.md_grey_600));
-
-                return false;
-            }
-        });
-        viewHolder.cardLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                viewHolder.cardLayout.setBackgroundColor(ContextCompat.getColor(context,R.color.md_grey_600));
-
-            }
-        });*/
         return convertView;
+    }
+    public View getViewByPosition(int pos, ListView listView) {
+        final int firstListItemPosition = listView.getFirstVisiblePosition();
+        final int lastListItemPosition = firstListItemPosition + listView.getChildCount() - 1;
+
+        if (pos < firstListItemPosition || pos > lastListItemPosition ) {
+            return listView.getAdapter().getView(pos, null, listView);
+        } else {
+            final int childIndex = pos - firstListItemPosition;
+            return listView.getChildAt(childIndex);
+        }
     }
 
     private class ViewHolder {
@@ -145,8 +141,6 @@ public class CardAdapter extends BaseAdapter {
             description = (TextView) view.findViewById(R.id.carditem_txt_description);
             upvote = (Button) view.findViewById(R.id.carditem_btn_upvote);
             cardLayout = (RelativeLayout) view.findViewById(R.id.cardlist_item);
-
-
         }
     }
 

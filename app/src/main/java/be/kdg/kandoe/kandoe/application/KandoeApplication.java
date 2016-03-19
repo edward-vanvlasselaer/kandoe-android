@@ -17,6 +17,7 @@ import be.kdg.kandoe.kandoe.service.CardApi;
 import be.kdg.kandoe.kandoe.service.CircleApi;
 import be.kdg.kandoe.kandoe.service.OrganisationApi;
 import be.kdg.kandoe.kandoe.service.UserApi;
+import be.kdg.kandoe.kandoe.util.SharedStorage;
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 
@@ -29,18 +30,23 @@ public class KandoeApplication extends Application{
     private static CardApi cardApi;
     private static UserApi userApi;
     private static CircleApi circleApi;
+    private static Application app;
 
     public static String getUserToken() {
+        if(userToken!=null)return userToken;
+        userToken = new SharedStorage(app).getValue("token");
         return userToken;
     }
 
     public static void setUserToken(String userToken) {
         KandoeApplication.userToken = userToken;
+        new SharedStorage(app).setValue("token",userToken);
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
+        app = this;
         Iconify.with(new FontAwesomeModule());
         createApi();
         userApi = createUserApi();
@@ -75,10 +81,11 @@ public class KandoeApplication extends Application{
             @Override
             public Response intercept(Chain chain) throws IOException {
                 Request request;
-                if(userToken != null)
+
+                if(getUserToken() != null)
                     request = chain.request()
                                 .newBuilder()
-                                .addHeader("X-Auth-Token", userToken)
+                                .addHeader("X-Auth-Token", getUserToken())
                                 .build();
                 else
                     request = chain.request()
