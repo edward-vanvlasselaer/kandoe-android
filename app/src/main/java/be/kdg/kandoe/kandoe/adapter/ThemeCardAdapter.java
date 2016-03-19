@@ -107,7 +107,7 @@ public class ThemeCardAdapter extends BaseAdapter {
                 try {
                     card.setCircleId(ThemeCardActivity.getCurrentTheme().getCircle().getCircleId());
 
-                    Call<Object> call = KandoeApplication.getCardApi().addCardToCircle(ThemeCardActivity.getCurrentTheme().getThemeId(), card);
+                    Call<Object> call = KandoeApplication.getCardApi().addCardToCircle(ThemeCardActivity.getCurrentTheme().getCircle().getCircleId(), card);
                     call.enqueue(new AbstractExceptionCallback() {
                         @Override
                         public void onResponse(Response response, Retrofit retrofit) {

@@ -12,7 +12,6 @@ public class Card implements Serializable {
     private String imageUrl;
     private Integer score=0;
     private Integer userId;
-    private boolean isSelected=false;
     private int circleId;
 
     public int getCircleId() {
@@ -21,14 +20,6 @@ public class Card implements Serializable {
 
     public void setCircleId(int circleId) {
         this.circleId = circleId;
-    }
-
-    public boolean isSelected() {
-        return isSelected;
-    }
-
-    public void setIsSelected(boolean isSelected) {
-        this.isSelected = isSelected;
     }
 
     public Integer getCardId() {
