@@ -28,9 +28,9 @@ public class CustomPagerAdapter extends FragmentStatePagerAdapter {
             case 0:
                 return new ChatFragment();
             case 1:
-                return new CardFragment();
-            case 2:
                 return new GameFragment();
+            case 2:
+                return new CardFragment();
             default:
                 return null;
         }

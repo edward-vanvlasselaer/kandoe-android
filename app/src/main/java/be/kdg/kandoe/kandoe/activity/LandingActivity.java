@@ -8,6 +8,7 @@ import android.widget.Button;
 
 import be.kdg.kandoe.kandoe.R;
 import be.kdg.kandoe.kandoe.dom.User;
+import be.kdg.kandoe.kandoe.util.AccountSettings;
 
 public class LandingActivity extends AppCompatActivity {
     private final String TAG = "LandingActivity";
@@ -32,7 +33,7 @@ public class LandingActivity extends AppCompatActivity {
             public void onClick(View v) {
                 User guest = new User();
                 guest.setUsername("guest");
-                User.setLoggedInUser(guest);
+                AccountSettings.setLoggedInUser(guest);
                 startActivity(new Intent(v.getContext(), GuestActivity.class));
             }
         });

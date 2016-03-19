@@ -56,11 +56,11 @@ public class ToolbarBuilder {
                 .withSelectionListEnabled(false)
                 .addProfiles(
                         new ProfileDrawerItem()
-                                .withName(User.getLoggedInUser().getUsername())
-                                .withEmail(User.getLoggedInUser().getEmail())
+                                .withName(AccountSettings.getLoggedInUser().getUsername())
+                                .withEmail(AccountSettings.getLoggedInUser().getEmail())
                                 .withEnabled(true)
                                 .withIcon(new IconDrawable(activity, FontAwesomeIcons.fa_reddit))
-                                .withIcon(User.getLoggedInUser().getImageUrl())
+                                .withIcon(AccountSettings.getLoggedInUser().getImageUrl())
                 ).build();
 
         //create the drawer and remember the `Drawer` result object

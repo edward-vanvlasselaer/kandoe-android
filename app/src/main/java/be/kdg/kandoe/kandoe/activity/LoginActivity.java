@@ -22,6 +22,7 @@ import be.kdg.kandoe.kandoe.dom.Organisation;
 import be.kdg.kandoe.kandoe.dom.Token;
 import be.kdg.kandoe.kandoe.dom.User;
 import be.kdg.kandoe.kandoe.exception.AbstractExceptionCallback;
+import be.kdg.kandoe.kandoe.util.AccountSettings;
 import retrofit.Call;
 import retrofit.Response;
 import retrofit.Retrofit;
@@ -73,8 +74,10 @@ public class LoginActivity extends AppCompatActivity {
         call.enqueue(new AbstractExceptionCallback<User>() {
             @Override
             public void onResponse(Response<User> response, Retrofit retrofit) {
-                User.setLoggedInUser(response.body());
-                Toast.makeText(getBaseContext(), "Hi, " + User.getLoggedInUser().getFirstName() + "!", Toast.LENGTH_SHORT).show();
+                if(response.body()==null)
+                    throw new RuntimeException("Loginactivity: response.body() IS NULL");
+                AccountSettings.setLoggedInUser(response.body());
+                Toast.makeText(getBaseContext(), "Hi, " + AccountSettings.getLoggedInUser().getFirstName() + "!", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(tempview.getContext(), OrganisationActivity.class));
             }
         });

@@ -10,7 +10,6 @@ import be.kdg.kandoe.kandoe.exception.UserException;
  * Created by Edward on 05/03/2016.
  */
 public class User implements Serializable {
-    private static User loggedInUser = null;
     @SerializedName("userId")
     private Integer userId;
     @SerializedName("username")
@@ -27,18 +26,6 @@ public class User implements Serializable {
     private boolean isPlaying;
 
     public User() {
-    }
-
-    public static User getLoggedInUser(){
-        if (loggedInUser == null){
-            throw new UserException("No user logged in");
-        }
-        return loggedInUser;
-    }
-
-    public static void setLoggedInUser(User loggedInUser) {
-        User.loggedInUser = loggedInUser;
-
     }
 
     public Integer getUserId() {

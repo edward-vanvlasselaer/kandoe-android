@@ -12,6 +12,7 @@ import be.kdg.kandoe.kandoe.application.KandoeApplication;
 import be.kdg.kandoe.kandoe.dom.Token;
 import be.kdg.kandoe.kandoe.dom.User;
 import be.kdg.kandoe.kandoe.exception.AbstractExceptionCallback;
+import be.kdg.kandoe.kandoe.util.AccountSettings;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
@@ -64,39 +65,43 @@ public class GuestActivity extends AppCompatActivity {
         //initListeners();
     }
 
-    private void initListeners() {
-        final String guestName = String.valueOf(nameInput.getText());
-        if (!guestName.equals("")) {
-            btnLogin.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(getApplicationContext(), "YES!", Toast.LENGTH_SHORT).show();
-
-                    User user=new User();
-                    user.setFirstName(guestName);
-                    Call<Token> registerCall = KandoeApplication.getUserApi().registerGuest(user);
-                   registerCall.enqueue(new Callback<Token>() {
-                       @Override
-                       public void onResponse(Response<Token> response, Retrofit retrofit) {
-                           Toast.makeText(getApplicationContext(), "YES!", Toast.LENGTH_SHORT).show();
-
-                       }
-
-                       @Override
-                       public void onFailure(Throwable t) {
-                           Toast.makeText(getApplicationContext(), "NO!", Toast.LENGTH_SHORT).show();
-
-                       }
-                   });
-                }
-            });
-        }
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tempview = v;
-                //login();
-            }
-        });
-    }
+//    private void initListeners() {
+//        final String guestName = String.valueOf(nameInput.getText());
+//        if (!guestName.equals("")) {
+//            btnLogin.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Call<Token> registerCall = KandoeApplication.getUserApi().registerGuest(guestName);
+//                    registerCall.enqueue(new AbstractExceptionCallback<Token>() {
+//                        @Override
+//                        public void onResponse(Response<Token> response, Retrofit retrofit) {
+//                            Toast.makeText(getBaseContext(), "Hi, " + AccountSettings.getLoggedInUser().getFirstName() + "!", Toast.LENGTH_SHORT).show();
+//
+//                    User user=new User();
+//                    user.setFirstName(guestName);
+//                    Call<Token> registerCall = KandoeApplication.getUserApi().registerGuest(user);
+//                   registerCall.enqueue(new Callback<Token>() {
+//                       @Override
+//                       public void onResponse(Response<Token> response, Retrofit retrofit) {
+//                           Toast.makeText(getApplicationContext(), "YES!", Toast.LENGTH_SHORT).show();
+//
+//                       }
+//
+//                       @Override
+//                       public void onFailure(Throwable t) {
+//                           Toast.makeText(getApplicationContext(), "NO!", Toast.LENGTH_SHORT).show();
+//
+//                       }
+//                   });
+//                }
+//            });
+//        }
+//        btnLogin.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                tempview = v;
+//                //login();
+//            }
+//        });
+//    }
 }
