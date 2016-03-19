@@ -16,6 +16,7 @@ import be.kdg.kandoe.kandoe.application.KandoeApplication;
 import be.kdg.kandoe.kandoe.dom.Card;
 import be.kdg.kandoe.kandoe.dom.Circle;
 import be.kdg.kandoe.kandoe.exception.AbstractExceptionCallback;
+import be.kdg.kandoe.kandoe.exception.CardException;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
@@ -32,8 +33,9 @@ public class CardFragment extends Fragment {
     private ListView listView;
     private List<Card> newList;
     private List<View> cardViews;
+
     public static synchronized CardFragment getInstance() {
-        if(instance == null)
+        if (instance == null)
             throw new RuntimeException("CardFragment doesn't exist for some reason");
         return instance;
     }
@@ -42,8 +44,10 @@ public class CardFragment extends Fragment {
         return listView;
     }
 
-    public int getPositionByCardId(int cardId){
-        for (Card card : newList){
+    public int getPositionByCardId(int cardId) throws CardException {
+        if (newList == null)
+            throw new CardException("list with cards hasn't been initialized yet");
+        for (Card card : newList) {
             if (cardId == card.getCardId())
                 return newList.indexOf(card);
         }
@@ -54,14 +58,14 @@ public class CardFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_card, container, false);
         listView = (ListView) rootView.findViewById(R.id.cardlist_listview);
-        final TextView textView=(TextView) rootView.findViewById(R.id.txt_nocards);
+        final TextView textView = (TextView) rootView.findViewById(R.id.txt_nocards);
         textView.setVisibility(View.GONE);
         cardAdapter = new CardAdapter(rootView.getContext());
         listView.setAdapter(cardAdapter);
 
 
         try {
-            circleId=ThemeCardActivity.getCurrentTheme().getCircle().getCircleId();
+            circleId = ThemeCardActivity.getCurrentTheme().getCircle().getCircleId();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -70,12 +74,12 @@ public class CardFragment extends Fragment {
             @Override
             public void onResponse(Response<Circle> response, Retrofit retrofit) {
                 newList = new ArrayList<>();
-                if (response.body() != null && response.body().getCards() !=null) {
+                if (response.body() != null && response.body().getCards() != null) {
                     for (Card card : response.body().getCards()) {
                         newList.add(card);
                     }
                     getCardAdapter().setCards(newList);
-                }else {
+                } else {
                     textView.setVisibility(View.VISIBLE);
                 }
             }
@@ -88,11 +92,11 @@ public class CardFragment extends Fragment {
     public void setMenuVisibility(boolean menuVisible) {
         super.setMenuVisibility(menuVisible);
 
-        if(!menuVisible && newList !=null){
-            for (Card card : newList){
+        if (!menuVisible && newList != null) {
+            for (Card card : newList) {
                 int position = newList.indexOf(card);
-                View singleItem = getCardAdapter().getViewByPosition(position,listView);
-                singleItem.setBackground(ContextCompat.getDrawable(this.getContext(),R.drawable.custom_themecard_item));
+                View singleItem = getCardAdapter().getViewByPosition(position, listView);
+                singleItem.setBackground(ContextCompat.getDrawable(this.getContext(), R.drawable.custom_card_item));
             }
         }
     }

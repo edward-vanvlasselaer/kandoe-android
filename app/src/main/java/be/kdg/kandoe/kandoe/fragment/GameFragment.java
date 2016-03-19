@@ -31,6 +31,7 @@ import be.kdg.kandoe.kandoe.activity.ThemeCardActivity;
 import be.kdg.kandoe.kandoe.dom.Card;
 import be.kdg.kandoe.kandoe.dom.Circle;
 import be.kdg.kandoe.kandoe.dom.Theme;
+import be.kdg.kandoe.kandoe.exception.CardException;
 import be.kdg.kandoe.kandoe.exception.ThemeException;
 
 
@@ -120,7 +121,7 @@ public class GameFragment extends Fragment {
                 drawable = ContextCompat.getDrawable(view.getContext(), R.drawable.c3);
                 break;
             case 4:
-                //drawable = ContextCompat.getDrawable(view.getContext(), R.drawable.c4); TODO c4.png missing..
+                drawable = ContextCompat.getDrawable(view.getContext(), R.drawable.c4);
                 break;
             case 5:
                 drawable = ContextCompat.getDrawable(view.getContext(), R.drawable.c5);
@@ -132,7 +133,7 @@ public class GameFragment extends Fragment {
                 drawable = ContextCompat.getDrawable(view.getContext(), R.drawable.c7);
                 break;
             case 8:
-                drawable = ContextCompat.getDrawable(view.getContext(), R.drawable.rsz_c8);
+                drawable = ContextCompat.getDrawable(view.getContext(), R.drawable.c8);
                 break;
             case 9:
                 drawable = ContextCompat.getDrawable(view.getContext(), R.drawable.c9);
@@ -188,11 +189,15 @@ public class GameFragment extends Fragment {
                 pager.setCurrentItem(3);
                 CardFragment cardFragment = CardFragment.getInstance();
                 ListView cardList = cardFragment.getListView();
-                int position = cardFragment.getPositionByCardId(button.getId());
-                View singleItem = cardFragment.getCardAdapter().getViewByPosition(position,cardList);
-
-                singleItem.setBackgroundColor(ContextCompat.getColor(ref.getContext(),R.color.md_light_blue_100));
-                cardList.smoothScrollToPosition(cardFragment.getPositionByCardId(button.getId()));
+                int position = 0;
+                try {
+                    position = cardFragment.getPositionByCardId(button.getId());
+                    View singleItem = cardFragment.getCardAdapter().getViewByPosition(position,cardList);
+                    singleItem.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.custom_themecard_item_selected));
+                    cardList.smoothScrollToPosition(cardFragment.getPositionByCardId(button.getId()));
+                } catch (CardException e) {
+                    e.printStackTrace();
+                }
                 Toast.makeText(getActivity(), "button clicked" + button.getId(), Toast.LENGTH_SHORT).show();
             }
         };
