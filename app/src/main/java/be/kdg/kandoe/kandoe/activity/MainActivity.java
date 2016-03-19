@@ -59,6 +59,10 @@ public class MainActivity extends AppCompatActivity {
         return instance;
     }
 
+    public MainActivity() {
+        instance = this;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

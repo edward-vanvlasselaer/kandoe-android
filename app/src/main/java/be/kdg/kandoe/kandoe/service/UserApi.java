@@ -19,6 +19,9 @@ public interface UserApi {
     @GET("/api/user/current")
     Call<User> getCurrentUser();
 
+    @GET("/api/user/logout")
+    Call<Object> logout();
+
     @POST("/api/user/register")
     Call<Token> registerUser(@Body User user);
 
