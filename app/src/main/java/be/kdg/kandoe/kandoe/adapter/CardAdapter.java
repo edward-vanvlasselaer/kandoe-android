@@ -83,7 +83,7 @@ public class CardAdapter extends BaseAdapter {
         }
 
 
-        viewHolder.title.setText(card.getDescription());
+        viewHolder.title.setText(card.getCardName());
         viewHolder.description.setText(card.getDescription());
         //TODO:weg doen is om score ff te zien
 

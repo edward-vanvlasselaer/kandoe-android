@@ -16,6 +16,24 @@ public class Circle implements Serializable {
     private Integer turnTime;
     private Integer totalRounds;
     private List<Card> cards;
+    private Integer maxCardsToSelect;
+    private Integer minCardsToSelect;
+
+    public Integer getMaxCardsToSelect() {
+        return maxCardsToSelect;
+    }
+
+    public void setMaxCardsToSelect(Integer maxCardsToSelect) {
+        this.maxCardsToSelect = maxCardsToSelect;
+    }
+
+    public Integer getMinCardsToSelect() {
+        return minCardsToSelect;
+    }
+
+    public void setMinCardsToSelect(Integer minCardsToSelect) {
+        this.minCardsToSelect = minCardsToSelect;
+    }
 
     public Integer getCircleId() {
         return circleId;

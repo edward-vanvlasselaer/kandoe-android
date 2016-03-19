@@ -32,6 +32,7 @@ public class ThemeCardActivity extends AppCompatActivity {
     private static Theme currentTheme;
     private int themeId;
     private Theme theme;
+    private Button startBtn;
 
     public static void setCurrentTheme(Theme currentTheme) {
         ThemeCardActivity.currentTheme = currentTheme;
@@ -48,16 +49,16 @@ public class ThemeCardActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        themeId = currentTheme.getThemeId();
-
         setContentView(R.layout.fragment_card);
 
         Bundle extras = getIntent().getExtras();
         theme = (Theme) extras.get("theme");
 
-        final TextView textView = (TextView) findViewById(R.id.txt_nocards);
+        themeId = currentTheme.getThemeId();
 
-        Button startBtn = (Button) findViewById(R.id.btn_select);
+
+        final TextView textView = (TextView) findViewById(R.id.txt_nocards);
+        startBtn = (Button) findViewById(R.id.btn_select);
         ListView listView = (ListView) findViewById(R.id.cardlist_listview);
         startBtn.setVisibility(View.VISIBLE);
 
@@ -80,18 +81,30 @@ public class ThemeCardActivity extends AppCompatActivity {
         themeCardAdapter = new ThemeCardAdapter(this.getApplicationContext());
         listView.setAdapter(themeCardAdapter);
 
-        startBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                //organisationIntent.putExtra("uri",uri.toString());
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("theme", theme);
-                getApplicationContext().startActivity(intent);
-            }
-        });
+        initListener();
+
 
     }
+
+    private void initListener(){
+        if (selectedMoreThanMin()) {
+            startBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    //organisationIntent.putExtra("uri",uri.toString());
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("theme", theme);
+                    getApplicationContext().startActivity(intent);
+                }
+            });
+        }
+    }
+
+    private boolean selectedMoreThanMin(){
+        return theme.getCircle().getMinCardsToSelect() == null || getThemeCardAdapter().getCardsSelected() > theme.getCircle().getMinCardsToSelect();
+    }
+
 
     public ThemeCardAdapter getThemeCardAdapter() {
         return themeCardAdapter;
