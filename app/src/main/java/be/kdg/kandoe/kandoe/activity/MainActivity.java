@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         //initMaterialDrawer();
 
         Bundle extras = getIntent().getExtras();
-        theme = (Theme) extras.get("theme");
+        if(extras!=null)theme = (Theme) extras.get("theme");
     }
 
     public ViewPager getViewPager() {

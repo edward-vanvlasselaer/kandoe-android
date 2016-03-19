@@ -5,6 +5,7 @@ import java.util.List;
 import be.kdg.kandoe.kandoe.dom.Card;
 import be.kdg.kandoe.kandoe.dom.Chat;
 import be.kdg.kandoe.kandoe.dom.Circle;
+import be.kdg.kandoe.kandoe.dom.Theme;
 import retrofit.Call;
 import retrofit.http.Body;
 import retrofit.http.GET;
@@ -30,6 +31,6 @@ public interface CircleApi {
     @GET("/api/circle/{circleId}/chat")
     Call<List<Chat>> getChatMessages(@Path("circleId") int circleId);
 
-    @POST("/api/circle/join/{link}")
-    Call<Object> joinCircleByLink(@Path("link") String link);
+    @POST("api/link/joincircle/{link}")
+    Call<Theme> joinCircleByLink(@Path("link") String link);
 }

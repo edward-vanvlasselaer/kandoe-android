@@ -24,7 +24,7 @@ import retrofit.Retrofit;
 
 public class KandoeApplication extends Application{
     private Retrofit retrofit;
-    private static String userToken;
+    private static String userToken=null;
 
     private static OrganisationApi organisationApi;
     private static CardApi cardApi;
