@@ -65,7 +65,6 @@ public class GuestActivity extends AppCompatActivity {
                                     // GuestActivity.this.startActivity(myintent);
                                     callCircle();
                                     //finish();
-
                                 }
                             });
                         }
@@ -74,8 +73,6 @@ public class GuestActivity extends AppCompatActivity {
                     callCircle();
 
                 }
-
-
             }
         });
 
@@ -87,55 +84,18 @@ public class GuestActivity extends AppCompatActivity {
         circleCall.enqueue(new AbstractExceptionCallback<Theme>() {
             @Override
             public void onResponse(Response<Theme> response, Retrofit retrofit) {
-                if (response == null) {
+                if (response.body() == null) {
                     noCircle = true;
+                    Toast.makeText(getApplicationContext(),"Invalid invite link", Toast.LENGTH_SHORT).show();
+
                 } else {
                     ThemeCardActivity.setCurrentTheme(response.body());
-                    Intent myintent = new Intent(GuestActivity.this, MainActivity.class);
+                    Toast.makeText(getBaseContext(), "Hi, " + AccountSettings.getLoggedInUser().getFirstName() + "!", Toast.LENGTH_SHORT).show();
+                    Intent myintent = new Intent(GuestActivity.this, ThemeCardActivity.class);
                     GuestActivity.this.startActivity(myintent);
-//                    Toast.makeText(getBaseContext(), response.body().getThemeId(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
-//    private void initListeners() {
-//        final String guestName = String.valueOf(nameInput.getText());
-//        if (!guestName.equals("")) {
-//            btnLogin.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Call<Token> registerCall = KandoeApplication.getUserApi().registerGuest(guestName);
-//                    registerCall.enqueue(new AbstractExceptionCallback<Token>() {
-//                        @Override
-//                        public void onResponse(Response<Token> response, Retrofit retrofit) {
-//                            Toast.makeText(getBaseContext(), "Hi, " + AccountSettings.getLoggedInUser().getFirstName() + "!", Toast.LENGTH_SHORT).show();
-//
-//                    User user=new User();
-//                    user.setFirstName(guestName);
-//                    Call<Token> registerCall = KandoeApplication.getUserApi().registerGuest(user);
-//                   registerCall.enqueue(new Callback<Token>() {
-//                       @Override
-//                       public void onResponse(Response<Token> response, Retrofit retrofit) {
-//                           Toast.makeText(getApplicationContext(), "YES!", Toast.LENGTH_SHORT).show();
-//
-//                       }
-//
-//                       @Override
-//                       public void onFailure(Throwable t) {
-//                           Toast.makeText(getApplicationContext(), "NO!", Toast.LENGTH_SHORT).show();
-//
-//                       }
-//                   });
-//                }
-//            });
-//        }
-//        btnLogin.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                tempview = v;
-//                //login();
-//            }
-//        });
-//    }
 }

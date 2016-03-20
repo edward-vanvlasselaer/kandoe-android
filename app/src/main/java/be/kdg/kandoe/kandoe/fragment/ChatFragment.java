@@ -70,7 +70,7 @@ public class ChatFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        handler.removeCallbacks(backgroundService);
+       // handler.removeCallbacks(backgroundService);
     }
 
 
@@ -79,12 +79,15 @@ public class ChatFragment extends Fragment {
         super.setMenuVisibility(menuVisible);
 
         if (fragment.getContext() != null)
-            //Toast.makeText(fragment.getContext(), "onFocusChange() " + menuVisible, Toast.LENGTH_SHORT).show();
 
         if (menuVisible) {
            handler.postDelayed(backgroundService, interval);
+            Toast.makeText(fragment.getContext(), "onFocusChange() " + menuVisible, Toast.LENGTH_SHORT).show();
+
         } else {
             handler.removeCallbacks(backgroundService);
+            Toast.makeText(fragment.getContext(), "onFocusChange() " + menuVisible, Toast.LENGTH_SHORT).show();
+
             //interval=10000;
             //handler.postDelayed(backgroundService, interval);
 

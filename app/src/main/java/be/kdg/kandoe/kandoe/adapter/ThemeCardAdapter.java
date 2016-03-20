@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,9 +19,12 @@ import be.kdg.kandoe.kandoe.R;
 import be.kdg.kandoe.kandoe.application.KandoeApplication;
 import be.kdg.kandoe.kandoe.dom.Card;
 import be.kdg.kandoe.kandoe.dom.Theme;
+import be.kdg.kandoe.kandoe.dom.User;
 import be.kdg.kandoe.kandoe.exception.AbstractExceptionCallback;
 import be.kdg.kandoe.kandoe.activity.ThemeCardActivity;
+import be.kdg.kandoe.kandoe.util.AccountSettings;
 import retrofit.Call;
+import retrofit.Callback;
 import retrofit.Response;
 import retrofit.Retrofit;
 
@@ -34,6 +38,7 @@ public class ThemeCardAdapter extends BaseAdapter {
     private List<Card> cards;
     public Card selectedCard;
     private int cardsSelected = 0;
+    private boolean go = false;
 
     HashMap<Integer, Integer> mhashColorSelected = new HashMap<>();
     HashMap<Integer, Integer> mhashBtnVisibility = new HashMap<>();
@@ -89,6 +94,7 @@ public class ThemeCardAdapter extends BaseAdapter {
             convertView.setTag(viewHolder);
         }
 
+        selectedCardsByUser();
 
         Typeface face = Typeface.createFromAsset(context.getAssets(), "fonts/bakery.ttf");
         viewHolder.title.setTypeface(face);
@@ -97,30 +103,46 @@ public class ThemeCardAdapter extends BaseAdapter {
         viewHolder.description.setText(card.getDescription());
         viewHolder.select.setText(R.string.select_card);
 
-        if (selectedMoreThanMax())
-            viewHolder.select.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    try {
-                        card.setCircleId(ThemeCardActivity.getCurrentTheme().getCircle().getCircleId());
+        viewHolder.select.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    card.setCircleId(ThemeCardActivity.getCurrentTheme().getCircle().getCircleId());
 
-                        Call<Object> call = KandoeApplication.getCardApi().addCardToCircle(ThemeCardActivity.getCurrentTheme().getCircle().getCircleId(), card);
-                        call.enqueue(new AbstractExceptionCallback() {
-                            @Override
-                            public void onResponse(Response response, Retrofit retrofit) {
-                                //viewHolder.cardLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.md_grey_600));
-                                //viewHolder.select.setVisibility(View.INVISIBLE);
+                    Call<Object> call = KandoeApplication.getCardApi().addCardToCircle(ThemeCardActivity.getCurrentTheme().getCircle().getCircleId(), card);
+                    //noinspection unchecked
+                    call.enqueue(new AbstractExceptionCallback() {
+                        @Override
+                        public void onResponse(Response response, Retrofit retrofit) {
+                            //TODO: is dat wel mooi?
+                            if (response.errorBody() != null) {
+                                Toast.makeText(context, "You cannot select more cards than max", Toast.LENGTH_SHORT).show();
+                                setGo(true);
+                            } else {
                                 mhashColorSelected.put(position, R.drawable.custom_themecard_item_selected);
                                 mhashBtnVisibility.put(position, View.INVISIBLE);
                                 setCardsSelected(getCardsSelected() + 1);
-                                notifyDataSetChanged();
                             }
-                        });
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                            notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void onFailure(Throwable t) {
+                            Toast.makeText(context, "You cannot select more cards than max", Toast.LENGTH_SHORT).show();
+
+                        }
+
+                    });
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            });
+
+
+            }
+
+        });
 
 
         viewHolder.cardLayout.setBackground(ContextCompat.getDrawable(context, mhashColorSelected.get(position)));
@@ -130,7 +152,7 @@ public class ThemeCardAdapter extends BaseAdapter {
         return convertView;
     }
 
-    private boolean selectedMoreThanMax() {
+    private boolean hasSelectedLessThanMax() {
         Theme theme = null;
         try {
             theme = ThemeCardActivity.getCurrentTheme();
@@ -138,9 +160,23 @@ public class ThemeCardAdapter extends BaseAdapter {
             e.printStackTrace();
         }
 
-        return (theme.getCircle().getMaxCardsToSelect() == null || theme.getCircle().getMaxCardsToSelect() < cardsSelected);
-
+        if (cardsSelected < theme.getCircle().getMaxCardsToSelect() || theme.getCircle().getMaxCardsToSelect() == null) {
+            return true;
+        } else {
+            Toast.makeText(context, "You cannot select more than " + theme.getCircle().getMaxCardsToSelect() + " cards", Toast.LENGTH_SHORT).show();
+            return false;
+        }
     }
+
+    private int selectedCardsByUser() {
+        for (Card card : cards) {
+            if (card.getSelector() == AccountSettings.getLoggedInUser().getUserId()) {
+                cardsSelected = cardsSelected+1;
+            }
+        }
+        return cardsSelected;
+    }
+
 
     public int getCardsSelected() {
         return cardsSelected;
@@ -165,5 +201,13 @@ public class ThemeCardAdapter extends BaseAdapter {
             cardLayout = (RelativeLayout) view.findViewById(R.id.card_layout);
 
         }
+    }
+
+    public boolean isGo() {
+        return go;
+    }
+
+    public void setGo(boolean go) {
+        this.go = go;
     }
 }

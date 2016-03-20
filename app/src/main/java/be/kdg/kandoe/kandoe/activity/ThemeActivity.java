@@ -50,6 +50,9 @@ public class ThemeActivity extends AppCompatActivity {
 
         List<Theme> themes = organisation.getThemes();
         getThemeAdapter().setThemes(themes);
+
+        if(getThemeAdapter().getCount()==0)
+            listView.setVisibility(View.GONE);
     }
 
 
