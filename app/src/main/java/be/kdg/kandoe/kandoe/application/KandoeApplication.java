@@ -30,7 +30,7 @@ public class KandoeApplication extends Application{
     private static CardApi cardApi;
     private static UserApi userApi;
     private static CircleApi circleApi;
-    private static Application app;
+    public static Application app;
 
     public static String getUserToken() {
         if(userToken!=null)return userToken;

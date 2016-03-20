@@ -22,18 +22,17 @@ import static android.view.LayoutInflater.from;
  * Created by claudiu on 15/03/16.
  */
 public class ThemeAdapter extends BaseAdapter {
+    private static ThemeAdapter instance=null;
     private final Context context;
     private List<Theme> themes;
-
-    private static ThemeAdapter instance=null;
-
-    public static ThemeAdapter getInstance(){return instance;}
 
     public ThemeAdapter(Context context){
         this.context=context;
         instance=this;
         this.themes=new ArrayList<>();
     }
+
+    public static ThemeAdapter getInstance(){return instance;}
 
     public void setThemes(List<Theme> themes){
         this.themes=themes;

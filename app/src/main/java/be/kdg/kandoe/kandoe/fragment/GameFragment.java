@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -36,6 +37,7 @@ import be.kdg.kandoe.kandoe.exception.ThemeException;
 
 
 public class GameFragment extends Fragment {
+    private static GameFragment ref;
     private Theme currentTheme;
     private Circle currentCircle;
     private int currentOrganisationId;
@@ -46,11 +48,20 @@ public class GameFragment extends Fragment {
     private int marginCard;
     private int[] tableStarts;
     private RelativeLayout background;
+    private ViewGroup rootView;
     private ViewTreeObserver vto;
+
     public GameFragment() {
+        try {
+            currentTheme = ThemeCardActivity.getCurrentTheme();
+            currentCircle = currentTheme.getCircle();
+            tableStarts = new int[currentCircle.getTotalRounds()];
+        } catch (Exception e) {
+           throw new RuntimeException("theme not initilized in gamefragment");
+        }
         circleCards = new ArrayList<>();
         circleButtons = new ArrayList<>();
-        tableStarts = new int[9];
+
     }
 
     public static synchronized GameFragment getSingletonObject() {
@@ -59,8 +70,6 @@ public class GameFragment extends Fragment {
         }
         return ref;
     }
-
-    private static GameFragment ref;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,7 +80,7 @@ public class GameFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_game, container, false);
+        rootView = (ViewGroup) inflater.inflate(R.layout.fragment_game, container, false);
 
         ViewTreeObserver viewTreeObserver = rootView.getViewTreeObserver();
         if (viewTreeObserver.isAlive()) {
@@ -82,8 +91,11 @@ public class GameFragment extends Fragment {
                     viewWidth = rootView.getWidth();
                     viewHeight = rootView.getHeight();
                     marginCard = (viewHeight / 9) / 2;
-                    for (int i = 0; i < 9; i++) {
-                        tableStarts[i] = viewHeight - marginCard - ((marginCard * i) * 2);
+
+                    int j = 0;
+                    for (int i = currentCircle.getTotalRounds(); i > 0 ; i--) {
+                        tableStarts[i-1] = marginCard + (j*marginCard);
+                        j++;
                     }
                     drawCards();
                 }
@@ -145,6 +157,39 @@ public class GameFragment extends Fragment {
         return background;
     }
 
+
+    public void moveCard(int cardId){
+        ImageButton myButton = null;
+        Card myCard = null;
+
+        for (ImageButton btn : circleButtons){
+            if (btn.getId() == cardId){
+                myButton = btn;
+            }
+        }
+        circleButtons.remove(myButton);
+
+        for (Card c : circleCards){
+            if (c.getCardId() == cardId){
+                myCard = c;
+            }
+        }
+        background.removeView(myButton);
+
+        //assert myButton != null;
+
+        RelativeLayout.LayoutParams params= null;
+        if (myButton != null && myCard != null) {
+            params = (RelativeLayout.LayoutParams) myButton.getLayoutParams();
+            params.topMargin = tableStarts[myCard.getScore()];
+            background.addView(myButton, params);
+            myButton.setOnClickListener(getButtonAndDoAction(myButton));
+            circleButtons.add(myButton);
+            return;
+        }
+        throw new RuntimeException("Cannot move card for some reason.");
+    }
+
     private void drawCards() {
         circleButtons = new ArrayList<>();
         for (Card card : circleCards) {
@@ -175,7 +220,9 @@ public class GameFragment extends Fragment {
             }
 
             params.leftMargin = rndLeft;
-            params.topMargin = tableStarts[0]; //TODO 0 -> card.getScore()
+            if (card.getScore()==null)
+                card.setScore(0);
+            params.topMargin = tableStarts[card.getScore()];
             background.addView(myImageButton, params); //Add view
             myImageButton.setOnClickListener(getButtonAndDoAction(myImageButton));
             circleButtons.add(myImageButton);
@@ -202,4 +249,6 @@ public class GameFragment extends Fragment {
             }
         };
     }
+
+
 }

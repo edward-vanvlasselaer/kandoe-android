@@ -28,7 +28,8 @@
         android:layout_marginRight="@dimen/margin_card"
         android:textAlignment="center"
         android:layout_below="@+id/carditem_txt_title"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/md_black_1000"/>
 
     <Button
         android:id="@+id/carditem_btn_upvote"
@@ -51,6 +52,7 @@
         android:text="THIS IS THE TITLE"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:textColor="@color/md_black_1000"/>
 
 </RelativeLayout>

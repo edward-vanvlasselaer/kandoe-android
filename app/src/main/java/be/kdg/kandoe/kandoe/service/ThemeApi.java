@@ -8,9 +8,13 @@ import retrofit.http.GET;
 import retrofit.http.Path;
 
 /**
- * Created by claudiu on 15/03/16.
+ * This interface is used to call the RESTful API for Organisations
  */
 public interface ThemeApi {
+    /**
+     * @param id identifier of the organisation
+     * @return List of theme Objects that belong to the organisation of the given Id
+     */
     @GET("/api/theme/organisation/{id}")
     Call<List<Theme>> getThemesByOrganisation(@Path("id") int id);
 }

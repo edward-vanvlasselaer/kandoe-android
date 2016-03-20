@@ -13,6 +13,7 @@ import retrofit.Call;
 import retrofit.Response;
 import retrofit.Retrofit;
 
+
 public class AccountSettings {
     private static User loggedInUser;
 

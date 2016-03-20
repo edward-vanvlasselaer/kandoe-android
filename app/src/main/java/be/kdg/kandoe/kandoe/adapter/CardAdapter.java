@@ -24,6 +24,7 @@ import be.kdg.kandoe.kandoe.application.KandoeApplication;
 import be.kdg.kandoe.kandoe.dom.Card;
 import be.kdg.kandoe.kandoe.dom.Theme;
 import be.kdg.kandoe.kandoe.exception.AbstractExceptionCallback;
+import be.kdg.kandoe.kandoe.fragment.GameFragment;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
@@ -100,6 +101,7 @@ public class CardAdapter extends BaseAdapter {
         viewHolder.upvote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                GameFragment.getSingletonObject().moveCard(card.getCardId());
                 Call<Object> call = KandoeApplication.getCircleApi().addVote(1, card);
                 call.enqueue(new AbstractExceptionCallback() {
                     @Override

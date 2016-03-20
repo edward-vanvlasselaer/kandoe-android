@@ -9,6 +9,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
+import org.json.JSONStringer;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +23,8 @@ import be.kdg.kandoe.kandoe.dom.Card;
 import be.kdg.kandoe.kandoe.dom.Theme;
 import be.kdg.kandoe.kandoe.dom.User;
 import be.kdg.kandoe.kandoe.exception.AbstractExceptionCallback;
+import be.kdg.kandoe.kandoe.util.GenericSharedStorage;
+import be.kdg.kandoe.kandoe.util.SharedStorage;
 import retrofit.Call;
 import retrofit.Response;
 import retrofit.Retrofit;
@@ -27,24 +33,22 @@ import retrofit.Retrofit;
  * Created by claudiu on 15/03/16.
  */
 public class ThemeCardActivity extends AppCompatActivity {
-    private ThemeCardAdapter themeCardAdapter;
     private static Theme currentTheme;
+    private ThemeCardAdapter themeCardAdapter;
     private int themeId;
     private Theme theme;
     private Button startBtn;
 
-
-    public static void setCurrentTheme(Theme currentTheme) {
-        ThemeCardActivity.currentTheme = currentTheme;
-    }
-
-    public static Theme getCurrentTheme() throws Exception {
-        if (currentTheme == null)
-            throw new Exception("currentTheme is NULL");
-
+    public static Theme getCurrentTheme() {
+        if(currentTheme!=null)return currentTheme;
+        currentTheme = new GenericSharedStorage<>(KandoeApplication.app,Theme.class).getObject("currentTheme");
         return currentTheme;
     }
 
+    public static void setCurrentTheme(Theme currentTheme) {
+        ThemeCardActivity.currentTheme = currentTheme;
+        new GenericSharedStorage<>(KandoeApplication.app,Theme.class).setObject("currentTheme", currentTheme);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,13 +56,9 @@ public class ThemeCardActivity extends AppCompatActivity {
         setContentView(R.layout.fragment_card);
 
         Bundle extras = getIntent().getExtras();
-//        theme = (Theme) extras.get("theme");
+        theme = (Theme) extras.get("theme");
 
-
-
-
-        themeId = currentTheme.getThemeId();
-
+        themeId = getCurrentTheme().getThemeId();
 
         final TextView textView = (TextView) findViewById(R.id.txt_nocards);
         startBtn = (Button) findViewById(R.id.btn_select);
@@ -94,33 +94,29 @@ public class ThemeCardActivity extends AppCompatActivity {
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (hasSelectedMoreThanMin()) {
+                //if (hasSelectedMoreThanMin()) {
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     //organisationIntent.putExtra("uri",uri.toString());
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.putExtra("theme", currentTheme);
+                    intent.putExtra("theme", getCurrentTheme());
                     getApplicationContext().startActivity(intent);
-                }
+                //}
             }
         });
 
     }
 
     private boolean hasSelectedMoreThanMin() {
-        if (currentTheme.getCircle().getMinCardsToSelect() == null || getThemeCardAdapter().getCardsSelected() >= currentTheme.getCircle().getMinCardsToSelect()) {
+        if (getCurrentTheme().getCircle().getMinCardsToSelect() == null || getThemeCardAdapter().getCardsSelected() >= getCurrentTheme().getCircle().getMinCardsToSelect()) {
             getThemeCardAdapter().setGo(true);
             return true;
         } else {
-            Toast.makeText(getApplicationContext(), "You have to select at least " + currentTheme.getCircle().getMinCardsToSelect() + " card", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "You have to select at least " + getCurrentTheme().getCircle().getMinCardsToSelect() + " card", Toast.LENGTH_SHORT).show();
             return false;
         }
     }
 
-
-
     public ThemeCardAdapter getThemeCardAdapter() {
         return themeCardAdapter;
     }
-
-
 }

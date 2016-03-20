@@ -34,26 +34,24 @@ import static android.view.LayoutInflater.from;
  * Created by claudiu on 15/03/16.
  */
 public class ThemeCardAdapter extends BaseAdapter {
+    private static ThemeCardAdapter instance = null;
     private final Context context;
-    private List<Card> cards;
     public Card selectedCard;
-    private int cardsSelected = 0;
-    private boolean go = false;
-
     HashMap<Integer, Integer> mhashColorSelected = new HashMap<>();
     HashMap<Integer, Integer> mhashBtnVisibility = new HashMap<>();
-
-    private static ThemeCardAdapter instance = null;
-
-    public static ThemeCardAdapter getInstance() {
-        return instance;
-    }
+    private List<Card> cards;
+    private int cardsSelected = 0;
+    private boolean go = false;
 
     public ThemeCardAdapter(Context context) {
         this.context = context;
         instance = this;
         this.cards = new ArrayList<>();
 
+    }
+
+    public static ThemeCardAdapter getInstance() {
+        return instance;
     }
 
     public void setCards(List<Card> cards) {
@@ -96,8 +94,8 @@ public class ThemeCardAdapter extends BaseAdapter {
 
         selectedCardsByUser();
 
-        Typeface face = Typeface.createFromAsset(context.getAssets(), "fonts/bakery.ttf");
-        viewHolder.title.setTypeface(face);
+        //Typeface face = Typeface.createFromAsset(context.getAssets(), "fonts/bakery.ttf");
+       // viewHolder.title.setTypeface(face);
 
         viewHolder.title.setText(card.getCardName());
         viewHolder.description.setText(card.getDescription());
@@ -186,28 +184,24 @@ public class ThemeCardAdapter extends BaseAdapter {
         this.cardsSelected = cardsSelected;
     }
 
-    private class ViewHolder {
-        TextView title;
-        TextView description;
-        Button select;
-        RelativeLayout cardLayout;
-
-        public ViewHolder(View view) {
-
-
-            title = (TextView) view.findViewById(R.id.carditem_txt_title);
-            description = (TextView) view.findViewById(R.id.carditem_txt_description);
-            select = (Button) view.findViewById(R.id.carditem_btn_upvote);
-            cardLayout = (RelativeLayout) view.findViewById(R.id.card_layout);
-
-        }
-    }
-
     public boolean isGo() {
         return go;
     }
 
     public void setGo(boolean go) {
         this.go = go;
+    }
+
+    private class ViewHolder {
+        TextView title;
+        TextView description;
+        Button select;
+        RelativeLayout cardLayout;
+        public ViewHolder(View view) {
+            title = (TextView) view.findViewById(R.id.carditem_txt_title);
+            description = (TextView) view.findViewById(R.id.carditem_txt_description);
+            select = (Button) view.findViewById(R.id.carditem_btn_upvote);
+            cardLayout = (RelativeLayout) view.findViewById(R.id.card_layout);
+        }
     }
 }

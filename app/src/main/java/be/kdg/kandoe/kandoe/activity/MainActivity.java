@@ -53,14 +53,14 @@ public class MainActivity extends AppCompatActivity {
     private Theme theme;
     private View view;
 
+    public MainActivity() {
+        instance = this;
+    }
+
     public static synchronized MainActivity getInstance(){
         if(instance==null)
             throw new RuntimeException("MainActivity doesn't exist for some reason");
         return instance;
-    }
-
-    public MainActivity() {
-        instance = this;
     }
 
     @Override

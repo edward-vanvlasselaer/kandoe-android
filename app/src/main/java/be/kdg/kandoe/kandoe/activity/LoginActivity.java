@@ -1,24 +1,18 @@
 package be.kdg.kandoe.kandoe.activity;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.gson.JsonElement;
-import com.google.gson.internal.LinkedTreeMap;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 
 import be.kdg.kandoe.kandoe.R;
 import be.kdg.kandoe.kandoe.application.KandoeApplication;
-import be.kdg.kandoe.kandoe.dom.Organisation;
 import be.kdg.kandoe.kandoe.dom.Token;
 import be.kdg.kandoe.kandoe.dom.User;
 import be.kdg.kandoe.kandoe.exception.AbstractExceptionCallback;
@@ -34,10 +28,20 @@ public class LoginActivity extends AppCompatActivity {
     private EditText passwordInput;
     private Button btnLogin;
 
+
     private View tempview;
+    private ProgressDialog dialog;
+    private Context mContext;
+    private Thread mThread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mContext = this;
+
+        dialog = new ProgressDialog(mContext);
+        dialog.setCancelable(false);
+        dialog.setMessage("Verifying credentials..");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         usernameInput = (EditText) findViewById(R.id.login_input_username);
@@ -50,8 +54,17 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dialog.show();
                 tempview = v;
-                login();
+                mThread = new Thread() {
+                    @Override
+                    public void run() {
+                            synchronized (this) {
+                                login();
+                            }
+                    }
+                };
+                mThread.start();
             }
         });
     }
@@ -60,8 +73,8 @@ public class LoginActivity extends AppCompatActivity {
         Call<Token> call = KandoeApplication.getUserApi().login(usernameInput.getText().toString(), passwordInput.getText().toString());
         call.enqueue(new AbstractExceptionCallback<Token>() {
             @Override
-            public void onResponse(Response<Token> response, Retrofit retrofit){
-                if(response.body() != null && response.body().getToken()!=null){
+            public void onResponse(Response<Token> response, Retrofit retrofit) {
+                if (response.body() != null && response.body().getToken() != null) {
                     KandoeApplication.setUserToken(response.body().getToken());
                     requestCurrentUser();
                 }
@@ -70,15 +83,24 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void requestCurrentUser() {
+        dialog.setMessage("Logging in..");
         Call<User> call = KandoeApplication.getUserApi().getCurrentUser();
         call.enqueue(new AbstractExceptionCallback<User>() {
             @Override
             public void onResponse(Response<User> response, Retrofit retrofit) {
-                if(response.body()==null)
+                if (response.body() == null)
                     throw new RuntimeException("Loginactivity: response.body() IS NULL");
                 AccountSettings.setLoggedInUser(response.body());
                 Toast.makeText(getBaseContext(), "Hi, " + AccountSettings.getLoggedInUser().getFirstName() + "!", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(tempview.getContext(), OrganisationActivity.class));
+                dialog.hide();
+                dialog = null;
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                dialog.hide();
+                dialog = null;
             }
         });
     }

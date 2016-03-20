@@ -26,10 +26,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CardFragment extends Fragment {
+    private static CardFragment instance;
     private CardAdapter cardAdapter;
     private Callback<List<Card>> callbackList;
     private int circleId = 0;
-    private static CardFragment instance;
     private ListView listView;
     private List<Card> newList;
     private List<View> cardViews;
@@ -110,10 +110,7 @@ public class CardFragment extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
-
-
     public CardAdapter getCardAdapter() {
         return cardAdapter;
     }

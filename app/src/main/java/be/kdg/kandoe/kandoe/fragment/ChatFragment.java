@@ -41,6 +41,12 @@ public class ChatFragment extends Fragment {
     private Fragment fragment;
     private int interval=2000;
 
+    public ChatFragment() {
+        fragment = this;
+        createBackgroundService();
+
+    }
+
     private void createBackgroundService() {
         handler = new Handler();
         backgroundService = new Runnable() {
@@ -51,13 +57,6 @@ public class ChatFragment extends Fragment {
             }
         };
     }
-
-    public ChatFragment() {
-        fragment = this;
-        createBackgroundService();
-
-    }
-
 
     @Override
     public void onResume() {

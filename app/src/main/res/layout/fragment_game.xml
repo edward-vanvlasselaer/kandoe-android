@@ -5,4 +5,13 @@
     tools:context=".MainActivity"
     android:id="@+id/game_background">
 
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:columnCount="20"
+        android:rowCount="9"
+        android:id="@+id/game_table">
+
+
+    </GridLayout>
 </RelativeLayout>

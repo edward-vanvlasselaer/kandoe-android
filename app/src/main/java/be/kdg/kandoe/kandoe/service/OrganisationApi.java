@@ -8,9 +8,12 @@ import retrofit.http.GET;
 import retrofit.http.Path;
 
 /**
- * Created by Edward on 14/03/2016.
+ * This interface is used to call the RESTful API for Organisations
  */
 public interface OrganisationApi {
+    /**
+     * @return List of all organisations
+     */
     @GET("/api/organisation")
     Call<List<Organisation>> getOrganisations();
 }

@@ -23,20 +23,19 @@ import static android.view.LayoutInflater.from;
  * Created by claudiu on 15/03/16.
  */
 public class OrganisationAdapter extends BaseAdapter {
+    private static OrganisationAdapter instance = null;
     private final Context context;
     private List<Organisation> organisations;
     private Organisation selectedOrganisation;
-
-    private static OrganisationAdapter instance = null;
-
-    public static OrganisationAdapter getInstance() {
-        return instance;
-    }
 
     public OrganisationAdapter(Context context) {
         this.context = context;
         instance = this;
         this.organisations = new ArrayList<>();
+    }
+
+    public static OrganisationAdapter getInstance() {
+        return instance;
     }
 
     public void setOrganisations(List<Organisation> organisations) {

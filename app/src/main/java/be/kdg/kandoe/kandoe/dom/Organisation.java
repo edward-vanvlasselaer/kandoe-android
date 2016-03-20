@@ -20,44 +20,44 @@ public class Organisation implements Serializable {
         return organisationId;
     }
 
-    public String getOrganisationName() {
-        return organisationName;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public User getCreator() {
-        return creator;
-    }
-
-    public List<User> getMembers() {
-        return members;
-    }
-
-    public List<Theme> getThemes() {
-        return themes;
-    }
-
     public void setOrganisationId(Integer organisationId) {
         this.organisationId = organisationId;
+    }
+
+    public String getOrganisationName() {
+        return organisationName;
     }
 
     public void setOrganisationName(String organisationName) {
         this.organisationName = organisationName;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public User getCreator() {
+        return creator;
     }
 
     public void setCreator(User creator) {
         this.creator = creator;
     }
 
+    public List<User> getMembers() {
+        return members;
+    }
+
     public void setMembers(List<User> members) {
         this.members = members;
+    }
+
+    public List<Theme> getThemes() {
+        return themes;
     }
 
     public void setThemes(List<Theme> themes) {

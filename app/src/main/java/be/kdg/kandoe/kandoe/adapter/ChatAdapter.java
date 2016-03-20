@@ -19,20 +19,19 @@ import static android.view.LayoutInflater.from;
  * Created by claudiu on 18/03/16.
  */
 public class ChatAdapter extends BaseAdapter {
-    private final Context context;
-    private List<Chat> chatMessages;
-    //public Card selectedCard;
-
     private static ChatAdapter instance = null;
-
-    public static ChatAdapter getInstance() {
-        return instance;
-    }
+    private final Context context;
+    //public Card selectedCard;
+    private List<Chat> chatMessages;
 
     public ChatAdapter(Context context) {
         this.context = context;
         instance = this;
         this.chatMessages = new ArrayList<>();
+    }
+
+    public static ChatAdapter getInstance() {
+        return instance;
     }
 
     public void setChatMessages(List<Chat> chatMessages) {
