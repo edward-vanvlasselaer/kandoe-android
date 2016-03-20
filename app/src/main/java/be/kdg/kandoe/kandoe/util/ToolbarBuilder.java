@@ -78,13 +78,13 @@ public class ToolbarBuilder {
                         new PrimaryDrawerItem().withName("Change theme").withIcon(new IconDrawable(activity, FontAwesomeIcons.fa_pie_chart)).withDescription("current: TODO"),
                         new DividerDrawerItem(),
                         new PrimaryDrawerItem().withName("Chat").withIcon(new IconDrawable(activity, FontAwesomeIcons.fa_comment))
-                                .withOnDrawerItemClickListener(gotoFragmentListener(1))
+                                .withOnDrawerItemClickListener(gotoFragmentListener(0))
                                 .withIdentifier(1),
                         new PrimaryDrawerItem().withName("Game").withIcon(new IconDrawable(activity, FontAwesomeIcons.fa_dot_circle_o))
-                                .withOnDrawerItemClickListener(gotoFragmentListener(2))
+                                .withOnDrawerItemClickListener(gotoFragmentListener(1))
                                 .withIdentifier(2),
                         new PrimaryDrawerItem().withName("Cards").withIcon(new IconDrawable(activity, FontAwesomeIcons.fa_files_o))
-                                .withOnDrawerItemClickListener(gotoFragmentListener(3))
+                                .withOnDrawerItemClickListener(gotoFragmentListener(2))
                                 .withIdentifier(3)
                 )
                 .build();

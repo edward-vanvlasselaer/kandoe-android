@@ -115,7 +115,7 @@ public class GameFragment extends Fragment {
 
     private RelativeLayout setBackground(View view) {
         background = (RelativeLayout) view.findViewById(R.id.game_background);
-        Drawable drawable = ContextCompat.getDrawable(view.getContext(), R.drawable.rsz_c8);
+        Drawable drawable;
         switch (currentCircle.getTotalRounds()) {
             case 3:
                 drawable = ContextCompat.getDrawable(view.getContext(), R.drawable.c3);
