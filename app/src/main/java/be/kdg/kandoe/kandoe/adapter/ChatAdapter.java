@@ -10,14 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import be.kdg.kandoe.kandoe.R;
-import be.kdg.kandoe.kandoe.dom.Card;
 import be.kdg.kandoe.kandoe.dom.Chat;
 
 import static android.view.LayoutInflater.from;
 
-/**
- * Created by claudiu on 18/03/16.
- */
+
 public class ChatAdapter extends BaseAdapter {
     private static ChatAdapter instance = null;
     private final Context context;

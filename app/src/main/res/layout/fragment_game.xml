@@ -9,7 +9,9 @@
         android:id="@+id/game_table"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
         <TableRow android:id="@+id/game_table_row1">
             <ImageButton android:id="@+id/img_r1c1"/>
             <ImageButton android:id="@+id/img_r1c2"/>

@@ -1,7 +1,6 @@
 package be.kdg.kandoe.kandoe.adapter;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,15 +15,13 @@ import java.util.HashMap;
 import java.util.List;
 
 import be.kdg.kandoe.kandoe.R;
+import be.kdg.kandoe.kandoe.activity.ThemeCardActivity;
 import be.kdg.kandoe.kandoe.application.KandoeApplication;
 import be.kdg.kandoe.kandoe.dom.Card;
 import be.kdg.kandoe.kandoe.dom.Theme;
-import be.kdg.kandoe.kandoe.dom.User;
 import be.kdg.kandoe.kandoe.exception.AbstractExceptionCallback;
-import be.kdg.kandoe.kandoe.activity.ThemeCardActivity;
 import be.kdg.kandoe.kandoe.util.AccountSettings;
 import retrofit.Call;
-import retrofit.Callback;
 import retrofit.Response;
 import retrofit.Retrofit;
 
@@ -95,7 +92,7 @@ public class ThemeCardAdapter extends BaseAdapter {
         selectedCardsByUser();
 
         //Typeface face = Typeface.createFromAsset(context.getAssets(), "fonts/bakery.ttf");
-       // viewHolder.title.setTypeface(face);
+        // viewHolder.title.setTypeface(face);
 
         viewHolder.title.setText(card.getCardName());
         viewHolder.description.setText(card.getDescription());
@@ -115,14 +112,13 @@ public class ThemeCardAdapter extends BaseAdapter {
                     call.enqueue(new AbstractExceptionCallback() {
                         @Override
                         public void onResponse(Response response, Retrofit retrofit) {
-                            //TODO: is dat wel mooi?
-                            /*if (response.errorBody() != null) {
+                            if (response.errorBody() != null) {
                                 Toast.makeText(context, "You cannot select more cards than max", Toast.LENGTH_SHORT).show();
                                 setGo(true);
                             } else {
                                 setLayoutOfCardsOfUser(position);
                                 incrementSelectedCards();
-                            }*/
+                            }
                             notifyDataSetChanged();
                         }
 
@@ -147,25 +143,25 @@ public class ThemeCardAdapter extends BaseAdapter {
     }
 
 
-    private void incrementSelectedCards(){
+    private void incrementSelectedCards() {
         setCardsSelected(getCardsSelected() + 1);
     }
 
-    private void setLayoutOfAlreadySelectedCards(Card card, int position)
-    {
-        if (card.getSelector() != 0 && card.getSelector()!=AccountSettings.getLoggedInUser().getUserId()) {
+    private void setLayoutOfAlreadySelectedCards(Card card, int position) {
+        if (card.getSelector() != 0 && card.getSelector() != AccountSettings.getLoggedInUser().getUserId()) {
             mhashColorSelected.put(position, R.drawable.custom_themecard_already_selected);
             mhashBtnVisibility.put(position, View.INVISIBLE);
-        }else if(card.getSelector()==AccountSettings.getLoggedInUser().getUserId()){
+        } else if (card.getSelector() == AccountSettings.getLoggedInUser().getUserId()) {
             setLayoutOfCardsOfUser(position);
         }
     }
 
-    private void setLayoutOfCardsOfUser(int position){
+    private void setLayoutOfCardsOfUser(int position) {
         mhashColorSelected.put(position, R.drawable.custom_themecard_item_selected);
         mhashBtnVisibility.put(position, View.INVISIBLE);
     }
 
+    @Deprecated
     private boolean hasSelectedLessThanMax() {
         Theme theme = null;
         try {
@@ -182,7 +178,7 @@ public class ThemeCardAdapter extends BaseAdapter {
         }
     }
 
-    private int selectedCardsByUser() {
+    public int selectedCardsByUser() {
         for (Card card : cards) {
             if (card.getSelector() == AccountSettings.getLoggedInUser().getUserId()) {
                 incrementSelectedCards();
@@ -212,6 +208,7 @@ public class ThemeCardAdapter extends BaseAdapter {
         TextView description;
         Button select;
         RelativeLayout cardLayout;
+
         public ViewHolder(View view) {
             title = (TextView) view.findViewById(R.id.carditem_txt_title);
             description = (TextView) view.findViewById(R.id.carditem_txt_description);

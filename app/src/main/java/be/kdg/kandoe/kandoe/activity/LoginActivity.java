@@ -3,13 +3,12 @@ package be.kdg.kandoe.kandoe.activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 
 import be.kdg.kandoe.kandoe.R;
 import be.kdg.kandoe.kandoe.application.KandoeApplication;
@@ -59,9 +58,9 @@ public class LoginActivity extends AppCompatActivity {
                 mThread = new Thread() {
                     @Override
                     public void run() {
-                            synchronized (this) {
-                                login();
-                            }
+                        synchronized (this) {
+                            login();
+                        }
                     }
                 };
                 mThread.start();

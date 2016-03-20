@@ -1,11 +1,6 @@
 package be.kdg.kandoe.kandoe.util;
 
-import android.content.Intent;
-import android.widget.Toast;
-
-import be.kdg.kandoe.kandoe.activity.OrganisationActivity;
 import be.kdg.kandoe.kandoe.application.KandoeApplication;
-import be.kdg.kandoe.kandoe.dom.Token;
 import be.kdg.kandoe.kandoe.dom.User;
 import be.kdg.kandoe.kandoe.exception.AbstractExceptionCallback;
 import be.kdg.kandoe.kandoe.exception.UserException;

@@ -15,7 +15,6 @@ public class Organisation implements Serializable {
     private List<Theme> themes;
 
 
-
     public Integer getOrganisationId() {
         return organisationId;
     }

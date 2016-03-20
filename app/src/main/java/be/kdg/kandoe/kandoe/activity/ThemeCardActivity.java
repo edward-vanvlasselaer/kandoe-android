@@ -9,10 +9,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-
-import org.json.JSONStringer;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,17 +17,13 @@ import be.kdg.kandoe.kandoe.adapter.ThemeCardAdapter;
 import be.kdg.kandoe.kandoe.application.KandoeApplication;
 import be.kdg.kandoe.kandoe.dom.Card;
 import be.kdg.kandoe.kandoe.dom.Theme;
-import be.kdg.kandoe.kandoe.dom.User;
 import be.kdg.kandoe.kandoe.exception.AbstractExceptionCallback;
 import be.kdg.kandoe.kandoe.util.GenericSharedStorage;
-import be.kdg.kandoe.kandoe.util.SharedStorage;
 import retrofit.Call;
 import retrofit.Response;
 import retrofit.Retrofit;
 
-/**
- * Created by claudiu on 15/03/16.
- */
+
 public class ThemeCardActivity extends AppCompatActivity {
     private static Theme currentTheme;
     private ThemeCardAdapter themeCardAdapter;
@@ -40,14 +32,14 @@ public class ThemeCardActivity extends AppCompatActivity {
     private Button startBtn;
 
     public static Theme getCurrentTheme() {
-        if(currentTheme!=null)return currentTheme;
-        currentTheme = new GenericSharedStorage<>(KandoeApplication.app,Theme.class).getObject("currentTheme");
+        if (currentTheme != null) return currentTheme;
+        currentTheme = new GenericSharedStorage<>(KandoeApplication.app, Theme.class).getObject("currentTheme");
         return currentTheme;
     }
 
     public static void setCurrentTheme(Theme currentTheme) {
         ThemeCardActivity.currentTheme = currentTheme;
-        new GenericSharedStorage<>(KandoeApplication.app,Theme.class).setObject("currentTheme", currentTheme);
+        new GenericSharedStorage<>(KandoeApplication.app, Theme.class).setObject("currentTheme", currentTheme);
     }
 
     @Override
@@ -85,8 +77,6 @@ public class ThemeCardActivity extends AppCompatActivity {
         listView.setAdapter(themeCardAdapter);
 
         initListener();
-
-
     }
 
     private void initListener() {
@@ -94,20 +84,19 @@ public class ThemeCardActivity extends AppCompatActivity {
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //if (hasSelectedMoreThanMin()) {
+                if (hasSelectedMoreThanMin()) {
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    //organisationIntent.putExtra("uri",uri.toString());
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("theme", getCurrentTheme());
                     getApplicationContext().startActivity(intent);
-                //}
+                }
             }
         });
 
     }
 
     private boolean hasSelectedMoreThanMin() {
-        if (getCurrentTheme().getCircle().getMinCardsToSelect() == null || getThemeCardAdapter().getCardsSelected() >= getCurrentTheme().getCircle().getMinCardsToSelect()) {
+        if (getCurrentTheme().getCircle().getMinCardsToSelect() == null || getThemeCardAdapter().selectedCardsByUser() >= getCurrentTheme().getCircle().getMinCardsToSelect()) {
             getThemeCardAdapter().setGo(true);
             return true;
         } else {

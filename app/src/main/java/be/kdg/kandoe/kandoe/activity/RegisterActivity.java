@@ -3,14 +3,12 @@ package be.kdg.kandoe.kandoe.activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import org.json.JSONObject;
 
 import be.kdg.kandoe.kandoe.R;
 import be.kdg.kandoe.kandoe.application.KandoeApplication;
@@ -19,7 +17,6 @@ import be.kdg.kandoe.kandoe.dom.User;
 import be.kdg.kandoe.kandoe.exception.AbstractExceptionCallback;
 import be.kdg.kandoe.kandoe.util.AccountSettings;
 import retrofit.Call;
-import retrofit.Callback;
 import retrofit.Response;
 import retrofit.Retrofit;
 
@@ -86,7 +83,8 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
-    private void register(User userRegister){
+
+    private void register(User userRegister) {
         Call<Token> call = KandoeApplication.getUserApi().registerUser(userRegister);
         call.enqueue(new AbstractExceptionCallback<Token>() {
             @Override
@@ -119,8 +117,9 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
-    private void killDialog(){
-        if(dialog!=null)
+
+    private void killDialog() {
+        if (dialog != null)
             dialog.hide();
         dialog = null;
     }

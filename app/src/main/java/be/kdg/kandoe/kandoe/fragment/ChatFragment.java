@@ -1,8 +1,5 @@
 package be.kdg.kandoe.kandoe.fragment;
 
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -19,14 +16,11 @@ import java.util.List;
 
 import be.kdg.kandoe.kandoe.R;
 import be.kdg.kandoe.kandoe.activity.ThemeCardActivity;
-import be.kdg.kandoe.kandoe.adapter.CardAdapter;
 import be.kdg.kandoe.kandoe.adapter.ChatAdapter;
 import be.kdg.kandoe.kandoe.application.KandoeApplication;
 import be.kdg.kandoe.kandoe.dom.Chat;
-import be.kdg.kandoe.kandoe.dom.User;
 import be.kdg.kandoe.kandoe.exception.AbstractExceptionCallback;
 import retrofit.Call;
-import retrofit.Callback;
 import retrofit.Response;
 import retrofit.Retrofit;
 
@@ -39,12 +33,11 @@ public class ChatFragment extends Fragment {
     private Runnable backgroundService;
     private Handler handler;
     private Fragment fragment;
-    private int interval=2000;
+    private int interval = 2000;
 
     public ChatFragment() {
         fragment = this;
         createBackgroundService();
-
     }
 
     private void createBackgroundService() {
@@ -61,15 +54,12 @@ public class ChatFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-       // handler.postDelayed(backgroundService, interval);
-
     }
 
 
     @Override
     public void onPause() {
         super.onPause();
-       // handler.removeCallbacks(backgroundService);
     }
 
 
@@ -78,24 +68,16 @@ public class ChatFragment extends Fragment {
         super.setMenuVisibility(menuVisible);
 
         if (fragment.getContext() != null)
-
-        if (menuVisible) {
-           handler.postDelayed(backgroundService, interval);
-            Toast.makeText(fragment.getContext(), "onFocusChange() " + menuVisible, Toast.LENGTH_SHORT).show();
-
-        } else {
-            handler.removeCallbacks(backgroundService);
-            Toast.makeText(fragment.getContext(), "onFocusChange() " + menuVisible, Toast.LENGTH_SHORT).show();
-
-            //interval=10000;
-            //handler.postDelayed(backgroundService, interval);
-
-        }
+            if (menuVisible) {
+                handler.postDelayed(backgroundService, interval);
+            } else {
+                handler.removeCallbacks(backgroundService);
+            }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = (View) inflater.inflate(R.layout.fragment_chat, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_chat, container, false);
         ListView listView = (ListView) rootView.findViewById(R.id.chat_list);
         chatMessage = (TextView) rootView.findViewById(R.id.chat_txt_message);
         sendBtn = (Button) rootView.findViewById(R.id.chat_btn_send);
@@ -130,13 +112,8 @@ public class ChatFragment extends Fragment {
                 }
             }
         });
-        //TODO: werkt ni
-        listView.setSelection(getChatAdapter().getCount()-1);
-
-
+        listView.setSelection(getChatAdapter().getCount() - 1);
         getChatMessages();
-
-        // createBackgroundService();
 
         return rootView;
     }
@@ -157,7 +134,7 @@ public class ChatFragment extends Fragment {
                         newList.add(chat);
                     }
                     getChatAdapter().setChatMessages(newList);
-                    //getChatAdapter().notifyDataSetChanged();
+
                 }
             }
         });

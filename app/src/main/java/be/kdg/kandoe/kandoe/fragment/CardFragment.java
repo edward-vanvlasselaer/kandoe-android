@@ -9,6 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import be.kdg.kandoe.kandoe.R;
 import be.kdg.kandoe.kandoe.activity.ThemeCardActivity;
 import be.kdg.kandoe.kandoe.adapter.CardAdapter;
@@ -21,9 +24,6 @@ import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
 import retrofit.Retrofit;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class CardFragment extends Fragment {
     private static CardFragment instance;
@@ -111,6 +111,7 @@ public class CardFragment extends Fragment {
             e.printStackTrace();
         }
     }
+
     public CardAdapter getCardAdapter() {
         return cardAdapter;
     }

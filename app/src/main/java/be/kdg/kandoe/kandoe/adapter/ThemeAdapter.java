@@ -12,9 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import be.kdg.kandoe.kandoe.R;
-import be.kdg.kandoe.kandoe.activity.MainActivity;
-import be.kdg.kandoe.kandoe.dom.Theme;
 import be.kdg.kandoe.kandoe.activity.ThemeCardActivity;
+import be.kdg.kandoe.kandoe.dom.Theme;
 
 import static android.view.LayoutInflater.from;
 
@@ -22,20 +21,22 @@ import static android.view.LayoutInflater.from;
  * Created by claudiu on 15/03/16.
  */
 public class ThemeAdapter extends BaseAdapter {
-    private static ThemeAdapter instance=null;
+    private static ThemeAdapter instance = null;
     private final Context context;
     private List<Theme> themes;
 
-    public ThemeAdapter(Context context){
-        this.context=context;
-        instance=this;
-        this.themes=new ArrayList<>();
+    public ThemeAdapter(Context context) {
+        this.context = context;
+        instance = this;
+        this.themes = new ArrayList<>();
     }
 
-    public static ThemeAdapter getInstance(){return instance;}
+    public static ThemeAdapter getInstance() {
+        return instance;
+    }
 
-    public void setThemes(List<Theme> themes){
-        this.themes=themes;
+    public void setThemes(List<Theme> themes) {
+        this.themes = themes;
         notifyDataSetChanged();
     }
 
@@ -78,7 +79,7 @@ public class ThemeAdapter extends BaseAdapter {
                 themeCardFragment.setArguments(bundle);*/
                 ThemeCardActivity.setCurrentTheme(theme);
 
-                Intent intent=new Intent(context, ThemeCardActivity.class);
+                Intent intent = new Intent(context, ThemeCardActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("theme", theme);
                 context.startActivity(intent);

@@ -1,7 +1,5 @@
 package be.kdg.kandoe.kandoe.dom;
 
-import android.content.Intent;
-
 import java.io.Serializable;
 import java.util.List;
 

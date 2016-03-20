@@ -1,11 +1,10 @@
 package be.kdg.kandoe.kandoe.util;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
-
-import be.kdg.kandoe.kandoe.dom.Theme;
 
 /**
  * Created by Edward on 19/03/2016.
@@ -17,8 +16,8 @@ public class GenericSharedStorage<T> {
 
     public GenericSharedStorage(Application activity, Class<T> clazz) {
         this.clazz = clazz;
-        editor = activity.getSharedPreferences("STORAGE", activity.MODE_PRIVATE).edit();
-        prefs = activity.getSharedPreferences("STORAGE", activity.MODE_PRIVATE);
+        editor = activity.getSharedPreferences("STORAGE", Context.MODE_PRIVATE).edit();
+        prefs = activity.getSharedPreferences("STORAGE", Context.MODE_PRIVATE);
     }
 
     public void setValue(String key, String value) {

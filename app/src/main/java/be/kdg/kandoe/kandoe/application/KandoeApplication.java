@@ -10,7 +10,6 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.squareup.okhttp.logging.HttpLoggingInterceptor;
 
-
 import java.io.IOException;
 
 import be.kdg.kandoe.kandoe.service.CardApi;
@@ -22,40 +21,28 @@ import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 
 
-public class KandoeApplication extends Application{
-    private Retrofit retrofit;
-    private static String userToken=null;
+public class KandoeApplication extends Application {
+    public static Application app;
+    private static String userToken = null;
 
     private static OrganisationApi organisationApi;
     private static CardApi cardApi;
     private static UserApi userApi;
     private static CircleApi circleApi;
-    public static Application app;
+    private Retrofit retrofit;
 
     public static String getUserToken() {
-        if(userToken!=null)return userToken;
+        if (userToken != null) return userToken;
         userToken = new SharedStorage(app).getValue("token");
         return userToken;
     }
 
     public static void setUserToken(String userToken) {
         KandoeApplication.userToken = userToken;
-        new SharedStorage(app).setValue("token",userToken);
+        new SharedStorage(app).setValue("token", userToken);
     }
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        app = this;
-        Iconify.with(new FontAwesomeModule());
-        createApi();
-        userApi = createUserApi();
-        organisationApi = createOrganisationApi();
-        cardApi = createCardApi();
-        circleApi=createCircleApi();
-    }
-
-    public static UserApi getUserApi(){
+    public static UserApi getUserApi() {
         return userApi;
     }
 
@@ -67,8 +54,20 @@ public class KandoeApplication extends Application{
         return cardApi;
     }
 
-    public static CircleApi getCircleApi(){
+    public static CircleApi getCircleApi() {
         return circleApi;
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        app = this;
+        Iconify.with(new FontAwesomeModule());
+        createApi();
+        userApi = createUserApi();
+        organisationApi = createOrganisationApi();
+        cardApi = createCardApi();
+        circleApi = createCircleApi();
     }
 
     private void createApi() {
@@ -82,15 +81,15 @@ public class KandoeApplication extends Application{
             public Response intercept(Chain chain) throws IOException {
                 Request request;
 
-                if(getUserToken() != null)
+                if (getUserToken() != null)
                     request = chain.request()
-                                .newBuilder()
-                                .addHeader("X-Auth-Token", getUserToken())
-                                .build();
+                            .newBuilder()
+                            .addHeader("X-Auth-Token", getUserToken())
+                            .build();
                 else
                     request = chain.request()
-                                    .newBuilder()
-                                    .build();
+                            .newBuilder()
+                            .build();
 
                 return chain.proceed(request);
             }
@@ -98,26 +97,26 @@ public class KandoeApplication extends Application{
         client.interceptors().add(logging);
 
         retrofit = new Retrofit.Builder()
-                //.baseUrl("http://dolha.in:8080")
-                .baseUrl("http://62.235.39.49:8080")
+                .baseUrl("http://dolha.in:8080") //als dit niet werkt, pak dan de onderste, kan aan DNS liggen
+                //.baseUrl("http://62.235.39.49:8080")
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
     }
 
-    private UserApi createUserApi(){
+    private UserApi createUserApi() {
         return retrofit.create(UserApi.class);
     }
 
-    private OrganisationApi createOrganisationApi(){
+    private OrganisationApi createOrganisationApi() {
         return retrofit.create(OrganisationApi.class);
     }
 
-    private CardApi createCardApi(){
+    private CardApi createCardApi() {
         return retrofit.create(CardApi.class);
     }
 
-    private CircleApi createCircleApi(){
+    private CircleApi createCircleApi() {
         return retrofit.create(CircleApi.class);
     }
 }

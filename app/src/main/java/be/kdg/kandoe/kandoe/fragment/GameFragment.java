@@ -1,12 +1,9 @@
 package be.kdg.kandoe.kandoe.fragment;
 
-import android.app.ActionBar;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,14 +15,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
-import android.widget.GridLayout;
-import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,7 +85,7 @@ public class GameFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         rootView = (ViewGroup) inflater.inflate(R.layout.fragment_game, container, false);
-        gameView = (View) rootView.findViewById(R.id.game_background);
+        gameView = rootView.findViewById(R.id.game_background);
         ViewTreeObserver viewTreeObserver = rootView.getViewTreeObserver();
         if (viewTreeObserver.isAlive()) {
             viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -108,8 +102,8 @@ public class GameFragment extends Fragment {
                         tableStarts[i - 1] = marginCard + (j * marginCard);
                         j++;
                     }
-                    setupGrid2();
-                    //drawCards2();
+                    //setupGrid2();
+                    drawCards();
                 }
             });
         }
@@ -125,12 +119,13 @@ public class GameFragment extends Fragment {
         return rootView;
     }
 
+    @Deprecated
     public void addCardToCircleSet(Card card) {
         circleCards.add(card);
         drawCards();
     }
 
-
+    @Deprecated
     public void removeCardFromCircleSet(Card card) {
         circleCards.remove(card);
         drawCards();
@@ -199,60 +194,68 @@ public class GameFragment extends Fragment {
         throw new RuntimeException("Cannot move card for some reason.");
     }
 
-    /* private void setupGrid(){
-         TableLayout table = (TableLayout) rootView.findViewById(R.id.game_table);
-         TableRow row1 = (TableRow) table.findViewById(R.id.game_table_row1);
-         TableRow row2 = (TableRow) table.findViewById(R.id.game_table_row2);
-         TableRow row3 = (TableRow) table.findViewById(R.id.game_table_row3);
-         TableRow row4 = (TableRow) table.findViewById(R.id.game_table_row4);
-         TableRow row5 = (TableRow) table.findViewById(R.id.game_table_row5);
-         TableRow row6 = (TableRow) table.findViewById(R.id.game_table_row6);
-         TableRow row7 = (TableRow) table.findViewById(R.id.game_table_row7);
-         TableRow row8 = (TableRow) table.findViewById(R.id.game_table_row8);
-         TableRow row9 = (TableRow) table.findViewById(R.id.game_table_row9);
+    @Deprecated
+    private void setupGrid() {
+        TableLayout table = (TableLayout) rootView.findViewById(R.id.game_table);
+//         TableRow row1 = (TableRow) table.findViewById(R.id.game_table_row1);
+//         TableRow row2 = (TableRow) table.findViewById(R.id.game_table_row2);
+//         TableRow row3 = (TableRow) table.findViewById(R.id.game_table_row3);
+//         TableRow row4 = (TableRow) table.findViewById(R.id.game_table_row4);
+//         TableRow row5 = (TableRow) table.findViewById(R.id.game_table_row5);
+//         TableRow row6 = (TableRow) table.findViewById(R.id.game_table_row6);
+//         TableRow row7 = (TableRow) table.findViewById(R.id.game_table_row7);
+//         TableRow row8 = (TableRow) table.findViewById(R.id.game_table_row8);
+//         TableRow row9 = (TableRow) table.findViewById(R.id.game_table_row9);
 
-         rowlist = new ArrayList<TableRow>();
-         rowlist.add(row1);
-         rowlist.add(row2);
-         rowlist.add(row3);
-         rowlist.add(row4);
-         rowlist.add(row5);
-         rowlist.add(row6);
-         rowlist.add(row7);
-         rowlist.add(row8);
-         rowlist.add(row9);
+        rowlist = new ArrayList<TableRow>();
+//        rowlist.add(row1);
+//        rowlist.add(row2);
+//        rowlist.add(row3);
+//        rowlist.add(row4);
+//        rowlist.add(row5);
+//        rowlist.add(row6);
+//        rowlist.add(row7);
+//        rowlist.add(row8);
+//        rowlist.add(row9);
 
-         int rows = currentCircle.getTotalRounds();
-         int columns = 20;
-         buttonMatrix = new ImageButton[rows][columns];
+        int rows = currentCircle.getTotalRounds();
+        int columns = 20;
+        buttonMatrix = new ImageButton[rows][columns];
 
-         int index = 0;
-         for (int i = 0; i < rows; i++) {
-             for (int j = 0; j < columns; j++) {
-                 Button btn = new Button(this.getContext());
-                 btn.setBackgroundResource(R.drawable.test_icon);
-                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(20, viewHeight/9);
-                 //debug only
-                 Random rndCol = new Random();
-                 int color = Color.argb(255, rndCol.nextInt(256), rndCol.nextInt(256), rndCol.nextInt(256));
-                 btn.setBackgroundColor(color);
+        int index = 0;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                Button btn = new Button(this.getContext());
+                btn.setBackgroundResource(R.drawable.test_icon);
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(20, viewHeight / 9);
+                //debug only
+                Random rndCol = new Random();
+                int color = Color.argb(255, rndCol.nextInt(256), rndCol.nextInt(256), rndCol.nextInt(256));
+                btn.setBackgroundColor(color);
 
-                 btn.setId(newid(index));
-                 buttonMatrix[i][j] = new ImageButton(this.getContext());
+                btn.setId(newid(index));
+                buttonMatrix[i][j] = new ImageButton(this.getContext());
 
-                 TableRow row = rowlist.get(i);
-                 row.addView(btn,params);
-             }
-             TableRow row = rowlist.get(i);
-             table.addView(row);
-         }
-         background.addView(table);
-         rootView.addView(background);
-     }*/
+                TableRow row = rowlist.get(i);
+                row.addView(btn, params);
+            }
+            TableRow row = rowlist.get(i);
+            table.addView(row);
+        }
+        background.addView(table);
+        rootView.addView(background);
+    }
+
+    @Deprecated
     private void setupGrid2() {
-
         gridTable = (TableLayout) rootView.findViewById(R.id.game_table);
-        TableRow row = (TableRow) gridTable.findViewById(R.id.game_table_row1);
+        TableRow row1 = (TableRow) gridTable.findViewById(R.id.game_table_row1);
+        TableRow row2 = (TableRow) gridTable.findViewById(R.id.game_table_row2);
+
+
+        List<TableRow> rowList = new ArrayList<>();
+        rowList.add(row1);
+        rowList.add(row2);
 
         ImageButton btn1 = (ImageButton) gameView.findViewById(R.id.img_r1c1);
         ImageButton btn2 = (ImageButton) gameView.findViewById(R.id.img_r1c2);
@@ -261,25 +264,41 @@ public class GameFragment extends Fragment {
         ImageButton btn5 = (ImageButton) gameView.findViewById(R.id.img_r2c2);
         ImageButton btn6 = (ImageButton) gameView.findViewById(R.id.img_r2c3);
 
-        List<ImageButton> list = new ArrayList<ImageButton>();
-        list.add(btn1);
-        list.add(btn2);
-        list.add(btn3);
-        list.add(btn4);
-        list.add(btn5);
-        list.add(btn6);
+        List<ImageButton> buttonsOfRow1 = new ArrayList<ImageButton>();
+        List<ImageButton> buttonsOfRow2 = new ArrayList<ImageButton>();
+        buttonsOfRow1.add(btn1);
+        buttonsOfRow1.add(btn2);
+        buttonsOfRow1.add(btn3);
 
-        // for (ImageButton btn : list){
-        row.removeView(btn1);
-        btn1 = new ImageButton(this.getContext());
-        btn1.setBackgroundResource(R.drawable.test_icon);
-        TableRow.LayoutParams params = new TableRow.LayoutParams(150, 150);
-        btn1.setLayoutParams(params);
-        //row.removeAllViews();
-        row.addView(btn1, params);
-        //}
+        buttonsOfRow2.add(btn4);
+        buttonsOfRow2.add(btn5);
+        buttonsOfRow2.add(btn6);
+
+
+//        for (ImageButton btn : list){
+//            row.removeView(btn);
+//            btn1 = new ImageButton(this.getContext());
+//            //btn.setBackgroundResource(R.drawable.test_icon);
+//            TableRow.LayoutParams params = new TableRow.LayoutParams(150, 150);
+//            btn1.setLayoutParams(params);
+//            row.addView(btn, params);
+//        }
+
+        for (int i = 0; i < rowList.size(); i++) {
+            for (int j = 0; j < buttonsOfRow1.size(); j++) {
+                rowList.get(i).removeView(buttonsOfRow1.get(j));
+                TableRow.LayoutParams params = new TableRow.LayoutParams(viewWidth / 10, viewWidth / 9);
+                rowList.get(i).addView(buttonsOfRow1.get(j), params);
+            }
+            for (int j = 0; j < buttonsOfRow2.size(); j++) {
+                rowList.get(i).removeView(buttonsOfRow2.get(j));
+                TableRow.LayoutParams params = new TableRow.LayoutParams(viewWidth / 10, viewWidth / 9);
+                rowList.get(i).addView(buttonsOfRow2.get(j), params);
+            }
+        }
     }
 
+    @Deprecated
     private int newid(int index) {
         return index++;
     }
@@ -324,6 +343,7 @@ public class GameFragment extends Fragment {
         }
     }
 
+    @Deprecated
     private void drawCards2() {
         gridTable = (TableLayout) rootView.findViewById(R.id.game_table);
         gridTable.removeAllViews();
@@ -354,7 +374,6 @@ public class GameFragment extends Fragment {
                 } catch (CardException e) {
                     e.printStackTrace();
                 }
-                Toast.makeText(getActivity(), "button clicked" + button.getId(), Toast.LENGTH_SHORT).show();
             }
         };
     }

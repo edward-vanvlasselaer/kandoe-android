@@ -10,7 +10,7 @@ public class Card implements Serializable {
     private String cardName;
     private String description;
     private String imageUrl;
-    private Integer score=0;
+    private Integer score = 0;
     private Integer userId;
     private int circleId;
     private int selectorId;

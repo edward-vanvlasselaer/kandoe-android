@@ -1,12 +1,6 @@
 package be.kdg.kandoe.kandoe.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -26,30 +20,25 @@ import be.kdg.kandoe.kandoe.dom.Theme;
 import be.kdg.kandoe.kandoe.exception.AbstractExceptionCallback;
 import be.kdg.kandoe.kandoe.fragment.GameFragment;
 import retrofit.Call;
-import retrofit.Callback;
 import retrofit.Response;
 import retrofit.Retrofit;
 
 import static android.view.LayoutInflater.from;
 
-/**
- * Created by Edward on 14/03/2016.
- */
+
 public class CardAdapter extends BaseAdapter {
+    private static CardAdapter instance = null;
     private final Context context;
     private List<Card> cards;
-    //public Card selectedCard;
-
-    private static CardAdapter instance = null;
-
-    public static CardAdapter getInstance() {
-        return instance;
-    }
 
     public CardAdapter(Context context) {
         this.context = context;
         instance = this;
         this.cards = new ArrayList<>();
+    }
+
+    public static CardAdapter getInstance() {
+        return instance;
     }
 
     public void setCards(List<Card> cards) {
@@ -78,7 +67,7 @@ public class CardAdapter extends BaseAdapter {
         final Card card = getItem(position);
         Theme theme = null;
         try {
-             theme= ThemeCardActivity.getCurrentTheme();
+            theme = ThemeCardActivity.getCurrentTheme();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -95,7 +84,6 @@ public class CardAdapter extends BaseAdapter {
 
         viewHolder.title.setText(card.getCardName());
         viewHolder.description.setText(card.getDescription());
-        //TODO:weg doen is om score ff te zien
 
         final Theme finalTheme = theme;
         viewHolder.upvote.setOnClickListener(new View.OnClickListener() {
@@ -108,9 +96,9 @@ public class CardAdapter extends BaseAdapter {
                     public void onResponse(Response response, Retrofit retrofit) {
                         //viewHolder.cardLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.md_grey_600));
                         if (card.getScore() == null) {
-                          //  viewHolder.title.setText(String.valueOf(1));
+                            //  viewHolder.title.setText(String.valueOf(1));
                         } else {
-                           // viewHolder.title.setText(card.getScore() + 1);
+                            // viewHolder.title.setText(card.getScore() + 1);
                         }
                     }
 
@@ -120,11 +108,12 @@ public class CardAdapter extends BaseAdapter {
         });
         return convertView;
     }
+
     public View getViewByPosition(int pos, ListView listView) {
         final int firstListItemPosition = listView.getFirstVisiblePosition();
         final int lastListItemPosition = firstListItemPosition + listView.getChildCount() - 1;
 
-        if (pos < firstListItemPosition || pos > lastListItemPosition ) {
+        if (pos < firstListItemPosition || pos > lastListItemPosition) {
             return listView.getAdapter().getView(pos, null, listView);
         } else {
             final int childIndex = pos - firstListItemPosition;

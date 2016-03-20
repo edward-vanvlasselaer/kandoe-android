@@ -1,7 +1,5 @@
 package be.kdg.kandoe.kandoe.service;
 
-import org.json.JSONObject;
-
 import be.kdg.kandoe.kandoe.dom.Token;
 import be.kdg.kandoe.kandoe.dom.User;
 import retrofit.Call;
@@ -31,6 +29,7 @@ public interface UserApi {
 
     /**
      * TO BE IMPLEMENTED
+     *
      * @return empty response body - can contain HTTP.OK (200) response.
      */
     @GET("/api/user/logout")
@@ -38,6 +37,7 @@ public interface UserApi {
 
     /**
      * registers and automatically logins the user.
+     *
      * @param user to be registered
      * @return token Object to authenticate the user during the usage of the application
      */

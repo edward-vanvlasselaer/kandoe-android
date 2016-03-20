@@ -2,7 +2,6 @@ package be.kdg.kandoe.kandoe.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -14,14 +13,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import be.kdg.kandoe.kandoe.R;
-import be.kdg.kandoe.kandoe.dom.Organisation;
 import be.kdg.kandoe.kandoe.activity.ThemeActivity;
+import be.kdg.kandoe.kandoe.dom.Organisation;
 
 import static android.view.LayoutInflater.from;
 
-/**
- * Created by claudiu on 15/03/16.
- */
+
 public class OrganisationAdapter extends BaseAdapter {
     private static OrganisationAdapter instance = null;
     private final Context context;
@@ -77,7 +74,7 @@ public class OrganisationAdapter extends BaseAdapter {
         viewHolder.join.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectedOrganisation=new Organisation();
+                selectedOrganisation = new Organisation();
                 selectedOrganisation.setOrganisationId(organisation.getOrganisationId());
                 selectedOrganisation.setOrganisationName(organisation.getOrganisationName());
                 selectedOrganisation.setImageUrl(organisation.getImageUrl());

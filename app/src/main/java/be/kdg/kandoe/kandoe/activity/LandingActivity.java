@@ -20,9 +20,9 @@ public class LandingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing);
 
-        btnGuest = (Button)findViewById(R.id.landing_btn_guest);
-        btnRegister = (Button)findViewById(R.id.landing_btn_register);
-        btnLogin = (Button)findViewById(R.id.landing_btn_login);
+        btnGuest = (Button) findViewById(R.id.landing_btn_guest);
+        btnRegister = (Button) findViewById(R.id.landing_btn_register);
+        btnLogin = (Button) findViewById(R.id.landing_btn_login);
 
         initListeners();
     }

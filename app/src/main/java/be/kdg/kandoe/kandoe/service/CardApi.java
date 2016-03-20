@@ -1,7 +1,6 @@
 package be.kdg.kandoe.kandoe.service;
 
 import java.util.List;
-import java.util.Objects;
 
 import be.kdg.kandoe.kandoe.dom.Card;
 import retrofit.Call;
@@ -38,7 +37,7 @@ public interface CardApi {
 
     /**
      * @param themeId identifier of the theme.
-     * @param card to be added to the circle.
+     * @param card    to be added to the circle.
      * @return empty response body - can contain HTTP.OK (200) response.
      */
     @POST("/api/theme/{themeId}/card")

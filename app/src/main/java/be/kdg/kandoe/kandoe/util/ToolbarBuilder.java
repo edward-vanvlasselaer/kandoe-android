@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.FontAwesomeIcons;
@@ -19,10 +18,7 @@ import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
-import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
-import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
-import com.mikepenz.materialdrawer.model.interfaces.Nameable;
 import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
 import com.mikepenz.materialdrawer.util.DrawerImageLoader;
 import com.squareup.picasso.Picasso;
@@ -30,8 +26,6 @@ import com.squareup.picasso.Picasso;
 import be.kdg.kandoe.kandoe.R;
 import be.kdg.kandoe.kandoe.activity.LandingActivity;
 import be.kdg.kandoe.kandoe.activity.MainActivity;
-import be.kdg.kandoe.kandoe.activity.OrganisationActivity;
-import be.kdg.kandoe.kandoe.dom.User;
 
 /**
  * Created by Edward on 17/03/2016.
@@ -98,7 +92,7 @@ public class ToolbarBuilder {
     }
 
 
-    public static Drawer.OnDrawerItemClickListener gotoFragmentListener(final int fragmentPositionOnViewPager){
+    public static Drawer.OnDrawerItemClickListener gotoFragmentListener(final int fragmentPositionOnViewPager) {
         return new Drawer.OnDrawerItemClickListener() {
             @Override
             public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
@@ -107,7 +101,8 @@ public class ToolbarBuilder {
             }
         };
     }
-    public static Drawer.OnDrawerItemClickListener logOutActivity(final Activity activity){
+
+    public static Drawer.OnDrawerItemClickListener logOutActivity(final Activity activity) {
         return new Drawer.OnDrawerItemClickListener() {
             @Override
             public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {

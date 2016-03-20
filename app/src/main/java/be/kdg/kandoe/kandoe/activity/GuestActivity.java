@@ -9,28 +9,22 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import be.kdg.kandoe.kandoe.R;
-import be.kdg.kandoe.kandoe.adapter.CustomPagerAdapter;
 import be.kdg.kandoe.kandoe.application.KandoeApplication;
-import be.kdg.kandoe.kandoe.dom.Circle;
 import be.kdg.kandoe.kandoe.dom.Theme;
 import be.kdg.kandoe.kandoe.dom.Token;
 import be.kdg.kandoe.kandoe.dom.User;
 import be.kdg.kandoe.kandoe.exception.AbstractExceptionCallback;
 import be.kdg.kandoe.kandoe.util.AccountSettings;
 import retrofit.Call;
-import retrofit.Callback;
 import retrofit.Response;
 import retrofit.Retrofit;
 
-/**
- * Created by claudiu on 17/03/16.
- */
+
 public class GuestActivity extends AppCompatActivity {
     private EditText nameInput;
     private EditText linkInput;
     private Button btnLogin;
 
-    private View tempview;
     private boolean noCircle = false;
 
     @Override
@@ -45,7 +39,7 @@ public class GuestActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(getApplicationContext(), "YES!", Toast.LENGTH_SHORT).show();
+
                 if (!noCircle) {
                     User guest = new User();
                     guest.setFirstName(nameInput.getText().toString());
@@ -60,23 +54,18 @@ public class GuestActivity extends AppCompatActivity {
                                 @Override //LOGIN
                                 public void onResponse(Response<User> response, Retrofit retrofit) {
                                     AccountSettings.setLoggedInUser(response.body());
-                                    // Toast.makeText(getBaseContext(), "Hi, " + AccountSettings.getLoggedInUser().getFirstName() + "!", Toast.LENGTH_SHORT).show();
-                                    // Intent myintent = new Intent(GuestActivity.this, MainActivity.class);
-                                    // GuestActivity.this.startActivity(myintent);
                                     callCircle();
-                                    //finish();
+
                                 }
                             });
                         }
                     });
                 } else {
                     callCircle();
-
                 }
             }
         });
 
-        //initListeners();
     }
 
     private void callCircle() {
@@ -86,7 +75,7 @@ public class GuestActivity extends AppCompatActivity {
             public void onResponse(Response<Theme> response, Retrofit retrofit) {
                 if (response.body() == null) {
                     noCircle = true;
-                    Toast.makeText(getApplicationContext(),"Invalid invite link", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Invalid invite link", Toast.LENGTH_SHORT).show();
 
                 } else {
                     ThemeCardActivity.setCurrentTheme(response.body());

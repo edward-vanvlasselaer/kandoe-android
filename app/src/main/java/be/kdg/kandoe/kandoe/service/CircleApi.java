@@ -26,7 +26,7 @@ public interface CircleApi {
 
     /**
      * @param circleId identifier of the circle.
-     * @param card identifier of the card.
+     * @param card     identifier of the card.
      * @return empty response body - can contain HTTP.OK (200) response.
      */
     @POST("/api/circle/{circleId}/vote")
@@ -34,7 +34,7 @@ public interface CircleApi {
 
     /**
      * @param circleId identifier of the circle.
-     * @param chat that has been updated/changed.
+     * @param chat     that has been updated/changed.
      * @return empty response body - can contain HTTP.OK (200) response.
      */
     @POST("/api/circle/{circleId}/chat")

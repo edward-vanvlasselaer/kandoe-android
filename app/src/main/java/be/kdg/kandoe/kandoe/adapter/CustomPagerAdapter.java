@@ -1,8 +1,6 @@
 package be.kdg.kandoe.kandoe.adapter;
 
-/**
- * Created by Edward on 09/03/2016.
- */
+
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -10,7 +8,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import be.kdg.kandoe.kandoe.fragment.CardFragment;
 import be.kdg.kandoe.kandoe.fragment.ChatFragment;
 import be.kdg.kandoe.kandoe.fragment.GameFragment;
-import be.kdg.kandoe.kandoe.activity.ThemeCardActivity;
 
 public class CustomPagerAdapter extends FragmentStatePagerAdapter {
     public int mNumOfTabs;

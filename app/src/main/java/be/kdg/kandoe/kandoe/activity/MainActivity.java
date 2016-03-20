@@ -1,36 +1,28 @@
 package be.kdg.kandoe.kandoe.activity;
 
-import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v13.app.FragmentPagerAdapter;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.SimpleOnPageChangeListener;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.FontAwesomeIcons;
-import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
-import com.mikepenz.materialdrawer.icons.MaterialDrawerFont;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
-import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.mikepenz.materialdrawer.model.interfaces.Nameable;
 import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
 import com.mikepenz.materialdrawer.util.DrawerImageLoader;
@@ -39,7 +31,6 @@ import com.squareup.picasso.Picasso;
 import be.kdg.kandoe.kandoe.R;
 import be.kdg.kandoe.kandoe.adapter.CustomPagerAdapter;
 import be.kdg.kandoe.kandoe.dom.Theme;
-import be.kdg.kandoe.kandoe.dom.User;
 import be.kdg.kandoe.kandoe.util.AccountSettings;
 import be.kdg.kandoe.kandoe.util.ToolbarBuilder;
 
@@ -57,8 +48,8 @@ public class MainActivity extends AppCompatActivity {
         instance = this;
     }
 
-    public static synchronized MainActivity getInstance(){
-        if(instance==null)
+    public static synchronized MainActivity getInstance() {
+        if (instance == null)
             throw new RuntimeException("MainActivity doesn't exist for some reason");
         return instance;
     }
@@ -69,19 +60,17 @@ public class MainActivity extends AppCompatActivity {
         instance = this;
         setContentView(R.layout.activity_main);
 
-         view = (View) findViewById(R.id.main_base);
-        //initTabLayout(); --> needed?
-//        toolbar =(Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
+        view = findViewById(R.id.main_base);
+
         toolbar = (Toolbar) this.findViewById(R.id.main_toolbar);
-        toolbar.setTitle("Kandoe - " + this.getClass().getSimpleName());
+        toolbar.setTitle("Kandoe");
         initViewPager();
 
-        drawer = ToolbarBuilder.makeDefaultDrawer(this,toolbar);
-        //initMaterialDrawer();
+        drawer = ToolbarBuilder.makeDefaultDrawer(this, toolbar);
+
 
         Bundle extras = getIntent().getExtras();
-        if(extras!=null)theme = (Theme) extras.get("theme");
+        if (extras != null) theme = (Theme) extras.get("theme");
     }
 
     public ViewPager getViewPager() {
@@ -90,17 +79,19 @@ public class MainActivity extends AppCompatActivity {
 
     private void initViewPager() {
         viewPager = (ViewPager) findViewById(R.id.pager);
-        pagerAdapter = new CustomPagerAdapter(getSupportFragmentManager(),3);
+        pagerAdapter = new CustomPagerAdapter(getSupportFragmentManager(), 3);
         viewPager.setAdapter(pagerAdapter);
     }
 
     @Override
     public void onBackPressed() {
-        if(drawer != null && drawer.isDrawerOpen())
+        if (drawer != null && drawer.isDrawerOpen())
             drawer.closeDrawer();
         else
             super.onBackPressed();
     }
+
+    @Deprecated
     private void initMaterialDrawer() {
         //initialize and create the image loader logic
         DrawerImageLoader.init(new AbstractDrawerImageLoader() {
@@ -174,14 +165,14 @@ public class MainActivity extends AppCompatActivity {
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         if (drawerItem instanceof Nameable) {
                             Toast.makeText(MainActivity.this, ((Nameable) drawerItem).getName().getText(MainActivity.this), Toast.LENGTH_SHORT).show();
-                            switch (((Nameable) drawerItem).getName().getText()){
-                                case "Chat" :
+                            switch (((Nameable) drawerItem).getName().getText()) {
+                                case "Chat":
                                     viewPager.setCurrentItem(0);
                                     break;
-                                case "Game" :
+                                case "Game":
                                     viewPager.setCurrentItem(1);
                                     break;
-                                case "Cards" :
+                                case "Cards":
                                     viewPager.setCurrentItem(2);
                                     break;
                             }
@@ -194,8 +185,8 @@ public class MainActivity extends AppCompatActivity {
                 }).build();
 
         drawer.addStickyFooterItem(new PrimaryDrawerItem()
-                        .withName("Log out")
-                        .withIcon(new IconDrawable(this, FontAwesomeIcons.fa_sign_out).alpha(100)));
+                .withName("Log out")
+                .withIcon(new IconDrawable(this, FontAwesomeIcons.fa_sign_out).alpha(100)));
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         drawer.getActionBarDrawerToggle().setDrawerIndicatorEnabled(true);

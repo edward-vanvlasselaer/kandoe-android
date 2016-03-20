@@ -4,8 +4,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-import be.kdg.kandoe.kandoe.exception.UserException;
-
 /**
  * Created by Edward on 05/03/2016.
  */
@@ -32,14 +30,14 @@ public class User implements Serializable {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
     public String getImageUrl() {
-        if(imageUrl==null)
+        if (imageUrl == null)
             return "";
         return imageUrl;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public void setImageUrl(String imageUrl) {

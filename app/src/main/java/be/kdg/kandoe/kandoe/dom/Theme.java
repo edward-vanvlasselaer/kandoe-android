@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by Edward on 14/03/2016.
  */
-public class Theme implements Serializable{
+public class Theme implements Serializable {
     private Integer themeId;
     private String name;
     private String description;
@@ -19,17 +19,13 @@ public class Theme implements Serializable{
         return circle;
     }
 
-    public void setCircle(Circle circle) {
-        this.circle = circle;
-    }
+
 
     public Integer getThemeId() {
         return themeId;
     }
 
-    public void setThemeId(Integer themeId) {
-        this.themeId = themeId;
-    }
+
 
     public String getName() {
         return name;
