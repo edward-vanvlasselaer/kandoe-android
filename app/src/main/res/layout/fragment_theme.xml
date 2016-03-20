@@ -3,7 +3,10 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical">
-
+    <include
+        android:id="@+id/organisation_toolbar"
+        layout="@layout/toolbar">
+    </include>
     <ListView
         android:id="@+id/themes_listview"
         android:layout_width="fill_parent"

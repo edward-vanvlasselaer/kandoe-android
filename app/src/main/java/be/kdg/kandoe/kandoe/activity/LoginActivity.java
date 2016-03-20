@@ -79,6 +79,12 @@ public class LoginActivity extends AppCompatActivity {
                     requestCurrentUser();
                 }
             }
+
+            @Override
+            public void onFailure(Throwable t) {
+                dialog.hide();
+                dialog = null;
+            }
         });
     }
 

@@ -45,6 +45,7 @@ public class OrganisationActivity extends AppCompatActivity {
 
         Drawer drawer = ToolbarBuilder.makeDefaultDrawer(OrganisationActivity.this, toolbar);
         drawer.removeItems(1,2,3);
+
         ListView listView = (ListView) findViewById(R.id.organisations_listview);
         organisationAdapter = new OrganisationAdapter(this.getApplicationContext());
         listView.setAdapter(organisationAdapter);

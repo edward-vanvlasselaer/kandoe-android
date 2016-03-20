@@ -98,7 +98,8 @@ public class KandoeApplication extends Application{
         client.interceptors().add(logging);
 
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://dolha.in:8080")
+                //.baseUrl("http://dolha.in:8080")
+                .baseUrl("http://62.235.39.49:8080")
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();

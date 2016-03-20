@@ -1,5 +1,6 @@
 package be.kdg.kandoe.kandoe.fragment;
 
+import android.app.ActionBar;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
@@ -16,10 +17,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.Button;
 import android.widget.GridLayout;
+import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -48,7 +53,11 @@ public class GameFragment extends Fragment {
     private int marginCard;
     private int[] tableStarts;
     private RelativeLayout background;
+    private TableLayout gridTable;
     private ViewGroup rootView;
+    private List<TableRow> rowlist;
+    private View gameView;
+    private ImageButton buttonMatrix[][];
     private ViewTreeObserver vto;
 
     public GameFragment() {
@@ -57,7 +66,7 @@ public class GameFragment extends Fragment {
             currentCircle = currentTheme.getCircle();
             tableStarts = new int[currentCircle.getTotalRounds()];
         } catch (Exception e) {
-           throw new RuntimeException("theme not initilized in gamefragment");
+            throw new RuntimeException("theme not initilized in gamefragment");
         }
         circleCards = new ArrayList<>();
         circleButtons = new ArrayList<>();
@@ -81,23 +90,25 @@ public class GameFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = (ViewGroup) inflater.inflate(R.layout.fragment_game, container, false);
-
+        gameView = (View) rootView.findViewById(R.id.game_background);
         ViewTreeObserver viewTreeObserver = rootView.getViewTreeObserver();
         if (viewTreeObserver.isAlive()) {
             viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override
                 public void onGlobalLayout() {
-                    rootView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                    viewWidth = rootView.getWidth();
-                    viewHeight = rootView.getHeight();
+                    gameView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    viewWidth = gameView.getWidth();
+                    viewHeight = gameView.getHeight();
+                    int debug = rootView.getHeight();
                     marginCard = (viewHeight / 9) / 2;
 
                     int j = 0;
-                    for (int i = currentCircle.getTotalRounds(); i > 0 ; i--) {
-                        tableStarts[i-1] = marginCard + (j*marginCard);
+                    for (int i = currentCircle.getTotalRounds(); i > 0; i--) {
+                        tableStarts[i - 1] = marginCard + (j * marginCard);
                         j++;
                     }
-                    drawCards();
+                    setupGrid2();
+                    //drawCards2();
                 }
             });
         }
@@ -117,7 +128,6 @@ public class GameFragment extends Fragment {
         circleCards.add(card);
         drawCards();
     }
-
 
 
     public void removeCardFromCircleSet(Card card) {
@@ -158,27 +168,25 @@ public class GameFragment extends Fragment {
     }
 
 
-    public void moveCard(int cardId){
+    public void moveCard(int cardId) {
         ImageButton myButton = null;
         Card myCard = null;
 
-        for (ImageButton btn : circleButtons){
-            if (btn.getId() == cardId){
+        for (ImageButton btn : circleButtons) {
+            if (btn.getId() == cardId) {
                 myButton = btn;
             }
         }
         circleButtons.remove(myButton);
 
-        for (Card c : circleCards){
-            if (c.getCardId() == cardId){
+        for (Card c : circleCards) {
+            if (c.getCardId() == cardId) {
                 myCard = c;
             }
         }
         background.removeView(myButton);
 
-        //assert myButton != null;
-
-        RelativeLayout.LayoutParams params= null;
+        RelativeLayout.LayoutParams params = null;
         if (myButton != null && myCard != null) {
             params = (RelativeLayout.LayoutParams) myButton.getLayoutParams();
             params.topMargin = tableStarts[myCard.getScore()];
@@ -189,7 +197,89 @@ public class GameFragment extends Fragment {
         }
         throw new RuntimeException("Cannot move card for some reason.");
     }
+   /* private void setupGrid(){
+        TableLayout table = (TableLayout) rootView.findViewById(R.id.game_table);
+        TableRow row1 = (TableRow) table.findViewById(R.id.game_table_row1);
+        TableRow row2 = (TableRow) table.findViewById(R.id.game_table_row2);
+        TableRow row3 = (TableRow) table.findViewById(R.id.game_table_row3);
+        TableRow row4 = (TableRow) table.findViewById(R.id.game_table_row4);
+        TableRow row5 = (TableRow) table.findViewById(R.id.game_table_row5);
+        TableRow row6 = (TableRow) table.findViewById(R.id.game_table_row6);
+        TableRow row7 = (TableRow) table.findViewById(R.id.game_table_row7);
+        TableRow row8 = (TableRow) table.findViewById(R.id.game_table_row8);
+        TableRow row9 = (TableRow) table.findViewById(R.id.game_table_row9);
 
+        rowlist = new ArrayList<TableRow>();
+        rowlist.add(row1);
+        rowlist.add(row2);
+        rowlist.add(row3);
+        rowlist.add(row4);
+        rowlist.add(row5);
+        rowlist.add(row6);
+        rowlist.add(row7);
+        rowlist.add(row8);
+        rowlist.add(row9);
+
+        int rows = currentCircle.getTotalRounds();
+        int columns = 20;
+        buttonMatrix = new ImageButton[rows][columns];
+
+        int index = 0;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                Button btn = new Button(this.getContext());
+                btn.setBackgroundResource(R.drawable.test_icon);
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(20, viewHeight/9);
+                //debug only
+                Random rndCol = new Random();
+                int color = Color.argb(255, rndCol.nextInt(256), rndCol.nextInt(256), rndCol.nextInt(256));
+                btn.setBackgroundColor(color);
+
+                btn.setId(newid(index));
+                buttonMatrix[i][j] = new ImageButton(this.getContext());
+
+                TableRow row = rowlist.get(i);
+                row.addView(btn,params);
+            }
+            TableRow row = rowlist.get(i);
+            table.addView(row);
+        }
+        background.addView(table);
+        rootView.addView(background);
+    }*/
+    private void setupGrid2(){
+
+        gridTable = (TableLayout) rootView.findViewById(R.id.game_table);
+        TableRow row = (TableRow) gridTable.findViewById(R.id.game_table_row1);
+
+        ImageButton btn1 = (ImageButton) gameView.findViewById(R.id.img_r1c1);
+        ImageButton btn2 = (ImageButton) gameView.findViewById(R.id.img_r1c2);
+        ImageButton btn3 = (ImageButton) gameView.findViewById(R.id.img_r1c3);
+        ImageButton btn4 = (ImageButton) gameView.findViewById(R.id.img_r2c1);
+        ImageButton btn5 = (ImageButton) gameView.findViewById(R.id.img_r2c2);
+        ImageButton btn6 = (ImageButton) gameView.findViewById(R.id.img_r2c3);
+
+        List<ImageButton> list = new ArrayList<ImageButton>();
+        list.add(btn1);
+        list.add(btn2);
+        list.add(btn3);
+        list.add(btn4);
+        list.add(btn5);
+        list.add(btn6);
+
+       // for (ImageButton btn : list){
+            row.removeView(btn6);
+            btn6 = new ImageButton(this.getContext());
+            btn6.setBackgroundResource(R.drawable.test_icon);
+            TableLayout.LayoutParams params = new TableLayout.LayoutParams(150, 150);
+            btn6.setLayoutParams(params);
+            row.addView(btn6,params);
+        //}
+    }
+
+    private int newid(int index){
+        return index++;
+    }
     private void drawCards() {
         circleButtons = new ArrayList<>();
         for (Card card : circleCards) {
@@ -201,7 +291,7 @@ public class GameFragment extends Fragment {
             Random rnd = new Random();
             int min = 25;
             int max = viewWidth;
-            int range = max - min -25;
+            int range = max - min - 25;
             int rndLeft = rnd.nextInt(range) + min;
 
             Random rndCol = new Random();
@@ -209,19 +299,20 @@ public class GameFragment extends Fragment {
 
             Drawable backgroundWhereShapeIsPlaced = myImageButton.getBackground();
             if (backgroundWhereShapeIsPlaced instanceof ShapeDrawable) {
-                ShapeDrawable shapeDrawable = (ShapeDrawable)backgroundWhereShapeIsPlaced;
+                ShapeDrawable shapeDrawable = (ShapeDrawable) backgroundWhereShapeIsPlaced;
                 shapeDrawable.getPaint().setColor(color);
             } else if (backgroundWhereShapeIsPlaced instanceof GradientDrawable) {
-                GradientDrawable gradientDrawable = (GradientDrawable)backgroundWhereShapeIsPlaced;
+                GradientDrawable gradientDrawable = (GradientDrawable) backgroundWhereShapeIsPlaced;
                 gradientDrawable.setColor(color);
             } else if (backgroundWhereShapeIsPlaced instanceof ColorDrawable) {
-                ColorDrawable colorDrawable = (ColorDrawable)backgroundWhereShapeIsPlaced;
+                ColorDrawable colorDrawable = (ColorDrawable) backgroundWhereShapeIsPlaced;
                 colorDrawable.setColor(color);
             }
 
             params.leftMargin = rndLeft;
-            if (card.getScore()==null)
+            if (card.getScore() == null)
                 card.setScore(0);
+
             params.topMargin = tableStarts[card.getScore()];
             background.addView(myImageButton, params); //Add view
             myImageButton.setOnClickListener(getButtonAndDoAction(myImageButton));
@@ -229,6 +320,20 @@ public class GameFragment extends Fragment {
         }
     }
 
+    private void drawCards2(){
+        gridTable = (TableLayout) rootView.findViewById(R.id.game_table);
+        gridTable.removeAllViews();
+
+
+
+        for (Card card : circleCards){
+            ImageButton myImageButton = new ImageButton(this.getContext());
+            myImageButton.setId(card.getCardId());
+            myImageButton.setBackgroundResource(R.drawable.circle_card_icon);
+
+
+        }
+    }
     View.OnClickListener getButtonAndDoAction(final ImageButton button) {
         return new View.OnClickListener() {
             public void onClick(View v) {
@@ -239,8 +344,8 @@ public class GameFragment extends Fragment {
                 int position = 0;
                 try {
                     position = cardFragment.getPositionByCardId(button.getId());
-                    View singleItem = cardFragment.getCardAdapter().getViewByPosition(position,cardList);
-                    singleItem.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.custom_themecard_item_selected));
+                    View singleItem = cardFragment.getCardAdapter().getViewByPosition(position, cardList);
+                    singleItem.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.custom_themecard_item_selected));
                     cardList.smoothScrollToPosition(cardFragment.getPositionByCardId(button.getId()));
                 } catch (CardException e) {
                     e.printStackTrace();

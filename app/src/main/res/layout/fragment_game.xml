@@ -5,13 +5,22 @@
     tools:context=".MainActivity"
     android:id="@+id/game_background">
 
-    <GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:columnCount="20"
-        android:rowCount="9"
-        android:id="@+id/game_table">
+    <TableLayout
+        android:id="@+id/game_table"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+        <TableRow android:id="@+id/game_table_row1">
+            <ImageButton android:id="@+id/img_r1c1"/>
+            <ImageButton android:id="@+id/img_r1c2"/>
+            <ImageButton android:id="@+id/img_r1c3"/>
+        </TableRow>
+        <TableRow android:id="@+id/game_table_row2">
+            <ImageButton android:id="@+id/img_r2c1"/>
+            <ImageButton android:id="@+id/img_r2c2"/>
+            <ImageButton android:id="@+id/img_r2c3"/>
+        </TableRow>
 
 
-    </GridLayout>
+    </TableLayout>
 </RelativeLayout>

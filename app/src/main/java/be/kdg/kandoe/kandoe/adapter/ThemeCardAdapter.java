@@ -113,14 +113,14 @@ public class ThemeCardAdapter extends BaseAdapter {
                         @Override
                         public void onResponse(Response response, Retrofit retrofit) {
                             //TODO: is dat wel mooi?
-                            if (response.errorBody() != null) {
+                            /*if (response.errorBody() != null) {
                                 Toast.makeText(context, "You cannot select more cards than max", Toast.LENGTH_SHORT).show();
                                 setGo(true);
                             } else {
                                 mhashColorSelected.put(position, R.drawable.custom_themecard_item_selected);
                                 mhashBtnVisibility.put(position, View.INVISIBLE);
                                 setCardsSelected(getCardsSelected() + 1);
-                            }
+                            }*/
                             notifyDataSetChanged();
                         }
 
