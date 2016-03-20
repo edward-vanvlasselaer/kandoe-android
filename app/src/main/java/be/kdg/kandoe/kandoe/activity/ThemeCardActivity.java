@@ -47,9 +47,6 @@ public class ThemeCardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_card);
 
-        Bundle extras = getIntent().getExtras();
-        theme = (Theme) extras.get("theme");
-
         themeId = getCurrentTheme().getThemeId();
 
         final TextView textView = (TextView) findViewById(R.id.txt_nocards);

@@ -377,6 +377,4 @@ public class GameFragment extends Fragment {
             }
         };
     }
-
-
 }

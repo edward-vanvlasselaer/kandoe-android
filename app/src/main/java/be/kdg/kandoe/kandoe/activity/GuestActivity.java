@@ -55,7 +55,6 @@ public class GuestActivity extends AppCompatActivity {
                                 public void onResponse(Response<User> response, Retrofit retrofit) {
                                     AccountSettings.setLoggedInUser(response.body());
                                     callCircle();
-
                                 }
                             });
                         }
@@ -65,7 +64,6 @@ public class GuestActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     private void callCircle() {
@@ -76,7 +74,6 @@ public class GuestActivity extends AppCompatActivity {
                 if (response.body() == null) {
                     noCircle = true;
                     Toast.makeText(getApplicationContext(), "Invalid invite link", Toast.LENGTH_SHORT).show();
-
                 } else {
                     ThemeCardActivity.setCurrentTheme(response.body());
                     Toast.makeText(getBaseContext(), "Hi, " + AccountSettings.getLoggedInUser().getFirstName() + "!", Toast.LENGTH_SHORT).show();
