@@ -24,7 +24,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Username"
+                android:text="@string/username"
                 android:id="@+id/register_txt_username"
                 />
             <EditText
@@ -36,7 +36,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="First name"
+                android:text="@string/first_name"
                 android:id="@+id/register_txt_firstname"
                 />
             <EditText
@@ -48,7 +48,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Last name"
+                android:text="@string/last_name"
                 android:id="@+id/register_txt_lastname"
                 />
             <EditText
@@ -60,7 +60,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Email"
+                android:text="@string/Email"
                 android:id="@+id/register_txt_email"
                 android:layout_below="@+id/scrollView"
                 android:layout_alignParentStart="true" />
@@ -76,7 +76,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Password"
+                android:text="@string/password"
                 android:id="@+id/register_txt_password"
                 android:layout_below="@+id/scrollView"
                 android:layout_alignParentStart="true" />
@@ -92,7 +92,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Confirm password"
+                android:text="@string/confirm_password"
                 android:id="@+id/register_txt_confirm"
                 android:layout_below="@+id/register_input_password"
                 android:layout_alignParentStart="true" />
@@ -115,7 +115,7 @@
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Register"
+        android:text="@string/register"
         android:id="@+id/register_btn_register"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true" />
