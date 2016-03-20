@@ -17,7 +17,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:text="THIS IS THE TITLE"
             android:textColor="@color/md_white_1000"
             android:paddingLeft="@dimen/margin_card"/>
 
@@ -27,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
-            android:text="Join" />
+            android:text="@string/join" />
     </RelativeLayout>
 
     <TextView
