@@ -101,6 +101,9 @@ public class ThemeCardAdapter extends BaseAdapter {
         viewHolder.description.setText(card.getDescription());
         viewHolder.select.setText(R.string.select_card);
 
+        setLayoutOfAlreadySelectedCards(card, position);
+
+
         viewHolder.select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,17 +120,10 @@ public class ThemeCardAdapter extends BaseAdapter {
                                 Toast.makeText(context, "You cannot select more cards than max", Toast.LENGTH_SHORT).show();
                                 setGo(true);
                             } else {
-                                mhashColorSelected.put(position, R.drawable.custom_themecard_item_selected);
-                                mhashBtnVisibility.put(position, View.INVISIBLE);
-                                setCardsSelected(getCardsSelected() + 1);
+                                setLayoutOfCardsOfUser(position);
+                                incrementSelectedCards();
                             }*/
                             notifyDataSetChanged();
-                        }
-
-                        @Override
-                        public void onFailure(Throwable t) {
-                            Toast.makeText(context, "You cannot select more cards than max", Toast.LENGTH_SHORT).show();
-
                         }
 
                     });
@@ -150,6 +146,26 @@ public class ThemeCardAdapter extends BaseAdapter {
         return convertView;
     }
 
+
+    private void incrementSelectedCards(){
+        setCardsSelected(getCardsSelected() + 1);
+    }
+
+    private void setLayoutOfAlreadySelectedCards(Card card, int position)
+    {
+        if (card.getSelector() != 0 && card.getSelector()!=AccountSettings.getLoggedInUser().getUserId()) {
+            mhashColorSelected.put(position, R.drawable.custom_themecard_already_selected);
+            mhashBtnVisibility.put(position, View.INVISIBLE);
+        }else if(card.getSelector()==AccountSettings.getLoggedInUser().getUserId()){
+            setLayoutOfCardsOfUser(position);
+        }
+    }
+
+    private void setLayoutOfCardsOfUser(int position){
+        mhashColorSelected.put(position, R.drawable.custom_themecard_item_selected);
+        mhashBtnVisibility.put(position, View.INVISIBLE);
+    }
+
     private boolean hasSelectedLessThanMax() {
         Theme theme = null;
         try {
@@ -169,12 +185,11 @@ public class ThemeCardAdapter extends BaseAdapter {
     private int selectedCardsByUser() {
         for (Card card : cards) {
             if (card.getSelector() == AccountSettings.getLoggedInUser().getUserId()) {
-                cardsSelected = cardsSelected+1;
+                incrementSelectedCards();
             }
         }
         return cardsSelected;
     }
-
 
     public int getCardsSelected() {
         return cardsSelected;
