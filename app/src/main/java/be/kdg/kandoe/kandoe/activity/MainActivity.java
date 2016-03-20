@@ -148,8 +148,8 @@ public class MainActivity extends AppCompatActivity {
                 .withAccountHeader(headerResult)
                 .withTranslucentStatusBar(true)
                 .addDrawerItems(
-                        new PrimaryDrawerItem().withName("Change organisation").withIcon(new IconDrawable(this, FontAwesomeIcons.fa_users)).withDescription("current: TODO"),
-                        new PrimaryDrawerItem().withName("Change theme").withIcon(new IconDrawable(this, FontAwesomeIcons.fa_pie_chart)).withDescription("current: TODO"),
+                        new PrimaryDrawerItem().withName("Change organisation").withIcon(new IconDrawable(this, FontAwesomeIcons.fa_users)).withDescription("current: "),
+                        new PrimaryDrawerItem().withName("Change theme").withIcon(new IconDrawable(this, FontAwesomeIcons.fa_pie_chart)).withDescription("current: "),
                         new DividerDrawerItem(),
                         new PrimaryDrawerItem().withName("Chat").withIcon(new IconDrawable(this, FontAwesomeIcons.fa_comment)),
                         new PrimaryDrawerItem().withName("Game").withIcon(new IconDrawable(this, FontAwesomeIcons.fa_dot_circle_o)),

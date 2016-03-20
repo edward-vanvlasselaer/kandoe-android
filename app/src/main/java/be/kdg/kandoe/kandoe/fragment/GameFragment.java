@@ -196,83 +196,83 @@ public class GameFragment extends Fragment {
 
     @Deprecated
     private void setupGrid() {
-        TableLayout table = (TableLayout) rootView.findViewById(R.id.game_table);
-//         TableRow row1 = (TableRow) table.findViewById(R.id.game_table_row1);
-//         TableRow row2 = (TableRow) table.findViewById(R.id.game_table_row2);
-//         TableRow row3 = (TableRow) table.findViewById(R.id.game_table_row3);
-//         TableRow row4 = (TableRow) table.findViewById(R.id.game_table_row4);
-//         TableRow row5 = (TableRow) table.findViewById(R.id.game_table_row5);
-//         TableRow row6 = (TableRow) table.findViewById(R.id.game_table_row6);
-//         TableRow row7 = (TableRow) table.findViewById(R.id.game_table_row7);
-//         TableRow row8 = (TableRow) table.findViewById(R.id.game_table_row8);
-//         TableRow row9 = (TableRow) table.findViewById(R.id.game_table_row9);
-
-        rowlist = new ArrayList<TableRow>();
-//        rowlist.add(row1);
-//        rowlist.add(row2);
-//        rowlist.add(row3);
-//        rowlist.add(row4);
-//        rowlist.add(row5);
-//        rowlist.add(row6);
-//        rowlist.add(row7);
-//        rowlist.add(row8);
-//        rowlist.add(row9);
-
-        int rows = currentCircle.getTotalRounds();
-        int columns = 20;
-        buttonMatrix = new ImageButton[rows][columns];
-
-        int index = 0;
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                Button btn = new Button(this.getContext());
-                btn.setBackgroundResource(R.drawable.test_icon);
-                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(20, viewHeight / 9);
-                //debug only
-                Random rndCol = new Random();
-                int color = Color.argb(255, rndCol.nextInt(256), rndCol.nextInt(256), rndCol.nextInt(256));
-                btn.setBackgroundColor(color);
-
-                btn.setId(newid(index));
-                buttonMatrix[i][j] = new ImageButton(this.getContext());
-
-                TableRow row = rowlist.get(i);
-                row.addView(btn, params);
-            }
-            TableRow row = rowlist.get(i);
-            table.addView(row);
-        }
-        background.addView(table);
-        rootView.addView(background);
+//        //TableLayout table = (TableLayout) rootView.findViewById(R.id.game_table);
+////         TableRow row1 = (TableRow) table.findViewById(R.id.game_table_row1);
+////         TableRow row2 = (TableRow) table.findViewById(R.id.game_table_row2);
+////         TableRow row3 = (TableRow) table.findViewById(R.id.game_table_row3);
+////         TableRow row4 = (TableRow) table.findViewById(R.id.game_table_row4);
+////         TableRow row5 = (TableRow) table.findViewById(R.id.game_table_row5);
+////         TableRow row6 = (TableRow) table.findViewById(R.id.game_table_row6);
+////         TableRow row7 = (TableRow) table.findViewById(R.id.game_table_row7);
+////         TableRow row8 = (TableRow) table.findViewById(R.id.game_table_row8);
+////         TableRow row9 = (TableRow) table.findViewById(R.id.game_table_row9);
+//
+//        rowlist = new ArrayList<TableRow>();
+////        rowlist.add(row1);
+////        rowlist.add(row2);
+////        rowlist.add(row3);
+////        rowlist.add(row4);
+////        rowlist.add(row5);
+////        rowlist.add(row6);
+////        rowlist.add(row7);
+////        rowlist.add(row8);
+////        rowlist.add(row9);
+//
+//        int rows = currentCircle.getTotalRounds();
+//        int columns = 20;
+//        buttonMatrix = new ImageButton[rows][columns];
+//
+//        int index = 0;
+//        for (int i = 0; i < rows; i++) {
+//            for (int j = 0; j < columns; j++) {
+//                Button btn = new Button(this.getContext());
+//                btn.setBackgroundResource(R.drawable.test_icon);
+//                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(20, viewHeight / 9);
+//                //debug only
+//                Random rndCol = new Random();
+//                int color = Color.argb(255, rndCol.nextInt(256), rndCol.nextInt(256), rndCol.nextInt(256));
+//                btn.setBackgroundColor(color);
+//
+//                btn.setId(newid(index));
+//                buttonMatrix[i][j] = new ImageButton(this.getContext());
+//
+//                TableRow row = rowlist.get(i);
+//                row.addView(btn, params);
+//            }
+//            TableRow row = rowlist.get(i);
+//            table.addView(row);
+//        }
+//        background.addView(table);
+//        rootView.addView(background);
     }
 
     @Deprecated
     private void setupGrid2() {
-        gridTable = (TableLayout) rootView.findViewById(R.id.game_table);
-        TableRow row1 = (TableRow) gridTable.findViewById(R.id.game_table_row1);
-        TableRow row2 = (TableRow) gridTable.findViewById(R.id.game_table_row2);
-
-
-        List<TableRow> rowList = new ArrayList<>();
-        rowList.add(row1);
-        rowList.add(row2);
-
-        ImageButton btn1 = (ImageButton) gameView.findViewById(R.id.img_r1c1);
-        ImageButton btn2 = (ImageButton) gameView.findViewById(R.id.img_r1c2);
-        ImageButton btn3 = (ImageButton) gameView.findViewById(R.id.img_r1c3);
-        ImageButton btn4 = (ImageButton) gameView.findViewById(R.id.img_r2c1);
-        ImageButton btn5 = (ImageButton) gameView.findViewById(R.id.img_r2c2);
-        ImageButton btn6 = (ImageButton) gameView.findViewById(R.id.img_r2c3);
+//        gridTable = (TableLayout) rootView.findViewById(R.id.game_table);
+//        TableRow row1 = (TableRow) gridTable.findViewById(R.id.game_table_row1);
+//        TableRow row2 = (TableRow) gridTable.findViewById(R.id.game_table_row2);
+//
+//
+//        List<TableRow> rowList = new ArrayList<>();
+//        rowList.add(row1);
+//        rowList.add(row2);
+//
+//        ImageButton btn1 = (ImageButton) gameView.findViewById(R.id.img_r1c1);
+//        ImageButton btn2 = (ImageButton) gameView.findViewById(R.id.img_r1c2);
+//        ImageButton btn3 = (ImageButton) gameView.findViewById(R.id.img_r1c3);
+//        ImageButton btn4 = (ImageButton) gameView.findViewById(R.id.img_r2c1);
+//        ImageButton btn5 = (ImageButton) gameView.findViewById(R.id.img_r2c2);
+//        ImageButton btn6 = (ImageButton) gameView.findViewById(R.id.img_r2c3);
 
         List<ImageButton> buttonsOfRow1 = new ArrayList<ImageButton>();
         List<ImageButton> buttonsOfRow2 = new ArrayList<ImageButton>();
-        buttonsOfRow1.add(btn1);
-        buttonsOfRow1.add(btn2);
-        buttonsOfRow1.add(btn3);
-
-        buttonsOfRow2.add(btn4);
-        buttonsOfRow2.add(btn5);
-        buttonsOfRow2.add(btn6);
+//        buttonsOfRow1.add(btn1);
+//        buttonsOfRow1.add(btn2);
+//        buttonsOfRow1.add(btn3);
+//
+//        buttonsOfRow2.add(btn4);
+//        buttonsOfRow2.add(btn5);
+//        buttonsOfRow2.add(btn6);
 
 
 //        for (ImageButton btn : list){
@@ -283,19 +283,19 @@ public class GameFragment extends Fragment {
 //            btn1.setLayoutParams(params);
 //            row.addView(btn, params);
 //        }
-
-        for (int i = 0; i < rowList.size(); i++) {
-            for (int j = 0; j < buttonsOfRow1.size(); j++) {
-                rowList.get(i).removeView(buttonsOfRow1.get(j));
-                TableRow.LayoutParams params = new TableRow.LayoutParams(viewWidth / 10, viewWidth / 9);
-                rowList.get(i).addView(buttonsOfRow1.get(j), params);
-            }
-            for (int j = 0; j < buttonsOfRow2.size(); j++) {
-                rowList.get(i).removeView(buttonsOfRow2.get(j));
-                TableRow.LayoutParams params = new TableRow.LayoutParams(viewWidth / 10, viewWidth / 9);
-                rowList.get(i).addView(buttonsOfRow2.get(j), params);
-            }
-        }
+//
+//        for (int i = 0; i < rowList.size(); i++) {
+//            for (int j = 0; j < buttonsOfRow1.size(); j++) {
+//                rowList.get(i).removeView(buttonsOfRow1.get(j));
+//                TableRow.LayoutParams params = new TableRow.LayoutParams(viewWidth / 10, viewWidth / 9);
+//                rowList.get(i).addView(buttonsOfRow1.get(j), params);
+//            }
+//            for (int j = 0; j < buttonsOfRow2.size(); j++) {
+//                rowList.get(i).removeView(buttonsOfRow2.get(j));
+//                TableRow.LayoutParams params = new TableRow.LayoutParams(viewWidth / 10, viewWidth / 9);
+//                rowList.get(i).addView(buttonsOfRow2.get(j), params);
+//            }
+//        }
     }
 
     @Deprecated
@@ -345,7 +345,7 @@ public class GameFragment extends Fragment {
 
     @Deprecated
     private void drawCards2() {
-        gridTable = (TableLayout) rootView.findViewById(R.id.game_table);
+       // gridTable = (TableLayout) rootView.findViewById(R.id.game_table);
         gridTable.removeAllViews();
 
 
