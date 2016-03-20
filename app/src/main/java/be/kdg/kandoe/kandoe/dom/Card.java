@@ -13,6 +13,7 @@ public class Card implements Serializable {
     private Integer score=0;
     private Integer userId;
     private int circleId;
+    private int selector;
 
     public int getCircleId() {
         return circleId;
@@ -20,6 +21,14 @@ public class Card implements Serializable {
 
     public void setCircleId(int circleId) {
         this.circleId = circleId;
+    }
+
+    public int getSelector() {
+        return selector;
+    }
+
+    public void setSelector(int selector) {
+        this.selector = selector;
     }
 
     public Integer getCardId() {

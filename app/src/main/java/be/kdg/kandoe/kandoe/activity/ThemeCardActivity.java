@@ -1,14 +1,13 @@
 package be.kdg.kandoe.kandoe.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +17,9 @@ import be.kdg.kandoe.kandoe.adapter.ThemeCardAdapter;
 import be.kdg.kandoe.kandoe.application.KandoeApplication;
 import be.kdg.kandoe.kandoe.dom.Card;
 import be.kdg.kandoe.kandoe.dom.Theme;
+import be.kdg.kandoe.kandoe.dom.User;
 import be.kdg.kandoe.kandoe.exception.AbstractExceptionCallback;
 import retrofit.Call;
-import retrofit.Callback;
 import retrofit.Response;
 import retrofit.Retrofit;
 
@@ -33,6 +32,7 @@ public class ThemeCardActivity extends AppCompatActivity {
     private int themeId;
     private Theme theme;
     private Button startBtn;
+
 
     public static void setCurrentTheme(Theme currentTheme) {
         ThemeCardActivity.currentTheme = currentTheme;
@@ -52,7 +52,10 @@ public class ThemeCardActivity extends AppCompatActivity {
         setContentView(R.layout.fragment_card);
 
         Bundle extras = getIntent().getExtras();
-        theme = (Theme) extras.get("theme");
+//        theme = (Theme) extras.get("theme");
+
+
+
 
         themeId = currentTheme.getThemeId();
 
@@ -86,24 +89,33 @@ public class ThemeCardActivity extends AppCompatActivity {
 
     }
 
-    private void initListener(){
-        if (selectedMoreThanMin()) {
-            startBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+    private void initListener() {
+
+        startBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (hasSelectedMoreThanMin()) {
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     //organisationIntent.putExtra("uri",uri.toString());
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.putExtra("theme", theme);
+                    intent.putExtra("theme", currentTheme);
                     getApplicationContext().startActivity(intent);
                 }
-            });
+            }
+        });
+
+    }
+
+    private boolean hasSelectedMoreThanMin() {
+        if (currentTheme.getCircle().getMinCardsToSelect() == null || getThemeCardAdapter().getCardsSelected() >= currentTheme.getCircle().getMinCardsToSelect()) {
+            getThemeCardAdapter().setGo(true);
+            return true;
+        } else {
+            Toast.makeText(getApplicationContext(), "You have to select at least " + currentTheme.getCircle().getMinCardsToSelect() + " card", Toast.LENGTH_SHORT).show();
+            return false;
         }
     }
 
-    private boolean selectedMoreThanMin(){
-        return theme.getCircle().getMinCardsToSelect() == null || getThemeCardAdapter().getCardsSelected() > theme.getCircle().getMinCardsToSelect();
-    }
 
 
     public ThemeCardAdapter getThemeCardAdapter() {
