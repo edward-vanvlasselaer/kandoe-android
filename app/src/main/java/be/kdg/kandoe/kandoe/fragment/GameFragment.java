@@ -86,7 +86,7 @@ public class GameFragment extends Fragment {
 
         rootView = (ViewGroup) inflater.inflate(R.layout.fragment_game, container, false);
         gameView = rootView.findViewById(R.id.game_background);
-        ViewTreeObserver viewTreeObserver = rootView.getViewTreeObserver();
+        ViewTreeObserver viewTreeObserver = gameView.getViewTreeObserver();
         if (viewTreeObserver.isAlive()) {
             viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override

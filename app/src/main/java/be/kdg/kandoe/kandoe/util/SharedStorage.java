@@ -6,9 +6,6 @@ import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
 
-/**
- * Created by Edward on 19/03/2016.
- */
 public class SharedStorage {
     SharedPreferences.Editor editor;
     SharedPreferences prefs;

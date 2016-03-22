@@ -1,5 +1,7 @@
 package be.kdg.kandoe.kandoe.exception;
 
+import android.util.Log;
+
 import retrofit.Callback;
 
 /**
@@ -8,6 +10,6 @@ import retrofit.Callback;
 public abstract class AbstractExceptionCallback<T> implements Callback<T> {
     @Override
     public void onFailure(Throwable t) {
-        int x = 5;
+        Log.e("","RETROFIT FAILED: " + t.getMessage());
     }
 }

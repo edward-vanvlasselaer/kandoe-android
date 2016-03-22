@@ -2,9 +2,12 @@ package be.kdg.kandoe.kandoe.activity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -83,6 +86,19 @@ public class LoginActivity extends AppCompatActivity {
             public void onFailure(Throwable t) {
                 dialog.hide();
                 dialog = null;
+                if (t.getMessage().contains("dolha.in")) {
+                    new AlertDialog.Builder(LoginActivity.this)
+                            .setTitle("Uh oh :(")
+                            .setMessage("Looks like something went wrong,\nmake sure you are connected to the internet.")
+                            .setNeutralButton("Will do!", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .show();
+                }
+                Log.e("","RETROFIT FAILED: " + t.getMessage());
             }
         });
     }
@@ -106,6 +122,19 @@ public class LoginActivity extends AppCompatActivity {
             public void onFailure(Throwable t) {
                 dialog.hide();
                 dialog = null;
+                if (t.getMessage().contains("dolha.in")) {
+                    new AlertDialog.Builder(LoginActivity.this)
+                            .setTitle("Uh oh :(")
+                            .setMessage("Looks like something went wrong,\nmake sure you are connected to the internet.")
+                            .setNeutralButton("Will do!", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .show();
+                }
+                Log.e("", "RETROFIT FAILED: " + t.getMessage());
             }
         });
     }
