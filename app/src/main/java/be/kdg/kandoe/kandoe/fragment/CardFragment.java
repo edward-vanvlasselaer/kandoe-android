@@ -73,6 +73,7 @@ public class CardFragment extends Fragment {
         call.enqueue(new AbstractExceptionCallback<Circle>() {
             @Override
             public void onResponse(Response<Circle> response, Retrofit retrofit) {
+                getCardAdapter().setCircle(response.body());
                 newList = new ArrayList<>();
                 if (response.body() != null && response.body().getCards() != null) {
                     for (Card card : response.body().getCards()) {

@@ -209,6 +209,7 @@ public class ThemeCardAdapter extends BaseAdapter {
         Button select;
         RelativeLayout cardLayout;
 
+
         public ViewHolder(View view) {
             title = (TextView) view.findViewById(R.id.carditem_txt_title);
             description = (TextView) view.findViewById(R.id.carditem_txt_description);

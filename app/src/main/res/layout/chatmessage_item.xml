@@ -13,7 +13,7 @@
         android:paddingTop="@dimen/margin_card"
         android:text="Medium Text"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textSize="14dp"
+        android:textSize="12dp"
         android:textColor="@color/md_blue_400"/>
 
     <TextView
@@ -21,6 +21,7 @@
         android:layout_width="360dp"
         android:layout_height="wrap_content"
         android:padding="@dimen/margin_card"
+        android:textSize="14dp"
         android:text="Medium Text"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 

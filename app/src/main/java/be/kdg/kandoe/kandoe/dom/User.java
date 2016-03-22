@@ -21,7 +21,7 @@ public class User implements Serializable {
     @SerializedName("password")
     private String password;
     private String imageUrl;
-    private boolean isPlaying;
+    private boolean playing;
 
     public User() {
     }
@@ -45,11 +45,11 @@ public class User implements Serializable {
     }
 
     public boolean isPlaying() {
-        return isPlaying;
+        return playing;
     }
 
-    public void setIsPlaying(boolean isPlaying) {
-        this.isPlaying = isPlaying;
+    public void setIsPlaying(boolean playing) {
+        this.playing = playing;
     }
 
     public String getPassword() {
