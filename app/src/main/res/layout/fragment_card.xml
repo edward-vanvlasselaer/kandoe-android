@@ -42,7 +42,6 @@
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/btn_select" />
         </LinearLayout>
-
     </LinearLayout>
 
     <LinearLayout

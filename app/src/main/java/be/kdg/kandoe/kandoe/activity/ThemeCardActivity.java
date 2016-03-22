@@ -3,11 +3,14 @@ package be.kdg.kandoe.kandoe.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.mikepenz.materialdrawer.Drawer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +22,7 @@ import be.kdg.kandoe.kandoe.dom.Card;
 import be.kdg.kandoe.kandoe.dom.Theme;
 import be.kdg.kandoe.kandoe.exception.AbstractExceptionCallback;
 import be.kdg.kandoe.kandoe.util.GenericSharedStorage;
+import be.kdg.kandoe.kandoe.util.ToolbarBuilder;
 import retrofit.Call;
 import retrofit.Response;
 import retrofit.Retrofit;

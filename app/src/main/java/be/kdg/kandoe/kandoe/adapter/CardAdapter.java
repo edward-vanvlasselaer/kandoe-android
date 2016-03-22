@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import be.kdg.kandoe.kandoe.R;
+import be.kdg.kandoe.kandoe.activity.MainActivity;
 import be.kdg.kandoe.kandoe.activity.ThemeCardActivity;
 import be.kdg.kandoe.kandoe.application.KandoeApplication;
 import be.kdg.kandoe.kandoe.dom.Card;
@@ -107,7 +108,9 @@ public class CardAdapter extends BaseAdapter {
         viewHolder.upvote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GameFragment.getSingletonObject().moveCard(card.getCardId());
+                card.setScore(card.getScore()+1);
+                GameFragment.getSingletonObject().moveCard(card);
+                MainActivity.getInstance().getViewPager().setCurrentItem(0);
                 Call<Object> call = KandoeApplication.getCircleApi().addVote(1, card);
                 call.enqueue(new AbstractExceptionCallback() {
                     @Override
