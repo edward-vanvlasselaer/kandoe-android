@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
@@ -53,6 +54,7 @@ public class GameFragment extends Fragment {
     private View gameView;
     private ImageButton buttonMatrix[][];
     private ViewTreeObserver vto;
+    private LinearLayout gameStatus;
 
     public GameFragment() {
         try {
@@ -86,6 +88,9 @@ public class GameFragment extends Fragment {
 
         rootView = (ViewGroup) inflater.inflate(R.layout.fragment_game, container, false);
         gameView = rootView.findViewById(R.id.game_background);
+        //TODO: checken if game STARTED is
+        gameStatus=(LinearLayout) rootView.findViewById(R.id.game_status);
+
         ViewTreeObserver viewTreeObserver = rootView.getViewTreeObserver();
         if (viewTreeObserver.isAlive()) {
             viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -246,6 +251,138 @@ public class GameFragment extends Fragment {
 //        rootView.addView(background);
     }
 
+    private void setupCardsOnGrid() {
+        //gridTable = (TableLayout) rootView.findViewById(R.id.game_table);
+        //TableLayout tableLayout=(TableLayout)rootView.findViewById(R.id.table_layout);
+       /* TableRow row1 = (TableRow) gridTable.findViewById(R.id.game_table_row1);
+        TableRow row2 = (TableRow) gridTable.findViewById(R.id.game_table_row2);
+        TableRow row3 = (TableRow) gridTable.findViewById(R.id.game_table_row3);
+        TableRow row4 = (TableRow) gridTable.findViewById(R.id.game_table_row4);
+        TableRow row5 = (TableRow) gridTable.findViewById(R.id.game_table_row5);
+        TableRow row6 = (TableRow) gridTable.findViewById(R.id.game_table_row6);
+        TableRow row7 = (TableRow) gridTable.findViewById(R.id.game_table_row7);
+        TableRow row8 = (TableRow) gridTable.findViewById(R.id.game_table_row8);
+        TableRow row9 = (TableRow) gridTable.findViewById(R.id.game_table_row9);
+        TableRow row10 = (TableRow) gridTable.findViewById(R.id.game_table_row10);
+
+        ImageButton imageButton_r1c1 = (ImageButton) gridTable.findViewById(R.id.img_r1c1);
+        ImageButton imageButton_r1c2 = (ImageButton) gridTable.findViewById(R.id.img_r1c2);
+        ImageButton imageButton_r1c3 = (ImageButton) gridTable.findViewById(R.id.img_r1c3);
+        ImageButton imageButton_r1c4 = (ImageButton) gridTable.findViewById(R.id.img_r1c4);
+        ImageButton imageButton_r1c5 = (ImageButton) gridTable.findViewById(R.id.img_r1c5);
+        ImageButton imageButton_r1c6 = (ImageButton) gridTable.findViewById(R.id.img_r1c6);
+        ImageButton imageButton_r1c7 = (ImageButton) gridTable.findViewById(R.id.img_r1c7);
+        ImageButton imageButton_r1c8 = (ImageButton) gridTable.findViewById(R.id.img_r1c8);
+        ImageButton imageButton_r1c9 = (ImageButton) gridTable.findViewById(R.id.img_r1c9);
+        ImageButton imageButton_r1c10 = (ImageButton) gridTable.findViewById(R.id.img_r1c10);
+
+        ImageButton imageButton_r2c1 = (ImageButton) gridTable.findViewById(R.id.img_r2c1);
+        ImageButton imageButton_r2c2 = (ImageButton) gridTable.findViewById(R.id.img_r2c2);
+        ImageButton imageButton_r2c3 = (ImageButton) gridTable.findViewById(R.id.img_r2c3);
+        ImageButton imageButton_r2c4 = (ImageButton) gridTable.findViewById(R.id.img_r2c4);
+        ImageButton imageButton_r2c5 = (ImageButton) gridTable.findViewById(R.id.img_r2c5);
+        ImageButton imageButton_r2c6 = (ImageButton) gridTable.findViewById(R.id.img_r2c6);
+        ImageButton imageButton_r2c7 = (ImageButton) gridTable.findViewById(R.id.img_r2c7);
+        ImageButton imageButton_r2c8 = (ImageButton) gridTable.findViewById(R.id.img_r2c8);
+        ImageButton imageButton_r2c9 = (ImageButton) gridTable.findViewById(R.id.img_r2c9);
+        ImageButton imageButton_r2c10 = (ImageButton) gridTable.findViewById(R.id.img_r2c10);
+
+        ImageButton imageButton_r3c1 = (ImageButton) gridTable.findViewById(R.id.img_r3c1);
+        ImageButton imageButton_r3c2 = (ImageButton) gridTable.findViewById(R.id.img_r3c2);
+        ImageButton imageButton_r3c3 = (ImageButton) gridTable.findViewById(R.id.img_r3c3);
+        ImageButton imageButton_r3c4 = (ImageButton) gridTable.findViewById(R.id.img_r3c4);
+        ImageButton imageButton_r3c5 = (ImageButton) gridTable.findViewById(R.id.img_r3c5);
+        ImageButton imageButton_r3c6 = (ImageButton) gridTable.findViewById(R.id.img_r3c6);
+        ImageButton imageButton_r3c7 = (ImageButton) gridTable.findViewById(R.id.img_r3c7);
+        ImageButton imageButton_r3c8 = (ImageButton) gridTable.findViewById(R.id.img_r3c8);
+        ImageButton imageButton_r3c9 = (ImageButton) gridTable.findViewById(R.id.img_r3c9);
+        ImageButton imageButton_r3c10 = (ImageButton) gridTable.findViewById(R.id.img_r3c10);
+
+        ImageButton imageButton_r4c1 = (ImageButton) gridTable.findViewById(R.id.img_r4c1);
+        ImageButton imageButton_r4c2 = (ImageButton) gridTable.findViewById(R.id.img_r4c2);
+        ImageButton imageButton_r4c3 = (ImageButton) gridTable.findViewById(R.id.img_r4c3);
+        ImageButton imageButton_r4c4 = (ImageButton) gridTable.findViewById(R.id.img_r4c4);
+        ImageButton imageButton_r4c5 = (ImageButton) gridTable.findViewById(R.id.img_r4c5);
+        ImageButton imageButton_r4c6 = (ImageButton) gridTable.findViewById(R.id.img_r4c6);
+        ImageButton imageButton_r4c7 = (ImageButton) gridTable.findViewById(R.id.img_r4c7);
+        ImageButton imageButton_r4c8 = (ImageButton) gridTable.findViewById(R.id.img_r4c8);
+        ImageButton imageButton_r4c9 = (ImageButton) gridTable.findViewById(R.id.img_r4c9);
+        ImageButton imageButton_r4c10 = (ImageButton) gridTable.findViewById(R.id.img_r4c10);
+
+        ImageButton imageButton_r5c1 = (ImageButton) gridTable.findViewById(R.id.img_r5c1);
+        ImageButton imageButton_r5c2 = (ImageButton) gridTable.findViewById(R.id.img_r5c2);
+        ImageButton imageButton_r5c3 = (ImageButton) gridTable.findViewById(R.id.img_r5c3);
+        ImageButton imageButton_r5c4 = (ImageButton) gridTable.findViewById(R.id.img_r5c4);
+        ImageButton imageButton_r5c5 = (ImageButton) gridTable.findViewById(R.id.img_r5c5);
+        ImageButton imageButton_r5c6 = (ImageButton) gridTable.findViewById(R.id.img_r5c6);
+        ImageButton imageButton_r5c7 = (ImageButton) gridTable.findViewById(R.id.img_r5c7);
+        ImageButton imageButton_r5c8 = (ImageButton) gridTable.findViewById(R.id.img_r5c8);
+        ImageButton imageButton_r5c9 = (ImageButton) gridTable.findViewById(R.id.img_r5c9);
+        ImageButton imageButton_r5c10 = (ImageButton) gridTable.findViewById(R.id.img_r5c10);
+
+        ImageButton imageButton_r6c1 = (ImageButton) gridTable.findViewById(R.id.img_r6c1);
+        ImageButton imageButton_r6c2 = (ImageButton) gridTable.findViewById(R.id.img_r6c2);
+        ImageButton imageButton_r6c3 = (ImageButton) gridTable.findViewById(R.id.img_r6c3);
+        ImageButton imageButton_r6c4 = (ImageButton) gridTable.findViewById(R.id.img_r6c4);
+        ImageButton imageButton_r6c5 = (ImageButton) gridTable.findViewById(R.id.img_r6c5);
+        ImageButton imageButton_r6c6 = (ImageButton) gridTable.findViewById(R.id.img_r6c6);
+        ImageButton imageButton_r6c7 = (ImageButton) gridTable.findViewById(R.id.img_r6c7);
+        ImageButton imageButton_r6c8 = (ImageButton) gridTable.findViewById(R.id.img_r6c8);
+        ImageButton imageButton_r6c9 = (ImageButton) gridTable.findViewById(R.id.img_r6c9);
+        ImageButton imageButton_r6c10 = (ImageButton) gridTable.findViewById(R.id.img_r6c10);
+
+        ImageButton imageButton_r7c1 = (ImageButton) gridTable.findViewById(R.id.img_r7c1);
+        ImageButton imageButton_r7c2 = (ImageButton) gridTable.findViewById(R.id.img_r7c2);
+        ImageButton imageButton_r7c3 = (ImageButton) gridTable.findViewById(R.id.img_r7c3);
+        ImageButton imageButton_r7c4 = (ImageButton) gridTable.findViewById(R.id.img_r7c4);
+        ImageButton imageButton_r7c5 = (ImageButton) gridTable.findViewById(R.id.img_r7c5);
+        ImageButton imageButton_r7c6 = (ImageButton) gridTable.findViewById(R.id.img_r7c6);
+        ImageButton imageButton_r7c7 = (ImageButton) gridTable.findViewById(R.id.img_r7c7);
+        ImageButton imageButton_r7c8 = (ImageButton) gridTable.findViewById(R.id.img_r7c8);
+        ImageButton imageButton_r7c9 = (ImageButton) gridTable.findViewById(R.id.img_r7c9);
+        ImageButton imageButton_r7c10 = (ImageButton) gridTable.findViewById(R.id.img_r7c10);
+
+        ImageButton imageButton_r8c1 = (ImageButton) gridTable.findViewById(R.id.img_r8c1);
+        ImageButton imageButton_r8c2 = (ImageButton) gridTable.findViewById(R.id.img_r8c2);
+        ImageButton imageButton_r8c3 = (ImageButton) gridTable.findViewById(R.id.img_r8c3);
+        ImageButton imageButton_r8c4 = (ImageButton) gridTable.findViewById(R.id.img_r8c4);
+        ImageButton imageButton_r8c5 = (ImageButton) gridTable.findViewById(R.id.img_r8c5);
+        ImageButton imageButton_r8c6 = (ImageButton) gridTable.findViewById(R.id.img_r8c6);
+        ImageButton imageButton_r8c7 = (ImageButton) gridTable.findViewById(R.id.img_r8c7);
+        ImageButton imageButton_r8c8 = (ImageButton) gridTable.findViewById(R.id.img_r8c8);
+        ImageButton imageButton_r8c9 = (ImageButton) gridTable.findViewById(R.id.img_r8c9);
+        ImageButton imageButton_r8c10 = (ImageButton) gridTable.findViewById(R.id.img_r8c10);
+
+        ImageButton imageButton_r9c1 = (ImageButton) gridTable.findViewById(R.id.img_r9c1);
+        ImageButton imageButton_r9c2 = (ImageButton) gridTable.findViewById(R.id.img_r9c2);
+        ImageButton imageButton_r9c3 = (ImageButton) gridTable.findViewById(R.id.img_r9c3);
+        ImageButton imageButton_r9c4 = (ImageButton) gridTable.findViewById(R.id.img_r9c4);
+        ImageButton imageButton_r9c5 = (ImageButton) gridTable.findViewById(R.id.img_r9c5);
+        ImageButton imageButton_r9c6 = (ImageButton) gridTable.findViewById(R.id.img_r9c6);
+        ImageButton imageButton_r9c7 = (ImageButton) gridTable.findViewById(R.id.img_r9c7);
+        ImageButton imageButton_r9c8 = (ImageButton) gridTable.findViewById(R.id.img_r9c8);
+        ImageButton imageButton_r9c9 = (ImageButton) gridTable.findViewById(R.id.img_r9c9);
+        ImageButton imageButton_r9c10 = (ImageButton) gridTable.findViewById(R.id.img_r9c10);
+
+        ImageButton imageButton_r10c1 = (ImageButton) gridTable.findViewById(R.id.img_r10c1);
+        ImageButton imageButton_r10c2 = (ImageButton) gridTable.findViewById(R.id.img_r10c2);
+        ImageButton imageButton_r10c3 = (ImageButton) gridTable.findViewById(R.id.img_r10c3);
+        ImageButton imageButton_r10c4 = (ImageButton) gridTable.findViewById(R.id.img_r10c4);
+        ImageButton imageButton_r10c5 = (ImageButton) gridTable.findViewById(R.id.img_r10c5);
+        ImageButton imageButton_r10c6 = (ImageButton) gridTable.findViewById(R.id.img_r10c6);
+        ImageButton imageButton_r10c7 = (ImageButton) gridTable.findViewById(R.id.img_r10c7);
+        ImageButton imageButton_r10c8 = (ImageButton) gridTable.findViewById(R.id.img_r10c8);
+        ImageButton imageButton_r10c9 = (ImageButton) gridTable.findViewById(R.id.img_r10c9);
+        ImageButton imageButton_r10c10 = (ImageButton) gridTable.findViewById(R.id.img_r10c10);
+
+
+*/
+        TableRow row;
+        for (int i = 0; i < currentCircle.getTotalRounds(); i++) {
+            row = new TableRow(this.getContext());
+        }
+    }
+
     @Deprecated
     private void setupGrid2() {
 //        gridTable = (TableLayout) rootView.findViewById(R.id.game_table);
@@ -345,7 +482,7 @@ public class GameFragment extends Fragment {
 
     @Deprecated
     private void drawCards2() {
-       // gridTable = (TableLayout) rootView.findViewById(R.id.game_table);
+        // gridTable = (TableLayout) rootView.findViewById(R.id.game_table);
         gridTable.removeAllViews();
 
 

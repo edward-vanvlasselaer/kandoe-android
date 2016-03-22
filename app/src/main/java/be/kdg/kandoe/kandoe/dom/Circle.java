@@ -18,6 +18,7 @@ public class Circle implements Serializable {
     private Integer minCardsToSelect;
     private Integer currentCircleParticipation;
 
+
     public Integer getCurrentCircleParticipation() {
         return currentCircleParticipation;
     }

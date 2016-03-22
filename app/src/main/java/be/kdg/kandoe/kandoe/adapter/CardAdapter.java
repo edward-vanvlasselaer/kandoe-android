@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +17,12 @@ import be.kdg.kandoe.kandoe.R;
 import be.kdg.kandoe.kandoe.activity.ThemeCardActivity;
 import be.kdg.kandoe.kandoe.application.KandoeApplication;
 import be.kdg.kandoe.kandoe.dom.Card;
+import be.kdg.kandoe.kandoe.dom.Circle;
 import be.kdg.kandoe.kandoe.dom.Theme;
+import be.kdg.kandoe.kandoe.dom.User;
 import be.kdg.kandoe.kandoe.exception.AbstractExceptionCallback;
 import be.kdg.kandoe.kandoe.fragment.GameFragment;
+import be.kdg.kandoe.kandoe.util.AccountSettings;
 import retrofit.Call;
 import retrofit.Response;
 import retrofit.Retrofit;
@@ -30,6 +34,7 @@ public class CardAdapter extends BaseAdapter {
     private static CardAdapter instance = null;
     private final Context context;
     private List<Card> cards;
+    private Circle circle;
 
     public CardAdapter(Context context) {
         this.context = context;
@@ -46,6 +51,10 @@ public class CardAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+
+    public void setCircle(Circle circle) {
+        this.circle = circle;
+    }
 
     @Override
     public int getCount() {
@@ -81,7 +90,16 @@ public class CardAdapter extends BaseAdapter {
             convertView.setTag(viewHolder);
         }
 
+        //TODO: checken of werkt
+        for(User user: circle.getUsers())
+        {
+            if(user.getUserId()== AccountSettings.getLoggedInUser().getUserId()){
+                if(!user.isPlaying()){
+                    Toast.makeText(context, "It's not your turn to play", Toast.LENGTH_SHORT).show();
 
+                }
+            }
+        }
         viewHolder.title.setText(card.getCardName());
         viewHolder.description.setText(card.getDescription());
 
@@ -119,6 +137,18 @@ public class CardAdapter extends BaseAdapter {
         } else {
             final int childIndex = pos - firstListItemPosition;
             return listView.getChildAt(childIndex);
+        }
+    }
+
+    private void checkIfIsTurnOfUser(){
+        for(User user: circle.getUsers())
+        {
+            if(user.getUserId()== AccountSettings.getLoggedInUser().getUserId()){
+                if(user.isPlaying()==false){
+                    Toast.makeText(context, "It's not your turn to play", Toast.LENGTH_SHORT).show();
+
+                }
+            }
         }
     }
 
