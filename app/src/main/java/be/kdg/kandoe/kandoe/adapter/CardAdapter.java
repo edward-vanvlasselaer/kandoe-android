@@ -109,6 +109,7 @@ public class CardAdapter extends BaseAdapter {
         return convertView;
     }
 
+
     public View getViewByPosition(int pos, ListView listView) {
         final int firstListItemPosition = listView.getFirstVisiblePosition();
         final int lastListItemPosition = firstListItemPosition + listView.getChildCount() - 1;

@@ -30,6 +30,7 @@ public class ThemeCardActivity extends AppCompatActivity {
     private int themeId;
     private Theme theme;
     private Button startBtn;
+    private TextView noCards;
 
     public static Theme getCurrentTheme() {
         if (currentTheme != null) return currentTheme;
@@ -52,7 +53,13 @@ public class ThemeCardActivity extends AppCompatActivity {
         final TextView textView = (TextView) findViewById(R.id.txt_nocards);
         startBtn = (Button) findViewById(R.id.btn_select);
         ListView listView = (ListView) findViewById(R.id.cardlist_listview);
+        noCards=(TextView)findViewById(R.id.txt_nocards);
         startBtn.setVisibility(View.VISIBLE);
+
+        if(getCurrentTheme().getCircle()==null){
+            startBtn.setVisibility(View.GONE);
+            noCards.setVisibility(View.VISIBLE);
+        }
 
         Call<List<Card>> call = KandoeApplication.getCardApi().getCardsByTheme(themeId);
         call.enqueue(new AbstractExceptionCallback<List<Card>>() {

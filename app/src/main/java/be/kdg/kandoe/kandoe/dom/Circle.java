@@ -16,6 +16,15 @@ public class Circle implements Serializable {
     private List<Card> cards;
     private Integer maxCardsToSelect;
     private Integer minCardsToSelect;
+    private Integer currentCircleParticipation;
+
+    public Integer getCurrentCircleParticipation() {
+        return currentCircleParticipation;
+    }
+
+    public void setCurrentCircleParticipation(Integer currentCircleParticipation) {
+        this.currentCircleParticipation = currentCircleParticipation;
+    }
 
     public Integer getMaxCardsToSelect() {
         return maxCardsToSelect;

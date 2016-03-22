@@ -3,7 +3,7 @@
     android:id="@+id/cardlist_item"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/custom_background"
+    android:background="@drawable/theme_background"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:textColor="@color/md_white_1000"
+            android:textColor="@color/md_orange_900"
             android:paddingLeft="@dimen/margin_card"/>
 
         <Button
