@@ -104,7 +104,7 @@ public class GameFragment extends Fragment {
                     int debug = rootView.getHeight();
                     marginCard = (viewHeight / 9);
 
-                    int xMargin = Math.round((viewWidth / 150));
+                    int xMargin = Math.round((viewWidth / 130));
 
 
                     int j = 0;
@@ -113,7 +113,7 @@ public class GameFragment extends Fragment {
                         j++;
                     }
 
-                    for (int i = 25; i < viewWidth - 150; i += 150) {
+                    for (int i = 25; i < viewWidth - 130; i += 130) {
                         horizontalList.add(i);
                     }
 
@@ -460,7 +460,7 @@ public class GameFragment extends Fragment {
             myButton.setBackgroundResource(R.drawable.circle_card_icon);
             myButton.setText(String.valueOf(card.getCardId()));
             myButton.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(150, 150);
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(130, 130);
 
             Random rnd = new Random();
 
@@ -471,7 +471,7 @@ public class GameFragment extends Fragment {
             int randomX = horizontalList.get(randomNr);
 
             if(xIsUsed.contains(randomX)){
-                params.leftMargin = horizontalList.get(randomNr)+75;
+                params.leftMargin = horizontalList.get(randomNr)+65;
             }else{
                 params.leftMargin = horizontalList.get(randomNr);
                 xIsUsed.add(randomX);
