@@ -1,6 +1,8 @@
 package be.kdg.kandoe.kandoe.adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -92,12 +94,10 @@ public class CardAdapter extends BaseAdapter {
         }
 
         //TODO: checken of werkt
-        for(User user: circle.getUsers())
-        {
-            if(user.getUserId()== AccountSettings.getLoggedInUser().getUserId()){
-                if(!user.isPlaying()){
-                    Toast.makeText(context, "It's not your turn to play", Toast.LENGTH_SHORT).show();
-
+        for (User user : circle.getUsers()) {
+            if (user.getUserId() == AccountSettings.getLoggedInUser().getUserId()) {
+                if (!user.isPlaying()) {
+                    //Toast.makeText(context, "It's not your turn to play", Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -108,23 +108,46 @@ public class CardAdapter extends BaseAdapter {
         viewHolder.upvote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                card.setScore(card.getScore()+1);
-                GameFragment.getSingletonObject().moveCard(card);
-                MainActivity.getInstance().getViewPager().setCurrentItem(1);
-                Call<Object> call = KandoeApplication.getCircleApi().addVote(1, card);
-                call.enqueue(new AbstractExceptionCallback() {
-                    @Override
-                    public void onResponse(Response response, Retrofit retrofit) {
-                        //viewHolder.cardLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.md_grey_600));
-                        if (card.getScore() == null) {
-                            //  viewHolder.title.setText(String.valueOf(1));
-                        } else {
-                            // viewHolder.title.setText(card.getScore() + 1);
-                        }
+                User playingUser = new User();
+                playingUser.setUsername("NULL");
+                for (User user : circle.getUsers()){
+                    if (user.isPlaying())
+                        playingUser = user;
+                }
+                for (User user : circle.getUsers()) {
+                    if (user.getUserId() == AccountSettings.getLoggedInUser().getUserId()) {
+//                        if (!user.isPlaying()) {
+//                            new AlertDialog.Builder(context)
+//                                    .setTitle("Not so fast!")
+//                                    .setMessage("It's not your turn to play, please wait until it is your turn.\nNext move is: " + playingUser.getUsername())
+//                                    .setPositiveButton("Ok I'll wait", new DialogInterface.OnClickListener() {
+//                                        public void onClick(DialogInterface dialog, int which) {
+//                                            dialog.dismiss();
+//                                        }
+//                                    })
+//                                    .show();
+//                            return;
+//                        }
                     }
+                }
+                if (card.getScore()+1 < circle.getTotalRounds()) {
+                    //TEST
+                    card.setScore(card.getScore() + 1);
+                    GameFragment.getSingletonObject().moveCard(card);
+                    MainActivity.getInstance().getViewPager().setCurrentItem(1);
+                    /////////////////////
+                    Call<Object> call = KandoeApplication.getCircleApi().addVote(1, card);
+                    call.enqueue(new AbstractExceptionCallback() {
+                        @Override
+                        public void onResponse(Response response, Retrofit retrofit) {
+                            //move test here
+                        }
 
 
-                });
+                    });
+                }else{
+                    Toast.makeText(context, "Card is already in the middle", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         return convertView;
@@ -143,11 +166,10 @@ public class CardAdapter extends BaseAdapter {
         }
     }
 
-    private void checkIfIsTurnOfUser(){
-        for(User user: circle.getUsers())
-        {
-            if(user.getUserId()== AccountSettings.getLoggedInUser().getUserId()){
-                if(user.isPlaying()==false){
+    private void checkIfIsTurnOfUser() {
+        for (User user : circle.getUsers()) {
+            if (user.getUserId() == AccountSettings.getLoggedInUser().getUserId()) {
+                if (user.isPlaying() == false) {
                     Toast.makeText(context, "It's not your turn to play", Toast.LENGTH_SHORT).show();
 
                 }

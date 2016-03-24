@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
         drawer = ToolbarBuilder.makeDefaultDrawer(this, toolbar);
 
-
+        viewPager.setCurrentItem(1);
         Bundle extras = getIntent().getExtras();
         if (extras != null) theme = (Theme) extras.get("theme");
     }

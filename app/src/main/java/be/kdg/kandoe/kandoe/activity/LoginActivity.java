@@ -56,9 +56,9 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                tempview = v;
                 if (dialog != null)
                     dialog.show();
-                tempview = v;
                 mThread = new Thread() {
                     @Override
                     public void run() {

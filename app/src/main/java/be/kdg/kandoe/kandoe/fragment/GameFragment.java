@@ -1,10 +1,7 @@
 package be.kdg.kandoe.kandoe.fragment;
 
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -26,7 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-
 import be.kdg.kandoe.kandoe.R;
 import be.kdg.kandoe.kandoe.activity.MainActivity;
 import be.kdg.kandoe.kandoe.activity.ThemeCardActivity;
@@ -43,7 +39,7 @@ public class GameFragment extends Fragment {
     private Circle currentCircle;
     private int currentOrganisationId;
     private List<Card> circleCards;
-    private List<ImageButton> circleButtons;
+    private List<Button> circleButtons;
     private int viewHeight;
     private int viewWidth;
     private int marginCard;
@@ -56,6 +52,9 @@ public class GameFragment extends Fragment {
     private ImageButton buttonMatrix[][];
     private ViewTreeObserver vto;
     private LinearLayout gameStatus;
+    private List<Integer> horizontalList;
+    private List<Integer> xIsUsed;
+
 
     public GameFragment() {
         try {
@@ -67,7 +66,8 @@ public class GameFragment extends Fragment {
         }
         circleCards = new ArrayList<>();
         circleButtons = new ArrayList<>();
-
+        horizontalList = new ArrayList<>();
+        xIsUsed = new ArrayList<>();
     }
 
     public static synchronized GameFragment getSingletonObject() {
@@ -91,7 +91,7 @@ public class GameFragment extends Fragment {
         gameView = rootView.findViewById(R.id.game_background);
 
         //TODO: checken if game STARTED is
-        gameStatus=(LinearLayout) rootView.findViewById(R.id.game_status);
+        gameStatus = (LinearLayout) rootView.findViewById(R.id.game_status);
 
         ViewTreeObserver viewTreeObserver = gameView.getViewTreeObserver();
         if (viewTreeObserver.isAlive()) {
@@ -104,11 +104,19 @@ public class GameFragment extends Fragment {
                     int debug = rootView.getHeight();
                     marginCard = (viewHeight / 9);
 
+                    int xMargin = Math.round((viewWidth / 150));
+
+
                     int j = 0;
                     for (int i = currentCircle.getTotalRounds(); i > 0; i--) {
-                        tableStarts[i - 1] = marginCard + (j * marginCard);
+                        tableStarts[i - 1] = marginCard + (j * marginCard) - 165;
                         j++;
                     }
+
+                    for (int i = 25; i < viewWidth - 150; i += 150) {
+                        horizontalList.add(i);
+                    }
+
                     drawCards();
                 }
             });
@@ -171,10 +179,10 @@ public class GameFragment extends Fragment {
 
 
     public void moveCard(Card card) {
-        ImageButton myButton = null;
+        Button myButton = null;
 //        Card myCard = null;
 
-        for (ImageButton btn : circleButtons) {
+        for (Button btn : circleButtons) {
             if (btn.getId() == card.getCardId()) {
                 myButton = btn;
             }
@@ -447,40 +455,57 @@ public class GameFragment extends Fragment {
     private void drawCards() {
         circleButtons = new ArrayList<>();
         for (Card card : circleCards) {
-            ImageButton myImageButton = new ImageButton(this.getContext()); //generate ImageButton
-            myImageButton.setId(card.getCardId()); //Set Id of button
-            myImageButton.setBackgroundResource(R.drawable.circle_card_icon);
+            Button myButton = new Button(this.getContext()); //generate ImageButton
+            myButton.setId(card.getCardId()); //Set Id of button
+            myButton.setBackgroundResource(R.drawable.circle_card_icon);
+            myButton.setText(String.valueOf(card.getCardId()));
+            myButton.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(150, 150);
 
             Random rnd = new Random();
-            int min = 25;
-            int max = viewWidth;
-            int range = max - min - 25;
-            int rndLeft = rnd.nextInt(range) + min;
 
-            Random rndCol = new Random();
-            int color = Color.argb(255, rndCol.nextInt(256), rndCol.nextInt(256), rndCol.nextInt(256));
+            int max = horizontalList.size();
+            int range = max-1;
+            int randomNr = rnd.nextInt(range);
 
-            Drawable backgroundWhereShapeIsPlaced = myImageButton.getBackground();
-            if (backgroundWhereShapeIsPlaced instanceof ShapeDrawable) {
-                ShapeDrawable shapeDrawable = (ShapeDrawable) backgroundWhereShapeIsPlaced;
-                shapeDrawable.getPaint().setColor(color);
-            } else if (backgroundWhereShapeIsPlaced instanceof GradientDrawable) {
-                GradientDrawable gradientDrawable = (GradientDrawable) backgroundWhereShapeIsPlaced;
-                gradientDrawable.setColor(color);
-            } else if (backgroundWhereShapeIsPlaced instanceof ColorDrawable) {
-                ColorDrawable colorDrawable = (ColorDrawable) backgroundWhereShapeIsPlaced;
-                colorDrawable.setColor(color);
+            int randomX = horizontalList.get(randomNr);
+
+            if(xIsUsed.contains(randomX)){
+                params.leftMargin = horizontalList.get(randomNr)+75;
+            }else{
+                params.leftMargin = horizontalList.get(randomNr);
+                xIsUsed.add(randomX);
             }
 
-            params.leftMargin = rndLeft;
+
+
+            //Random rndCol = new Random();
+            //int color = Color.argb(255, rndCol.nextInt(256), rndCol.nextInt(256), rndCol.nextInt(256));
+
+//            LayerDrawable layerlist = (LayerDrawable) ContextCompat.getDrawable(this.getContext(),R.drawable.circle_card_icon);
+//            GradientDrawable shape = (GradientDrawable) layerlist.findDrawableByLayerId(R.id.icon_circle_background);
+//            shape.setColor(color);
+
+//            Drawable backgroundWhereShapeIsPlaced = myImageButton.getBackground();
+//            if (backgroundWhereShapeIsPlaced instanceof ShapeDrawable) {
+//                ShapeDrawable shapeDrawable = (ShapeDrawable) backgroundWhereShapeIsPlaced;
+//                shapeDrawable.getPaint().setColor(color);
+//            } else if (backgroundWhereShapeIsPlaced instanceof GradientDrawable) {
+//                GradientDrawable gradientDrawable = (GradientDrawable) backgroundWhereShapeIsPlaced;
+//                gradientDrawable.setColor(color);
+//            } else if (backgroundWhereShapeIsPlaced instanceof ColorDrawable) {
+//                ColorDrawable colorDrawable = (ColorDrawable) backgroundWhereShapeIsPlaced;
+//                colorDrawable.setColor(color);
+//            }
+
+
             if (card.getScore() == null)
                 card.setScore(0);
 
             params.topMargin = tableStarts[card.getScore()];
-            background.addView(myImageButton, params); //Add view
-            myImageButton.setOnClickListener(getButtonAndDoAction(myImageButton));
-            circleButtons.add(myImageButton);
+            background.addView(myButton, params); //Add view
+            myButton.setOnClickListener(getButtonAndDoAction(myButton));
+            circleButtons.add(myButton);
         }
     }
 
@@ -494,12 +519,10 @@ public class GameFragment extends Fragment {
             ImageButton myImageButton = new ImageButton(this.getContext());
             myImageButton.setId(card.getCardId());
             myImageButton.setBackgroundResource(R.drawable.circle_card_icon);
-
-
         }
     }
 
-    View.OnClickListener getButtonAndDoAction(final ImageButton button) {
+    View.OnClickListener getButtonAndDoAction(final Button button) {
         return new View.OnClickListener() {
             public void onClick(View v) {
                 ViewPager pager = MainActivity.getInstance().getViewPager();

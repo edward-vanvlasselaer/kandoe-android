@@ -1,5 +1,7 @@
 package be.kdg.kandoe.kandoe.activity;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -36,6 +38,9 @@ public class ThemeCardActivity extends AppCompatActivity {
     private Button startBtn;
     private TextView noCards;
 
+    private ProgressDialog dialog;
+    private Thread mThread;
+
     public static Theme getCurrentTheme() {
         if (currentTheme != null) return currentTheme;
         currentTheme = new GenericSharedStorage<>(KandoeApplication.app, Theme.class).getObject("currentTheme");
@@ -50,7 +55,16 @@ public class ThemeCardActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_card);
+        setContentView(R.layout.fragment_card);//kan geen toolbar opzetten anders haaft cardFragment 2 toolbars, nooit layouts dubbel gebruiken
+
+        dialog = new ProgressDialog(this);
+        dialog.setCancelable(false);
+        dialog.setMessage("Loading cards..");
+
+        if (dialog != null)
+            dialog.show();
+
+
 
         themeId = getCurrentTheme().getThemeId();
 
@@ -65,10 +79,27 @@ public class ThemeCardActivity extends AppCompatActivity {
             noCards.setVisibility(View.VISIBLE);
         }
 
+        mThread = new Thread() {
+            @Override
+            public void run() {
+                synchronized (this) {
+                    requestCards(textView);
+                }
+            }
+        };
+        mThread.start();
+        themeCardAdapter = new ThemeCardAdapter(this.getApplicationContext());
+        listView.setAdapter(themeCardAdapter);
+        initListener();
+    }
+
+    private void requestCards(final TextView textView) {
         Call<List<Card>> call = KandoeApplication.getCardApi().getCardsByTheme(themeId);
         call.enqueue(new AbstractExceptionCallback<List<Card>>() {
             @Override
             public void onResponse(Response<List<Card>> response, Retrofit retrofit) {
+                if (dialog != null)
+                    dialog.dismiss();
                 List<Card> newList = new ArrayList<>();
                 if (response.body() != null) {
                     for (Card card : response.body()) {
@@ -79,16 +110,16 @@ public class ThemeCardActivity extends AppCompatActivity {
                     textView.setVisibility(View.VISIBLE);
                 }
             }
+
+            @Override
+            public void onFailure(Throwable t) {
+                if (dialog != null)
+                    dialog.dismiss();
+            }
         });
-
-        themeCardAdapter = new ThemeCardAdapter(this.getApplicationContext());
-        listView.setAdapter(themeCardAdapter);
-
-        initListener();
     }
 
     private void initListener() {
-
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,7 +131,6 @@ public class ThemeCardActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     private boolean hasSelectedMoreThanMin() {
