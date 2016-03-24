@@ -26,6 +26,12 @@ import com.squareup.picasso.Picasso;
 import be.kdg.kandoe.kandoe.R;
 import be.kdg.kandoe.kandoe.activity.LandingActivity;
 import be.kdg.kandoe.kandoe.activity.MainActivity;
+import be.kdg.kandoe.kandoe.application.KandoeApplication;
+import be.kdg.kandoe.kandoe.exception.AbstractExceptionCallback;
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 /**
  * Created by Edward on 17/03/2016.
@@ -106,10 +112,18 @@ public class ToolbarBuilder {
         return new Drawer.OnDrawerItemClickListener() {
             @Override
             public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                Intent myintent = new Intent(activity, LandingActivity.class);
-                activity.startActivity(myintent);
-                activity.finish();
+                Call<Object> logout= KandoeApplication.getUserApi().logout();
+                logout.enqueue(new AbstractExceptionCallback<Object>() {
+                    @Override
+                    public void onResponse(Response<Object> response, Retrofit retrofit) {
+                        Intent myintent = new Intent(activity, LandingActivity.class);
+                        activity.startActivity(myintent);
+                        activity.finish();
+                    }
+
+                });
                 return false;
+
             }
         };
     }

@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+
 import be.kdg.kandoe.kandoe.R;
 import be.kdg.kandoe.kandoe.activity.MainActivity;
 import be.kdg.kandoe.kandoe.activity.ThemeCardActivity;

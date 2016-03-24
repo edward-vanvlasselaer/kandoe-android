@@ -2,6 +2,7 @@ package be.kdg.kandoe.kandoe.adapter;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -113,7 +114,8 @@ public class ThemeCardAdapter extends BaseAdapter {
                         @Override
                         public void onResponse(Response response, Retrofit retrofit) {
                             if (response.errorBody() != null) {
-                                Toast.makeText(context, "You cannot select more cards than max", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context,response.code()+ ": You cannot select more cards than max", Toast.LENGTH_SHORT).show();
+                                Log.e("",response.errorBody().toString());
                                 setGo(true);
                             } else {
                                 setLayoutOfCardsOfUser(position);

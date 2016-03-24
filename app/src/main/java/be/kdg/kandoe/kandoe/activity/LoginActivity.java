@@ -56,7 +56,8 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.show();
+                if (dialog != null)
+                    dialog.show();
                 tempview = v;
                 mThread = new Thread() {
                     @Override
@@ -104,7 +105,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void requestCurrentUser() {
-        dialog.setMessage("Logging in..");
+        if (dialog != null)
+            dialog.setMessage("Logging in..");
         Call<User> call = KandoeApplication.getUserApi().getCurrentUser();
         call.enqueue(new AbstractExceptionCallback<User>() {
             @Override
@@ -114,7 +116,8 @@ public class LoginActivity extends AppCompatActivity {
                 AccountSettings.setLoggedInUser(response.body());
                 Toast.makeText(getBaseContext(), "Hi, " + AccountSettings.getLoggedInUser().getFirstName() + "!", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(tempview.getContext(), OrganisationActivity.class));
-                dialog.hide();
+                if (dialog != null)
+                    dialog.hide();
                 dialog = null;
             }
 

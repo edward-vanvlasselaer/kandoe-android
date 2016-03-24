@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:textColor="@color/md_orange_900"
+            android:textColor="@color/green_kd"
             android:paddingLeft="@dimen/margin_card"/>
 
         <Button

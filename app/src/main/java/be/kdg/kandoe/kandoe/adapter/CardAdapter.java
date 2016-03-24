@@ -110,7 +110,7 @@ public class CardAdapter extends BaseAdapter {
             public void onClick(View v) {
                 card.setScore(card.getScore()+1);
                 GameFragment.getSingletonObject().moveCard(card);
-                MainActivity.getInstance().getViewPager().setCurrentItem(0);
+                MainActivity.getInstance().getViewPager().setCurrentItem(1);
                 Call<Object> call = KandoeApplication.getCircleApi().addVote(1, card);
                 call.enqueue(new AbstractExceptionCallback() {
                     @Override
