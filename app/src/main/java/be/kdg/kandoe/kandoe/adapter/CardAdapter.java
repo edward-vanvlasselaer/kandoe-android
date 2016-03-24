@@ -101,7 +101,11 @@ public class CardAdapter extends BaseAdapter {
                 }
             }
         }
-        viewHolder.title.setText(card.getCardName());
+
+        String cardPosition="";
+
+        if(card.getPosition()!=null)cardPosition=card.getPosition();
+        viewHolder.title.setText(cardPosition+": "+card.getCardName());
         viewHolder.description.setText(card.getDescription());
 
         final Theme finalTheme = theme;

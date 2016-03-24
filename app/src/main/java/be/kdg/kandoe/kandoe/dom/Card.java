@@ -14,7 +14,7 @@ public class Card implements Serializable {
     private Integer userId;
     private int circleId;
     private int selectorId;
-    private int position;
+    private String position;
 
     public int getSelectorId() {
         return selectorId;
@@ -24,11 +24,11 @@ public class Card implements Serializable {
         this.selectorId = selectorId;
     }
 
-    public int getPosition() {
+    public String getPosition() {
         return position;
     }
 
-    public void setPosition(int position) {
+    public void setPosition(String position) {
         this.position = position;
     }
 
