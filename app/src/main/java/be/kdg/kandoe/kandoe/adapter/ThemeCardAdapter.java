@@ -109,7 +109,6 @@ public class ThemeCardAdapter extends BaseAdapter {
                     card.setCircleId(ThemeCardActivity.getCurrentTheme().getCircle().getCircleId());
 
                     Call<Object> call = KandoeApplication.getCardApi().addCardToCircle(ThemeCardActivity.getCurrentTheme().getCircle().getCircleId(), card);
-                    //noinspection unchecked
                     call.enqueue(new AbstractExceptionCallback() {
                         @Override
                         public void onResponse(Response response, Retrofit retrofit) {
@@ -125,13 +124,9 @@ public class ThemeCardAdapter extends BaseAdapter {
                         }
 
                     });
-
-
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-
             }
 
         });
@@ -210,7 +205,6 @@ public class ThemeCardAdapter extends BaseAdapter {
         TextView description;
         Button select;
         RelativeLayout cardLayout;
-
 
         public ViewHolder(View view) {
             title = (TextView) view.findViewById(R.id.carditem_txt_title);

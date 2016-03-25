@@ -1,6 +1,7 @@
 package be.kdg.kandoe.kandoe.fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import be.kdg.kandoe.kandoe.R;
@@ -20,6 +22,7 @@ import be.kdg.kandoe.kandoe.dom.Card;
 import be.kdg.kandoe.kandoe.dom.Circle;
 import be.kdg.kandoe.kandoe.exception.AbstractExceptionCallback;
 import be.kdg.kandoe.kandoe.exception.CardException;
+import be.kdg.kandoe.kandoe.util.CustomComparator;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
@@ -33,6 +36,12 @@ public class CardFragment extends Fragment {
     private ListView listView;
     private List<Card> newList;
     private List<View> cardViews;
+    private TextView textView;
+
+    private Runnable backgroundService;
+    private Handler handler;
+    private Fragment fragment;
+    private int interval = 5000;
 
     public static synchronized CardFragment getInstance() {
         if (instance == null)
@@ -43,6 +52,23 @@ public class CardFragment extends Fragment {
     public ListView getListView() {
         return listView;
     }
+
+    public CardFragment() {
+        fragment = this;
+        createBackgroundService();
+    }
+
+    private void createBackgroundService() {
+        handler = new Handler();
+        backgroundService = new Runnable() {
+            @Override
+            public void run() {
+                requestCards(textView);
+                handler.postDelayed(backgroundService, interval);
+            }
+        };
+    }
+
 
     public int getPositionByCardId(int cardId) throws CardException {
         if (newList == null)
@@ -58,7 +84,7 @@ public class CardFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_card, container, false);
         listView = (ListView) rootView.findViewById(R.id.cardlist_listview);
-        final TextView textView = (TextView) rootView.findViewById(R.id.txt_nocards);
+        textView = (TextView) rootView.findViewById(R.id.txt_nocards);
         textView.setVisibility(View.GONE);
         cardAdapter = new CardAdapter(rootView.getContext());
         listView.setAdapter(cardAdapter);
@@ -69,6 +95,12 @@ public class CardFragment extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        requestCards(textView);
+
+        return rootView;
+    }
+
+    private void requestCards(final TextView textView) {
         Call<Circle> call = KandoeApplication.getCircleApi().getCircle(circleId);
         call.enqueue(new AbstractExceptionCallback<Circle>() {
             @Override
@@ -79,14 +111,17 @@ public class CardFragment extends Fragment {
                     for (Card card : response.body().getCards()) {
                         newList.add(card);
                     }
-                    getCardAdapter().setCards(newList);
+                    Collections.sort(newList,new CustomComparator());
+                    if(newList.equals(getCardAdapter().getCards())){
+                        return;
+                    }else {
+                        getCardAdapter().setCards(newList);
+                    }
                 } else {
                     textView.setVisibility(View.VISIBLE);
                 }
             }
         });
-
-        return rootView;
     }
 
     @Override
@@ -98,6 +133,13 @@ public class CardFragment extends Fragment {
                 int position = newList.indexOf(card);
                 View singleItem = getCardAdapter().getViewByPosition(position, listView);
                 singleItem.setBackground(ContextCompat.getDrawable(this.getContext(), R.drawable.custom_card_item));
+            }
+        }
+        if (fragment.getContext() != null) {
+            if (menuVisible) {
+                handler.postDelayed(backgroundService, interval);
+            } else {
+                handler.removeCallbacks(backgroundService);
             }
         }
     }
@@ -112,10 +154,7 @@ public class CardFragment extends Fragment {
             e.printStackTrace();
         }
     }
-
     public CardAdapter getCardAdapter() {
         return cardAdapter;
     }
-
-
 }

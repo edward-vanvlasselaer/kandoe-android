@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -22,17 +23,24 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
 import be.kdg.kandoe.kandoe.R;
 import be.kdg.kandoe.kandoe.activity.MainActivity;
 import be.kdg.kandoe.kandoe.activity.ThemeCardActivity;
+import be.kdg.kandoe.kandoe.application.KandoeApplication;
 import be.kdg.kandoe.kandoe.dom.Card;
 import be.kdg.kandoe.kandoe.dom.Circle;
 import be.kdg.kandoe.kandoe.dom.Theme;
+import be.kdg.kandoe.kandoe.exception.AbstractExceptionCallback;
 import be.kdg.kandoe.kandoe.exception.CardException;
 import be.kdg.kandoe.kandoe.exception.ThemeException;
+import be.kdg.kandoe.kandoe.util.CustomComparator;
+import retrofit.Call;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 
 public class GameFragment extends Fragment {
@@ -57,8 +65,17 @@ public class GameFragment extends Fragment {
     private List<Integer> horizontalList;
     private List<Integer> xIsUsed;
 
+    private Runnable backgroundService;
+    private Handler handler;
+    private Fragment fragment;
+    private int interval = 1000;
+
+    private Thread th;
+
 
     public GameFragment() {
+        fragment = this;
+        createBackgroundService();
         try {
             currentTheme = ThemeCardActivity.getCurrentTheme();
             currentCircle = currentTheme.getCircle();
@@ -72,6 +89,51 @@ public class GameFragment extends Fragment {
         xIsUsed = new ArrayList<>();
     }
 
+    private void createBackgroundService() {
+        handler = new Handler();
+        backgroundService = new Runnable() {
+            @Override
+            public void run() {
+                requestCards();
+                drawCards();
+                handler.postDelayed(backgroundService, interval);
+            }
+        };
+//        th = new Thread(backgroundService){
+//            @Override
+//            public void run() {
+//                requestCards();
+//                drawCards();
+//                handler.post(this);
+//                try {
+//                    sleep(interval);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        };
+    }
+
+    private void requestCards() {
+        Call<Circle> call = KandoeApplication.getCircleApi().getCircle(currentCircle.getCircleId());
+        call.enqueue(new AbstractExceptionCallback<Circle>() {
+            @Override
+            public void onResponse(Response<Circle> response, Retrofit retrofit) {
+                circleCards = new ArrayList<>();
+                if (response.body() != null && response.body().getCards() != null) {
+                    for (Card card : response.body().getCards()) {
+                        circleCards.add(card);
+                    }
+                    Collections.sort(circleCards, new CustomComparator());
+                }
+            }
+        });
+    }
+
+    @Override
+    public void setMenuVisibility(boolean menuVisible) {
+        super.setMenuVisibility(menuVisible);
+    }
     public static synchronized GameFragment getSingletonObject() {
         if (ref == null) {
             ref = new GameFragment();
@@ -133,6 +195,25 @@ public class GameFragment extends Fragment {
         circleCards = currentCircle.getCards();
 
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (fragment.getContext() != null) {
+            handler.postDelayed(backgroundService, interval);
+        }
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        MainActivity.getInstance().getViewPager().setCurrentItem(0);
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        MainActivity.getInstance().getViewPager().setCurrentItem(1);
     }
 
     @Deprecated
@@ -464,6 +545,10 @@ public class GameFragment extends Fragment {
 
     private void drawCards() {
         circleButtons = new ArrayList<>();
+        background.removeAllViews();
+
+        Collections.sort(circleCards, new CustomComparator());
+        int x = 0;
         for (Card card : circleCards) {
             Button myButton = new Button(this.getContext()); //generate ImageButton
             myButton.setId(card.getCardId()); //Set Id of button
@@ -474,18 +559,18 @@ public class GameFragment extends Fragment {
 
             Random rnd = new Random();
 
-            int max = horizontalList.size();
-            int range = max-1;
-            int randomNr = rnd.nextInt(range);
-
-            int randomX = horizontalList.get(randomNr);
-
-            if(xIsUsed.contains(randomX)){
-                params.leftMargin = horizontalList.get(randomNr)+65;
-            }else{
-                params.leftMargin = horizontalList.get(randomNr);
-                xIsUsed.add(randomX);
-            }
+//            int max = horizontalList.size();
+//            int range = max-1;
+//            int randomNr = rnd.nextInt(range);
+//
+//            int randomX = horizontalList.get(randomNr);
+//
+//            if(xIsUsed.contains(randomX)){
+//                params.leftMargin = horizontalList.get(randomNr)+65;
+//            }else{
+//                params.leftMargin = horizontalList.get(randomNr);
+//                xIsUsed.add(randomX);
+//            }
 
 
 
@@ -511,6 +596,13 @@ public class GameFragment extends Fragment {
 
             if (card.getScore() == null)
                 card.setScore(0);
+            if(x>= horizontalList.size()){
+                x=0;
+                params.leftMargin =  horizontalList.get(x) + 65;
+            }else{
+                params.leftMargin = horizontalList.get(x);
+                x++;
+            }
 
             params.topMargin = tableStarts[card.getScore()];
             background.addView(myButton, params); //Add view

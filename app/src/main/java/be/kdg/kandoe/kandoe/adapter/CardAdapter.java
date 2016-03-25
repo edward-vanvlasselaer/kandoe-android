@@ -37,6 +37,11 @@ public class CardAdapter extends BaseAdapter {
     private static CardAdapter instance = null;
     private final Context context;
     private List<Card> cards;
+
+    public List<Card> getCards() {
+        return cards;
+    }
+
     private Circle circle;
 
     public CardAdapter(Context context) {
@@ -120,31 +125,29 @@ public class CardAdapter extends BaseAdapter {
                 }
                 for (User user : circle.getUsers()) {
                     if (user.getUserId() == AccountSettings.getLoggedInUser().getUserId()) {
-//                        if (!user.isPlaying()) {
-//                            new AlertDialog.Builder(context)
-//                                    .setTitle("Not so fast!")
-//                                    .setMessage("It's not your turn to play, please wait until it is your turn.\nNext move is: " + playingUser.getUsername())
-//                                    .setPositiveButton("Ok I'll wait", new DialogInterface.OnClickListener() {
-//                                        public void onClick(DialogInterface dialog, int which) {
-//                                            dialog.dismiss();
-//                                        }
-//                                    })
-//                                    .show();
-//                            return;
-//                        }
+                        if (!user.isPlaying()) {
+                            new AlertDialog.Builder(context)
+                                    .setTitle("Not so fast!")
+                                    .setMessage("It's not your turn to play, please wait until it is your turn.\nNext move is: " + playingUser.getUsername())
+                                    .setPositiveButton("Ok I'll wait", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                        }
+                                    })
+                                    .show();
+                            return;
+                        }
                     }
                 }
                 if (card.getScore()+1 < circle.getTotalRounds()) {
-                    //TEST
-                    card.setScore(card.getScore() + 1);
-                    GameFragment.getSingletonObject().moveCard(card);
-                    MainActivity.getInstance().getViewPager().setCurrentItem(1);
-                    /////////////////////
+
                     Call<Object> call = KandoeApplication.getCircleApi().addVote(1, card);
                     call.enqueue(new AbstractExceptionCallback() {
                         @Override
                         public void onResponse(Response response, Retrofit retrofit) {
-                            //move test here
+//                            card.setScore(card.getScore() + 1);
+//                            GameFragment.getSingletonObject().moveCard(card);
+                            MainActivity.getInstance().getViewPager().setCurrentItem(1);
                         }
 
 

@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.IOException;
+
 import be.kdg.kandoe.kandoe.R;
 import be.kdg.kandoe.kandoe.application.KandoeApplication;
 import be.kdg.kandoe.kandoe.dom.Token;
@@ -78,9 +80,34 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Response<Token> response, Retrofit retrofit) {
                 if (response.body() != null && response.body().getToken() != null) {
+
+
                     KandoeApplication.setUserToken(response.body().getToken());
                     requestCurrentUser();
                 }
+
+                try {
+                    String err = response.errorBody().string();
+                    if (err.contains("400")){
+                        dialog.hide();
+                        dialog = null;
+                        new AlertDialog.Builder(LoginActivity.this)
+                                .setTitle("Uh oh :(")
+                                .setMessage("Looks like you entered the wrong password or the username doesn't exist")
+                                .setNeutralButton("Ok i'll check it out", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                })
+                                .show();
+                        return;
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                if(dialog!=null)
+                    dialog.hide();
             }
 
             @Override

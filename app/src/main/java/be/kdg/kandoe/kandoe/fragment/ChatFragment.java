@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,12 +66,13 @@ public class ChatFragment extends Fragment {
     public void setMenuVisibility(boolean menuVisible) {
         super.setMenuVisibility(menuVisible);
 
-        if (fragment.getContext() != null)
+        if (fragment.getContext() != null) {
             if (menuVisible) {
                 handler.postDelayed(backgroundService, interval);
             } else {
                 handler.removeCallbacks(backgroundService);
             }
+        }
     }
 
     @Override

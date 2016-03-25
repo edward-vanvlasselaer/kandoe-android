@@ -1,6 +1,7 @@
 package be.kdg.kandoe.kandoe.util;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -58,6 +59,7 @@ public class ToolbarBuilder {
                 .withActivity(activity)
                 .withHeaderBackground(R.drawable.drawer_background1)
                 .withSelectionListEnabled(false)
+
                 .addProfiles(
                         new ProfileDrawerItem()
                                 .withName(AccountSettings.getLoggedInUser().getUsername())
@@ -89,7 +91,16 @@ public class ToolbarBuilder {
                 )
                 .build();
         drawer.addStickyFooterItem(new PrimaryDrawerItem()
-                .withName("Log out").withOnDrawerItemClickListener(logOutActivity(activity))
+                .withName("Log out").withIdentifier(11)
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        Intent myintent = new Intent(activity, LandingActivity.class);
+                        activity.startActivity(myintent);
+                        activity.finish();
+                        return false;
+                    }
+                })
                 .withIcon(new IconDrawable(activity, FontAwesomeIcons.fa_sign_out).alpha(100)));
 
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(false);
@@ -112,18 +123,21 @@ public class ToolbarBuilder {
         return new Drawer.OnDrawerItemClickListener() {
             @Override
             public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                Call<Object> logout= KandoeApplication.getUserApi().logout();
-                logout.enqueue(new AbstractExceptionCallback<Object>() {
-                    @Override
-                    public void onResponse(Response<Object> response, Retrofit retrofit) {
-                        Intent myintent = new Intent(activity, LandingActivity.class);
-                        activity.startActivity(myintent);
-                        activity.finish();
-                    }
+//                Call<Object> logout= KandoeApplication.getUserApi().logout();
+//                logout.enqueue(new AbstractExceptionCallback<Object>() {
+//                    @Override
+//                    public void onResponse(Response<Object> response, Retrofit retrofit) {
+//                        Intent myintent = new Intent(activity, LandingActivity.class);
+//                        activity.getBaseContext().startActivity(myintent);
+//                        activity.finish();
+//                    }
+//
+//                });
 
-                });
+                Intent myintent = new Intent(activity.getApplicationContext(), LandingActivity.class);
+                activity.getApplicationContext().startActivity(myintent);
+                activity.finish();
                 return false;
-
             }
         };
     }
