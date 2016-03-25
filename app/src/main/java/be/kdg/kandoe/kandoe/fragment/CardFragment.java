@@ -150,10 +150,6 @@ public class CardFragment extends Fragment {
 
             }
         });
-
-
-
-        return rootView;
     }
 
     @Override
