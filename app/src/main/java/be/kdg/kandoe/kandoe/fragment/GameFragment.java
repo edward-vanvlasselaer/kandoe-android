@@ -1,5 +1,6 @@
 package be.kdg.kandoe.kandoe.fragment;
 
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -171,7 +173,15 @@ public class GameFragment extends Fragment {
                 drawable = ContextCompat.getDrawable(view.getContext(), R.drawable.c9);
                 break;
             default:
-                throw new NullPointerException("number of rounds not found");
+                new AlertDialog.Builder(this.getContext())
+                                    .setTitle("Too many circles :(")
+                                    .setMessage("It's best if you continue to play this game on the website, because there are too many circles :(")
+                                    .setPositiveButton("no problemo", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                        }
+                                    })
+                                    .show();
         }
         background.setBackground(drawable);
         return background;
