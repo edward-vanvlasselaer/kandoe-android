@@ -17,7 +17,15 @@ public class Circle implements Serializable {
     private Integer maxCardsToSelect;
     private Integer minCardsToSelect;
     private Integer currentCircleParticipation;
+    private String gameStatus;
 
+    public String getGameStatus() {
+        return gameStatus;
+    }
+
+    public void setGameStatus(String gameStatus) {
+        this.gameStatus = gameStatus;
+    }
 
     public Integer getCurrentCircleParticipation() {
         return currentCircleParticipation;
