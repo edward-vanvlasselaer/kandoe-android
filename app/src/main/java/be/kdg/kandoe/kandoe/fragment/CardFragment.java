@@ -1,9 +1,11 @@
 package be.kdg.kandoe.kandoe.fragment;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,6 +91,7 @@ public class CardFragment extends Fragment {
         cardAdapter = new CardAdapter(rootView.getContext());
         listView.setAdapter(cardAdapter);
 
+        final Circle  circle=null;
 
         try {
             circleId = ThemeCardActivity.getCurrentTheme().getCircle().getCircleId();
@@ -120,8 +123,37 @@ public class CardFragment extends Fragment {
                 } else {
                     textView.setVisibility(View.VISIBLE);
                 }
+
+                if(response.body().getGameStatus().equals("FINISHED")){
+                    new AlertDialog.Builder(getContext())
+                            .setTitle("Game is finished")
+                            .setMessage("You cannot longer play in this game because the game is finished")
+                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .show();
+                }
+
+                if(response.body().getGameStatus().equals("PLANNED")){
+                    new AlertDialog.Builder(getContext())
+                            .setTitle("Game is planned")
+                            .setMessage("You cannot play in this game because the game is not started yet")
+                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .show();
+                }
+
             }
         });
+
+
+
+        return rootView;
     }
 
     @Override
@@ -154,7 +186,10 @@ public class CardFragment extends Fragment {
             e.printStackTrace();
         }
     }
+
     public CardAdapter getCardAdapter() {
         return cardAdapter;
     }
+
+
 }
