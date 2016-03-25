@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import be.kdg.kandoe.kandoe.R;
 import be.kdg.kandoe.kandoe.activity.MainActivity;
@@ -25,7 +24,6 @@ import be.kdg.kandoe.kandoe.dom.Circle;
 import be.kdg.kandoe.kandoe.dom.Theme;
 import be.kdg.kandoe.kandoe.dom.User;
 import be.kdg.kandoe.kandoe.exception.AbstractExceptionCallback;
-import be.kdg.kandoe.kandoe.fragment.GameFragment;
 import be.kdg.kandoe.kandoe.util.AccountSettings;
 import retrofit.Call;
 import retrofit.Response;
@@ -104,7 +102,6 @@ public class CardAdapter extends BaseAdapter {
         }
 
 
-
         //TODO: checken of werkt
         for (User user : circle.getUsers()) {
             if (user.getUserId() == AccountSettings.getLoggedInUser().getUserId()) {
@@ -116,8 +113,13 @@ public class CardAdapter extends BaseAdapter {
 
         String cardPosition = "";
 
-        if (card.getPosition() != null) cardPosition = card.getPosition();
-        viewHolder.title.setText(cardPosition + " "+card.getCardName());
+        if (card.getPosition() != null) {
+            cardPosition = card.getPosition();
+            viewHolder.title.setText(cardPosition + ": " + card.getCardName());
+        }
+        if (card.getPosition() == null) {
+            viewHolder.title.setText(card.getCardName());
+        }
         viewHolder.description.setText(card.getDescription());
 
         final Theme finalTheme = theme;
@@ -146,7 +148,7 @@ public class CardAdapter extends BaseAdapter {
                         }
                     }
                 }
-                if (card.getScore()+1 < circle.getTotalRounds()) {
+                if (card.getScore() + 1 < circle.getTotalRounds()) {
 
                     Call<Object> call = KandoeApplication.getCircleApi().addVote(1, card);
                     call.enqueue(new AbstractExceptionCallback() {
@@ -159,7 +161,7 @@ public class CardAdapter extends BaseAdapter {
 
 
                     });
-                }else{
+                } else {
                     Toast.makeText(context, "Card is already in the middle", Toast.LENGTH_SHORT).show();
                 }
             }

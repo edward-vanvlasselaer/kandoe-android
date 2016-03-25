@@ -553,7 +553,9 @@ public class GameFragment extends Fragment {
             Button myButton = new Button(this.getContext()); //generate ImageButton
             myButton.setId(card.getCardId()); //Set Id of button
             myButton.setBackgroundResource(R.drawable.circle_card_icon);
-            myButton.setText(String.valueOf(card.getCardId()));
+            if (card.getPosition() == null)
+                card.setPosition("");
+            myButton.setText(String.valueOf(card.getPosition()));
             myButton.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(130, 130);
 

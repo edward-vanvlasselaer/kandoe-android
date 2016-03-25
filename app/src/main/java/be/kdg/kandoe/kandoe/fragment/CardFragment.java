@@ -99,7 +99,6 @@ public class CardFragment extends Fragment {
             e.printStackTrace();
         }
         requestCards(textView);
-
         return rootView;
     }
 
@@ -147,7 +146,6 @@ public class CardFragment extends Fragment {
                             })
                             .show();
                 }
-
             }
         });
     }
