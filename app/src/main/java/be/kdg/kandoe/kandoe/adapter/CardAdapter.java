@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import be.kdg.kandoe.kandoe.R;
 import be.kdg.kandoe.kandoe.activity.MainActivity;
@@ -93,6 +94,12 @@ public class CardAdapter extends BaseAdapter {
             convertView.setTag(viewHolder);
         }
 
+        if (!circle.getGameStatus().equals("STARTED")) {
+            viewHolder.upvote.setVisibility(View.INVISIBLE);
+        }
+
+
+
         //TODO: checken of werkt
         for (User user : circle.getUsers()) {
             if (user.getUserId() == AccountSettings.getLoggedInUser().getUserId()) {
@@ -102,10 +109,10 @@ public class CardAdapter extends BaseAdapter {
             }
         }
 
-        String cardPosition="";
+        String cardPosition = "";
 
-        if(card.getPosition()!=null)cardPosition=card.getPosition();
-        viewHolder.title.setText(cardPosition+": "+card.getCardName());
+        if (card.getPosition() != null) cardPosition = card.getPosition();
+        viewHolder.title.setText(cardPosition + " "+card.getCardName());
         viewHolder.description.setText(card.getDescription());
 
         final Theme finalTheme = theme;
@@ -114,7 +121,7 @@ public class CardAdapter extends BaseAdapter {
             public void onClick(View v) {
                 User playingUser = new User();
                 playingUser.setUsername("NULL");
-                for (User user : circle.getUsers()){
+                for (User user : circle.getUsers()) {
                     if (user.isPlaying())
                         playingUser = user;
                 }
@@ -134,7 +141,7 @@ public class CardAdapter extends BaseAdapter {
 //                        }
                     }
                 }
-                if (card.getScore()+1 < circle.getTotalRounds()) {
+                if (card.getScore() + 1 < circle.getTotalRounds()) {
                     //TEST
                     card.setScore(card.getScore() + 1);
                     GameFragment.getSingletonObject().moveCard(card);
@@ -149,7 +156,7 @@ public class CardAdapter extends BaseAdapter {
 
 
                     });
-                }else{
+                } else {
                     Toast.makeText(context, "Card is already in the middle", Toast.LENGTH_SHORT).show();
                 }
             }
